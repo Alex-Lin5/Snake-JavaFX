@@ -34,9 +34,11 @@ public class ThreadLoop implements Runnable {
 //                float Delay = System.currentTimeMillis() - time;
 
 
-                time = System.currentTimeMillis() - time;
+                pad.update();
                 Painter.paint(pad, gc);
                 Messager.Print(gc);
+
+                time = System.currentTimeMillis() - time;
 
 
                 if (time < interval) {
@@ -51,7 +53,7 @@ public class ThreadLoop implements Runnable {
                     Thread.sleep((long) (interval));
                 } catch (InterruptedException ignore) {
                 }
-                continue;
+//                continue;
             }
         }
     }

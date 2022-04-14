@@ -18,9 +18,10 @@ public class Main extends Application {
     private final int WIDTH = 300;
     private final int HEIGHT = 200;
     private ThreadLoop loop;
-    private Point SpawnPoint;
+//    private Point SpawnPoint;
 
     private GraphicsContext myGraphicsContext;
+    private PixelPad pad;
 
     public static void main(String[] args){
 //        Application.launch(args);
@@ -33,15 +34,8 @@ public class Main extends Application {
         myGraphicsContext = myCanvas.getGraphicsContext2D();
         myCanvas.setFocusTraversable(true);
 
-
 //        GameFrame.setup(myStage, WIDTH, HEIGHT);
-//        SpawnPoint = new Point(30, 60);
-//        Snake snake1 = new Snake(SpawnPoint);
-//        Food theFood = new Food();
         PixelPad pad = new PixelPad(WIDTH, HEIGHT);
-
-//        loop = new ThreadLoop();
-//        loop.start();
         Keypad.getKey(pad.getSnake(), myCanvas);
         Painter.paint(pad, myGraphicsContext);
         Messager.Print(myGraphicsContext);

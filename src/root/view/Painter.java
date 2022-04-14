@@ -15,8 +15,8 @@ public class Painter {
     private static Color GridColor = Color.GREY;
     private static int size = SIZE;
 
-    private static Snake snake;
-    private static Food food;
+//    private static Snake snake;
+//    private static Food food;
 
     public static void paint(PixelPad pad, GraphicsContext gc){
         gc.setFill(PadColor);
@@ -25,14 +25,14 @@ public class Painter {
         gc.setFill(GridColor);
 
         gc.setFill(FoodColor);
-//        food = pad.getFood();
-//        gc.fillRect(food.getX(), food.getY(), size, size);
-//        gc.fillRect(pad.getFood().getX(), pad.getFood().getY(), size, size);
-        gc.fillRect(10, 20, size, size);
+        gc.fillRect(pad.getFood().getFoodPoint().getX(),
+                pad.getFood().getFoodPoint().getY(), size, size);
+//        gc.fillRect(10, 20, size, size);
 
         gc.setFill(SnakeColor);
-        snake = pad.getSnake();
-        gc.fillRect(50, 50, size, size);
+//        gc.fillRect(50, 50, size, size);
+        pad.getSnake().body.forEach(Pixel -> gc.fillRect(
+                Pixel.getX(), Pixel.getY(), size, size));
         
     }
 }
