@@ -7,13 +7,11 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import root.controller.Keypad;
-import root.controller.Painter;
+import root.view.Painter;
 import root.controller.ThreadLoop;
-import root.model.Food;
 import root.model.Point;
-import root.model.Snake;
 import root.view.Messager;
-import root.view.PixelPad;
+import root.model.PixelPad;
 
 public class Main extends Application {
 
@@ -37,14 +35,14 @@ public class Main extends Application {
 
 
 //        GameFrame.setup(myStage, WIDTH, HEIGHT);
-        SpawnPoint = new Point(30, 60);
-        Snake snake1 = new Snake(SpawnPoint);
-        Food theFood = new Food();
+//        SpawnPoint = new Point(30, 60);
+//        Snake snake1 = new Snake(SpawnPoint);
+//        Food theFood = new Food();
         PixelPad pad = new PixelPad(WIDTH, HEIGHT);
 
 //        loop = new ThreadLoop();
 //        loop.start();
-        Keypad.getKey(snake1, myCanvas);
+        Keypad.getKey(pad.getSnake(), myCanvas);
         Painter.paint(pad, myGraphicsContext);
         Messager.Print(myGraphicsContext);
         myStack.getChildren().add(myCanvas);

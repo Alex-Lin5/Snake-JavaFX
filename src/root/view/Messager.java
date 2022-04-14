@@ -2,6 +2,7 @@ package root.view;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import root.model.PixelPad;
 
 public class Messager {
     private static Color ScoreColor = Color.WHITE;

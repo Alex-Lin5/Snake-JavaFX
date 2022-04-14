@@ -6,8 +6,9 @@ public class Food extends Point{
 
 //    @Override
 //    public Food(double x, double y){
-    public Food(){
-        super(10, 20);}
+    public Food(Point FoodPoint){
+//        super(10, 20);}
+        super(FoodPoint.getX(), FoodPoint.getY());}
 //        this.x = x; this.y = y;}
 
 //    Food(int x, int y) {

@@ -1,12 +1,12 @@
-package root.controller;
+package root.view;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import root.model.Food;
 import root.model.Snake;
-import root.view.PixelPad;
+import root.model.PixelPad;
 
-import static root.view.PixelPad.SIZE;
+import static root.model.PixelPad.SIZE;
 
 public class Painter {
     private static Color PadColor = Color.BLACK;
@@ -24,11 +24,11 @@ public class Painter {
 
         gc.setFill(GridColor);
 
-        
         gc.setFill(FoodColor);
 //        food = pad.getFood();
 //        gc.fillRect(food.getX(), food.getY(), size, size);
-        gc.fillRect(pad.getFood().getX(), pad.getFood().getY(), size, size);
+//        gc.fillRect(pad.getFood().getX(), pad.getFood().getY(), size, size);
+        gc.fillRect(10, 20, size, size);
 
         gc.setFill(SnakeColor);
         snake = pad.getSnake();

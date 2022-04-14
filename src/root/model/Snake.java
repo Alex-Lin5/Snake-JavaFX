@@ -3,7 +3,7 @@ package root.model;
 import java.util.LinkedList;
 import java.util.List;
 
-import static root.view.PixelPad.SIZE;
+import static root.model.PixelPad.SIZE;
 
 public class Snake {
 //    public class Snake extends Point{
