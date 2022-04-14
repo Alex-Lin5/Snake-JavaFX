@@ -1,5 +1,9 @@
 package root.controller;
 
+import javafx.scene.canvas.GraphicsContext;
+import root.view.Messager;
+import root.view.PixelPad;
+
 public class ThreadLoop implements Runnable {
     public boolean running;
     private boolean stopped;
@@ -7,12 +11,17 @@ public class ThreadLoop implements Runnable {
     private float interval;
     private float SnakeSpeed = 20.0f;
 
-    public ThreadLoop() {
+    private final GraphicsContext gc;
+    private final PixelPad pad;
+
+    public ThreadLoop(final PixelPad pad, final GraphicsContext gc) {
 //        Snake snake1 = new Snake();
 //        SnakeSpeed = snake1.getSpeed();
         interval = (float) (1000 / SnakeSpeed);
         running = true;
         stopped = false;
+        this.gc = gc;
+        this.pad = pad;
     }
 
     @Override
@@ -22,7 +31,11 @@ public class ThreadLoop implements Runnable {
 
                 float time = System.currentTimeMillis();
 //                float Delay = System.currentTimeMillis() - time;
+
+
                 time = System.currentTimeMillis() - time;
+                Painter.paint(pad, gc);
+                Messager.Print(gc);
 
 
                 if (time < interval) {

@@ -45,8 +45,8 @@ public class Main extends Application {
 //        loop = new ThreadLoop();
 //        loop.start();
         Keypad.getKey(snake1, myCanvas);
-        Painter.paint(pad, theFood, snake1, myGraphicsContext);
-        Messager.Print(WIDTH, HEIGHT, myGraphicsContext, loop);
+        Painter.paint(pad, myGraphicsContext);
+        Messager.Print(myGraphicsContext);
         myStack.getChildren().add(myCanvas);
         Scene myScene = new Scene(myStack);
 
