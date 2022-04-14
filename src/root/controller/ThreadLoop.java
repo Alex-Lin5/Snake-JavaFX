@@ -1,6 +1,5 @@
 package root.controller;
 
-import root.model.Snake;
 public class ThreadLoop implements Runnable {
     public boolean running;
     private boolean stopped;
@@ -9,8 +8,8 @@ public class ThreadLoop implements Runnable {
     private float SnakeSpeed = 20.0f;
 
     public ThreadLoop() {
-        Snake snake1 = new Snake();
-        SnakeSpeed = snake1.getSpeed();
+//        Snake snake1 = new Snake();
+//        SnakeSpeed = snake1.getSpeed();
         interval = (float) (1000 / SnakeSpeed);
         running = true;
         stopped = false;

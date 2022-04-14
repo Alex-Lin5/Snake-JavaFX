@@ -10,6 +10,7 @@ import root.controller.Keypad;
 import root.controller.Painter;
 import root.controller.ThreadLoop;
 import root.model.Food;
+import root.model.Point;
 import root.model.Snake;
 import root.view.Messager;
 import root.view.PixelPad;
@@ -19,6 +20,7 @@ public class Main extends Application {
     private final int WIDTH = 300;
     private final int HEIGHT = 200;
     private ThreadLoop loop;
+    private Point SpawnPoint;
 
     private GraphicsContext myGraphicsContext;
 
@@ -35,8 +37,8 @@ public class Main extends Application {
 
 
 //        GameFrame.setup(myStage, WIDTH, HEIGHT);
-
-        Snake snake1 = new Snake();
+        SpawnPoint = new Point(30, 60);
+        Snake snake1 = new Snake(SpawnPoint);
         Food theFood = new Food();
         PixelPad pad = new PixelPad(WIDTH, HEIGHT);
 
