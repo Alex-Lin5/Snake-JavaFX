@@ -17,11 +17,11 @@ public class PixelPad {
         cols = (int) width/SIZE;
 
         this.snake = new Snake(new Point(30, 50));
-        this.food = new Food(new Point(10, 20));
+        this.food = new Food(new Point(100, 100));
     }
 
     public void update() {
-        snake.move();
+        snake.move(cols*SIZE, rows*SIZE);
     }
     public int getCols() { return cols;}
     public int getRows() { return rows;}

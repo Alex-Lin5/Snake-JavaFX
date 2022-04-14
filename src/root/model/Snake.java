@@ -11,7 +11,7 @@ public class Snake {
     private int length;
 
     public List<Point> body;
-    public Point head;
+    public Point head, tail;
 
     private int xVelocity;
     private int yVelocity;
@@ -28,9 +28,10 @@ public class Snake {
     public Snake(Point SpawnPoint) {
         xVelocity = 0;
         yVelocity = 0;
-        speed = 0.4f;
+        speed = 0.2f;
         length = 3;
 
+//        Point head = SpawnPoint;
         head = SpawnPoint;
         body = new LinkedList<>();
         body.add(head);
@@ -38,6 +39,8 @@ public class Snake {
         for(int i=0; i<length-1; i++){
             temp = new Point(temp.getX()-step, temp.getY());
             body.add(temp);
+
+        tail = body.get(0);
         }
 
 //        spawn();
@@ -56,15 +59,21 @@ public class Snake {
 //        y = 40;
 //    }
 
-    public void move() {
+    public void move(int width, int height) {
         double x, y;
         x = head.getX();
         y = head.getY();
         x = x + xVelocity*speed*step;
         y = y + yVelocity*speed*step;
+        if (x<=0) x = width;
+        if (x>=width) x = 0;
+        if (y<=0) y = height;
+        if (y>=height) y = 0;
 
+        head = new Point(x, y);
         body.add(new Point(x, y));
         body.remove(0);
+        tail = body.get(1);
     }
     public void setUp() {
         if (yVelocity == 1 && length > 1) return;

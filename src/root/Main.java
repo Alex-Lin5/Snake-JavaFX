@@ -41,14 +41,16 @@ public class Main extends Application {
         Messager.Print(myGraphicsContext);
         myStack.getChildren().add(myCanvas);
         Scene myScene = new Scene(myStack);
+        loop = new ThreadLoop(pad, myGraphicsContext);
 
         myStage.setResizable((false));
         myStage.setTitle("snake");
         myStage.setOnCloseRequest(windowEvent -> System.exit(0));
         myStage.setScene(myScene);
         myStage.show();
-        new Thread().start();
-//        new Thread(loop).start();
+        new Thread(loop).start();
+//        (new Thread(loop)).start();
+//        new Thread().start();
     }
 }
 

@@ -31,8 +31,9 @@ public class Painter {
 
         gc.setFill(SnakeColor);
 //        gc.fillRect(50, 50, size, size);
-        pad.getSnake().body.forEach(Pixel -> gc.fillRect(
-                Pixel.getX(), Pixel.getY(), size, size));
+        pad.getSnake().body.forEach(Pixel ->
+                gc.fillRect( Pixel.getX(), Pixel.getY(),
+                        size, size));
         
     }
 }

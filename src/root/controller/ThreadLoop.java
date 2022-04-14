@@ -16,9 +16,9 @@ public class ThreadLoop implements Runnable {
 
     public ThreadLoop(final PixelPad pad, final GraphicsContext gc) {
 //        Snake snake1 = new Snake();
-//        SnakeSpeed = snake1.getSpeed();
-        float snakeSpeed = 20.0f;
-        interval = (float) (1000 / snakeSpeed);
+//        FPS = snake1.getSpeed();
+        float FPS = 60.0f;
+        interval = (float) (1000 / FPS);
         running = true;
         stopped = false;
         this.gc = gc;
