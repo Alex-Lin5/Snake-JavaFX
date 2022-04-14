@@ -13,7 +13,7 @@ public class PixelPad {
 
     public int getCols() { return cols;}
     public int getRows() { return rows;}
-    public int getWidth() { return rows*SIZE;}
-    public int getHeight() { return cols*SIZE;}
+    public int getWidth() { return cols*SIZE;}
+    public int getHeight() { return rows*SIZE;}
 
 }
