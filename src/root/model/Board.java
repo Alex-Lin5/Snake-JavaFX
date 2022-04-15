@@ -1,9 +1,6 @@
 package root.model;
 
-import root.model.Food;
-import root.model.Snake;
-
-public class PixelPad {
+public class Board {
     public static final int SIZE = 10;
 
     private final int cols;
@@ -12,7 +9,7 @@ public class PixelPad {
     private Snake snake;
     private Food food;
 
-    public PixelPad(final int width, final int height) {
+    public Board(final int width, final int height) {
         rows = (int) height/SIZE;
         cols = (int) width/SIZE;
 
@@ -21,10 +18,8 @@ public class PixelPad {
     }
 
     public void update() {
-        snake.move(cols*SIZE, rows*SIZE);
+        snake.move(cols * SIZE, rows * SIZE);
     }
-    public int getCols() { return cols;}
-    public int getRows() { return rows;}
     public int getWidth() { return cols*SIZE;}
     public int getHeight() { return rows*SIZE;}
 

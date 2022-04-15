@@ -1,29 +1,20 @@
 package root.model;
 
 import java.util.LinkedList;
-import java.util.List;
 
-import static root.model.PixelPad.SIZE;
+import static root.model.Board.SIZE;
 
 public class Snake {
 //    public class Snake extends Point{
     private float speed;
     private int length;
 
-    public List<Point> body;
+    public LinkedList<Point> body;
     public Point head, tail;
 
     private int xVelocity;
     private int yVelocity;
-//    private double x, y;
     private final int step = SIZE;
-
-//    private boolean xDirection;
-//    private boolean yDirection;
-//    private final boolean UP = false;
-//    private final boolean DOWN = true;
-//    private final boolean LEFT = false;
-//    private final boolean RIGHT = true;
 
     public Snake(Point SpawnPoint) {
         xVelocity = 0;
@@ -33,47 +24,64 @@ public class Snake {
 
 //        Point head = SpawnPoint;
         head = SpawnPoint;
-        body = new LinkedList<>();
-        body.add(head);
+        body = new LinkedList<Point>();
+        body.addFirst(head);
         Point temp = new Point(head.getX(), head.getY());
-        for(int i=0; i<length-1; i++){
-            temp = new Point(temp.getX()-step, temp.getY());
-            body.add(temp);
+        for(int i=1; i<length; i++){
+//            temp = new Point(temp.getX()-step, temp.getY());
+            temp = new Point(temp.getX(), temp.getY());
+            body.addLast(temp);
 
-        tail = body.get(0);
+//        tail = body.get(0);
         }
-
-//        spawn();
-
     }
 
-//    public Point getHead() { return (Point) (x, y);}
+    public LinkedList<Point> getBody() { return body;}
+    public Point getHead() { return head;}
     public float getSpeed() {
         return speed;
     }
-//    public double getX() { return x;}
-//    public double getY() { return y;}
-
-//    private void spawn() {
-//        x = 30;
-//        y = 40;
-//    }
 
     public void move(int width, int height) {
-        double x, y;
+        double x, y, xNew, yNew;
         x = head.getX();
         y = head.getY();
-        x = x + xVelocity*speed*step;
-        y = y + yVelocity*speed*step;
-        if (x<=0) x = width;
-        if (x>=width) x = 0;
-        if (y<=0) y = height;
-        if (y>=height) y = 0;
+        xNew = x + xVelocity*speed*step;
+        yNew = y + yVelocity*speed*step;
+        if (xNew<0) xNew = width;
+        if (xNew>width) xNew = 0;
+        if (yNew<0) yNew = height;
+        if (yNew>height) yNew = 0;
 
-        head = new Point(x, y);
-        body.add(new Point(x, y));
-        body.remove(0);
-        tail = body.get(1);
+
+        if (!isStatic()) {
+            head = new Point(xNew, yNew);
+            if (meetGrid(x, y, xNew, yNew)) {
+                body.addFirst(head);
+                body.removeLast();
+            }
+            else {
+                body.set(0, head);
+            }
+        }
+    }
+    private boolean meetGrid(double x, double y,
+                             double xNew, double yNew) {
+        Point previous = new Point(x, y);
+        Point current = new Point(xNew, yNew);
+        if (previous.getRows() != current.getRows() |
+        previous.getCols() != current.getCols())
+            return true;
+        else
+            return false;
+    }
+    private boolean isStatic() {
+        if (xVelocity == 0 & yVelocity == 0) return true;
+        else return false;
+    }
+    public void setStatic() {
+        xVelocity = 0;
+        yVelocity = 0;
     }
     public void setUp() {
         if (yVelocity == 1 && length > 1) return;

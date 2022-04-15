@@ -19,12 +19,8 @@ public class Keypad {
                 case RIGHT:
                     snake.setRight();
                     break;
-                case P:
-//                    if (loop.isRunning()) {
-//                        loop.pause();
-//                    } else {
-//                        loop.resume();
-//                    }
+                case DIGIT1:
+                    snake.setStatic();
                     break;
                 case ENTER:
 //                    if (loop.isOver()) {

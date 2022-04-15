@@ -1,8 +1,8 @@
 package root.controller;
 
 import javafx.scene.canvas.GraphicsContext;
-import root.view.Messager;
-import root.model.PixelPad;
+import root.model.Board;
+import root.view.Messenger;
 import root.view.Painter;
 
 public class ThreadLoop implements Runnable {
@@ -12,9 +12,9 @@ public class ThreadLoop implements Runnable {
     private float interval;
 
     private final GraphicsContext gc;
-    private final PixelPad pad;
+    private final Board pad;
 
-    public ThreadLoop(final PixelPad pad, final GraphicsContext gc) {
+    public ThreadLoop(final Board pad, final GraphicsContext gc) {
 //        Snake snake1 = new Snake();
 //        FPS = snake1.getSpeed();
         float FPS = 60.0f;
@@ -36,7 +36,7 @@ public class ThreadLoop implements Runnable {
 
                 pad.update();
                 Painter.paint(pad, gc);
-                Messager.Print(gc);
+                Messenger.Print(pad, gc);
 
                 time = System.currentTimeMillis() - time;
 

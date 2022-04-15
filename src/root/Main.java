@@ -7,21 +7,23 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import root.controller.Keypad;
-import root.view.Painter;
 import root.controller.ThreadLoop;
-import root.model.Point;
-import root.view.Messager;
-import root.model.PixelPad;
+import root.model.Board;
+import root.view.Messenger;
+import root.view.Painter;
 
 public class Main extends Application {
 
-    private final int WIDTH = 300;
-    private final int HEIGHT = 200;
+    private final int BOARD_WIDTH = 300;
+    private final int BOARD_HEIGHT = 200;
+    private final int PANEL_WIDTH = 0;
+    private final int PANEL_HEIGHT = 20;
+
     private ThreadLoop loop;
 //    private Point SpawnPoint;
 
     private GraphicsContext myGraphicsContext;
-    private PixelPad pad;
+    private Board pad;
 
     public static void main(String[] args){
 //        Application.launch(args);
@@ -30,15 +32,17 @@ public class Main extends Application {
     @Override
     public void start(Stage myStage) throws Exception{
         StackPane myStack = new StackPane();
-        Canvas myCanvas = new Canvas(WIDTH, HEIGHT);
-        myGraphicsContext = myCanvas.getGraphicsContext2D();
+        Canvas myCanvas = new Canvas(
+            BOARD_WIDTH+PANEL_WIDTH, BOARD_HEIGHT+PANEL_HEIGHT);
         myCanvas.setFocusTraversable(true);
+        myGraphicsContext = myCanvas.getGraphicsContext2D();
 
-//        GameFrame.setup(myStage, WIDTH, HEIGHT);
-        PixelPad pad = new PixelPad(WIDTH, HEIGHT);
+//        GameFrame.setup(myStage, BOARD_WIDTH, BOARD_HEIGHT);
+        Board pad = new Board(BOARD_WIDTH, BOARD_HEIGHT);
         Keypad.getKey(pad.getSnake(), myCanvas);
         Painter.paint(pad, myGraphicsContext);
-        Messager.Print(myGraphicsContext);
+        Messenger.Print(pad, myGraphicsContext);
+
         myStack.getChildren().add(myCanvas);
         Scene myScene = new Scene(myStack);
         loop = new ThreadLoop(pad, myGraphicsContext);
