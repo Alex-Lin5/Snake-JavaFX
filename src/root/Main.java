@@ -9,8 +9,6 @@ import javafx.stage.Stage;
 import root.controller.Keypad;
 import root.controller.ThreadLoop;
 import root.model.Board;
-import root.view.Messenger;
-import root.view.Painter;
 
 public class Main extends Application {
 
@@ -40,12 +38,12 @@ public class Main extends Application {
 //        GameFrame.setup(myStage, BOARD_WIDTH, BOARD_HEIGHT);
         Board pad = new Board(BOARD_WIDTH, BOARD_HEIGHT);
         Keypad.getKey(pad.getSnake(), myCanvas);
-        Painter.paint(pad, myGraphicsContext);
-        Messenger.Print(pad, myGraphicsContext);
+//        Painter.paint(pad, myGraphicsContext);
+//        Messenger.Print(pad, myGraphicsContext);
 
+        loop = new ThreadLoop(pad, myCanvas, myGraphicsContext);
         myStack.getChildren().add(myCanvas);
         Scene myScene = new Scene(myStack);
-        loop = new ThreadLoop(pad, myGraphicsContext);
 
         myStage.setResizable((false));
         myStage.setTitle("snake");

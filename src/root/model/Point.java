@@ -17,10 +17,10 @@ public class Point {
 
     public double getX(){ return (double) x;}
     public double getY(){ return (double) y;}
-    public int getCols() { return (int) Math.floor(x/SIZE);}
-    public int getRows() { return (int) Math.floor(y/SIZE);}
-//    public int getCols() { return cols;}
-//    public int getRows() { return rows;}
+    public int GetXGrid() { return (int) Math.floor(x/SIZE);}
+    public int GetYGrid() { return (int) Math.floor(y/SIZE);}
+//    public int GetXGrid() { return cols;}
+//    public int GetYGrid() { return rows;}
 
 //    public Point getPoint() { return point;}
 }
