@@ -15,7 +15,7 @@ public class Main extends Application {
     private final int BOARD_WIDTH = 300;
     private final int BOARD_HEIGHT = 200;
     private final int PANEL_WIDTH = 0;
-    private final int PANEL_HEIGHT = 20;
+    private final int PANEL_HEIGHT = 40;
 
     private ThreadLoop loop;
 //    private Point SpawnPoint;
@@ -41,7 +41,8 @@ public class Main extends Application {
 //        Painter.paint(pad, myGraphicsContext);
 //        Messenger.Print(pad, myGraphicsContext);
 
-        loop = new ThreadLoop(pad, myCanvas, myGraphicsContext);
+//        loop = new ThreadLoop(pad, myCanvas, myGraphicsContext);
+        loop = new ThreadLoop(pad, myGraphicsContext);
         myStack.getChildren().add(myCanvas);
         Scene myScene = new Scene(myStack);
 
@@ -50,8 +51,9 @@ public class Main extends Application {
         myStage.setOnCloseRequest(windowEvent -> System.exit(0));
         myStage.setScene(myScene);
         myStage.show();
-        new Thread(loop).start();
-//        (new Thread(loop)).start();
+//        new Thread().start();
+//        new Thread(loop).start();
+        (new Thread(loop)).start();
 //        new Thread().start();
     }
 }

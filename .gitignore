@@ -5,6 +5,7 @@
 *.zip
 *.iml
 .idea
+Log
 target/
 # User-specific stuff
 .idea/**/workspace.xml

@@ -21,12 +21,13 @@ public class Messenger {
 //    }
 
 
-    public static void Print(Board pad, GraphicsContext gc){
+    public static void Print(int FPS, Board pad, GraphicsContext gc){
         int width = pad.getWidth();
         int height = pad.getHeight();
         gc.setFill(ScoreColor);
 //        gc.fillText("Score: 0", width, height+PanelHeight);
         gc.fillText("Score: 0", 5, height+15);
+        gc.fillText("FPS: " + FPS,5, height+30);
 //        gc.fillText("Score: 000", 15, height+15);
 
 //        if (!thread.isOvered()) {

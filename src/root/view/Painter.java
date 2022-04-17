@@ -1,18 +1,19 @@
 package root.view;
 
-import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import root.model.Board;
 
 import static root.model.Board.SIZE;
-
+//import static root.Main.PANEL
 public class Painter {
     private static Color PadColor = Color.BLACK;
     private static Color FoodColor = Color.WHEAT;
-    private static Color SnakeColor = Color.WHITE;
+    private static Color SnakeColor = Color.GREEN;
     private static Color GridColor = Color.GREY;
     private static int size = SIZE;
+//    private static int panelWidth = PANEL_WIDTH;
+//    private static int panelHeight = PANEL_HEIGHT;
 
     public static void paint(Board pad, GraphicsContext gc){
         gc.setFill(PadColor);
@@ -21,9 +22,9 @@ public class Painter {
         gc.setFill(GridColor);
         gc.setStroke(GridColor);
         for (int i=0; i<pad.getWidth()/size; i++)
-            gc.strokeLine(i*size, 0, i*size, pad.getHeight());
+            gc.strokeLine(i*size, 0, i*size, pad.getHeight()-gc.getLineWidth());
         for (int i=0; i<pad.getHeight()/size; i++)
-            gc.strokeLine(0, i*size, pad.getWidth(), i*size);
+            gc.strokeLine(0, i*size, pad.getWidth()-gc.getLineWidth(), i*size);
 
         gc.setFill(SnakeColor);
         for(int i=0; i<pad.getSnake().getLength()-1; i++) {
@@ -41,7 +42,10 @@ public class Painter {
                 pad.getFood().getFoodPoint().getY(), size, size);
     }
 
-    public static void clear(Canvas theCanvas, GraphicsContext gc) {
-        gc.clearRect(0,0, theCanvas.getWidth(), theCanvas.getHeight());
+//    public static void clear(Canvas theCanvas, GraphicsContext gc) {
+//        gc.clearRect(0,0, theCanvas.getWidth(), theCanvas.getHeight());
+//    }
+    public static void clear(Board theBoard, GraphicsContext gc) {
+        gc.clearRect(0,0, theBoard.getWidth(), theBoard.getHeight()+40);
     }
 }
