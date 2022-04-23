@@ -4,12 +4,21 @@ import javafx.scene.canvas.Canvas;
 import root.model.Snake;
 
 public class Keypad {
-    public static void getKey(Snake snake, Canvas myCanvas) {
-        myCanvas.setOnKeyPressed(event -> {
+    private boolean restart;
+    private final Canvas canvas;
+    private final Snake snake;
+
+    public Keypad(Snake snake, Canvas myCanvas) {
+        canvas = myCanvas;
+        this.snake = snake;
+    }
+    public boolean getKey() {
+//        public boolean getKey(boolean restart) {
+        restart = false;
+        canvas.setOnKeyPressed(event -> {
             if (snake.isTurned()) {
                 if (snake.isMoving())
                     return;
-
             }
             switch (event.getCode()){
                 case UP:
@@ -28,17 +37,18 @@ public class Keypad {
                     snake.setStatic();
                     break;
                 case ENTER:
-                    if (snake.isDead()) {
-//                        (new Thread(loop)).start();
-                    }
+                    if (snake.isDead())
+                        restart = true;
                     break;
                 default:
                     break;
 
             }
             if (snake.isDead())
-                return;
+                ;
+//                return;
             else snake.setTurned();
         });
+        return restart;
     }
 }

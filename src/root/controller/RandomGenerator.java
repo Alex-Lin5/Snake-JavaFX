@@ -20,12 +20,8 @@ public class RandomGenerator {
             y = random.nextInt(height);
             point = new Point(x, y);
             point = point.getXYonGrid();
-            for (int i=0; i<body.size(); i++){
-                if (Point.Equal(point, body.get(i))) {
-                    stacked = true;
-                    break;
-                }
-            }
+            if (point.isDuplicateIn(body, 0, body.size()))
+                stacked = true;
         } while (stacked);
         return point;
     }

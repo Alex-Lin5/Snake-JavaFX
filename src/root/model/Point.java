@@ -1,5 +1,7 @@
 package root.model;
 
+import java.util.LinkedList;
+
 import static root.model.Board.SIZE;
 
 public class Point {
@@ -20,8 +22,24 @@ public class Point {
         this.x = setOne.getX();
         this.y = setOne.getY();
     }
+    public boolean meetGrid() {
+        Point point = new Point(x, y);
+        if (x == point.GetXGrid()*SIZE &
+                y == point.GetYGrid()*SIZE)
+            return true;
+        else return false;
+    }
+
     public Point getXYonGrid() {
         return new Point (Math.floor(x/SIZE)*SIZE , Math.floor(y/SIZE)*SIZE);
+    }
+    public boolean isDuplicateIn (LinkedList<Point> list, int begin, int end) {
+        Point point = new Point(x, y);
+        for (int i=begin; i<end; i++) {
+            if (Point.Equal(point, list.get(i)))
+                return true;
+        }
+        return false;
     }
     public static Point addPoint(Point newPoint) {
         return new Point(newPoint.getX(), newPoint.getY());
