@@ -20,6 +20,9 @@ public class Point {
         this.x = setOne.getX();
         this.y = setOne.getY();
     }
+    public Point getXYonGrid() {
+        return new Point (Math.floor(x/SIZE)*SIZE , Math.floor(y/SIZE)*SIZE);
+    }
     public static Point addPoint(Point newPoint) {
         return new Point(newPoint.getX(), newPoint.getY());
     }

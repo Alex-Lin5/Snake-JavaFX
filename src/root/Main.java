@@ -51,10 +51,13 @@ public class Main extends Application {
         myStage.setOnCloseRequest(windowEvent -> System.exit(0));
         myStage.setScene(myScene);
         myStage.show();
-//        new Thread().start();
-//        new Thread(loop).start();
-        (new Thread(loop)).start();
-//        new Thread().start();
+
+//        Thread t =  new Thread(loop);
+//        t.start();
+//        t.join();
+        new Thread(loop).start();
+//        (new Thread(loop)).start();
+//        new Thread().start(); // wrong
     }
 }
 

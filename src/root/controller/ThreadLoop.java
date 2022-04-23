@@ -43,7 +43,7 @@ public class ThreadLoop implements Runnable {
                 int FPS = (int) (1000/interval);
 
                 pad.update();
-                Painter.clear(pad, gc);
+//                Painter.clear(pad, gc);
                 Painter.paint(pad, gc);
                 Messenger.Print(FPS, pad, gc);
 

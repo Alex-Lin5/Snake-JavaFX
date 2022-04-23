@@ -13,23 +13,28 @@ public class Snake {
     private Point head, tail;
     private int headDirection, tailDirection;
     private double distance;
+    private int score;
 
     private int xVelocity;
     private int yVelocity;
     private boolean turned;
+    private boolean dead;
     private boolean moving;
+//    private boolean growing;
 
     private final int step = SIZE;
 
     public Snake(Point SpawnPoint) {
+        score = 0;
         xVelocity = 0;
         yVelocity = 0;
         headDirection = 0;
         tailDirection = 0;
 //        speed = 80f; // from 0 to 1000, ms to traverse a block
-        speed = 20f; // from 0 to 10, number of blocks traverse in 1s
-        length = 4;
+        speed = 1f; // from 0 to 50, number of blocks traverse in 1s
+        length = 3;
         turned = false;
+        dead = false;
         moving = false;
 
         head = Point.addPoint(SpawnPoint);
@@ -41,7 +46,11 @@ public class Snake {
             body.add(i, Point.addPoint(SpawnPoint));
         }
     }
-
+    public boolean isMoving() { return moving;}
+    public void setTurned() { this.turned = true;}
+    public boolean isDead() { return dead;}
+    public void setScore(int scoreNew) { this.score = scoreNew;}
+    public int getScore() { return score;}
     public LinkedList<Point> getBody() { return body;}
     public Point getHead() { return head;}
     public Point getTail() { return tail;}
@@ -49,21 +58,34 @@ public class Snake {
     public float getSpeed() {
         return speed;
     }
-    public double getEndDistance() { return distance;}
+//    public double getEndDistance() { return distance;}
 
+    public void grow() {
+        double x, y, xNew, yNew;
+        length += 1;
+        x = head.getX();
+        y = head.getY();
+        xNew = x + xVelocity;
+        yNew = y + yVelocity;
+        body.addFirst(Point.addPoint(head));
+        Point newPoint = new Point(xNew, yNew);
+        head = newPoint;
+    }
     public void move(int width, int height) {
         double x, y, xNew, yNew, head2body0, tail2bodyr1;
+//        double distance;
         x = head.getX();
         y = head.getY();
         xNew = x + xVelocity;
         yNew = y + yVelocity;
         Point newPoint = new Point(xNew, yNew);
 
-        turned = isTurned(newPoint);
+//        turned = isTurned(newPoint);
         moving = (!isStatic());
         headDirection = Point.whichDirection(body.get(1), body.get(0));
         tailDirection = Point.whichDirection(body.get(length-1), body.get(length-2));
         distance = Point.DistanceBetween(body.get(0), newPoint);
+//        distance = Point.DistanceBetween(body.get(0), head);
 
         if (xNew<0) xNew = width-step;
         if (xNew>width-step) xNew = 0;
@@ -76,52 +98,55 @@ public class Snake {
         else
             wrapped = false;
 
-        if (!bodyStacked()) { // snake is dynamic
-            if (turned) {
-                if (Point.XYslide(head, body.get(0)) == 1)
-                    head.setXY(body.get(0).getX() + Point.whichDirection(body.get(0), head)*distance,
-                            body.get(0).getY());
-                if (Point.XYslide(head, body.get(0)) == 2)
-                    head.setXY(body.get(0).getX(),
-                            body.get(0).getY() + Point.whichDirection(body.get(0), head)*distance);
-            }
-            else head = newPoint;
+        if (!bodyStacked()) { // snake body is not stacked
             // tail part
             if (Point.onAdjacentGrid(body.get(length-1), body.get(length-2))) {
-                if (Point.XYslide(body.get(length-1), body.get(length-2)) == 1)
-                    tail.setXY(body.get(length-1).getX() + tailDirection*distance,
-                            body.get(length-1).getY());
-                if (Point.XYslide(body.get(length-1), body.get(length-2)) == 2)
-                    tail.setXY(body.get(length-1).getX(),
-                            body.get(length-1).getY() + tailDirection*distance);
-            }
+                setTail(1);}
             else {
-                if (Point.XYslide(body.get(length-1), body.get(length-2)) == 1)
-                    tail.setXY(body.get(length-1).getX() - tailDirection*distance,
-                            body.get(length-1).getY());
-                if (Point.XYslide(body.get(length-1), body.get(length-2)) == 2)
-                    tail.setXY(body.get(length-1).getX(),
-                            body.get(length-1).getY() - tailDirection*distance);
-            }
+                setTail(-1);}
+
             // body part
             if (meetGrid(head)) {
                 body.addFirst(Point.addPoint(head));
                 body.removeLast();
+                turned = false;
             }
+//            turned = isTurned(newPoint);
+            // head part
+            if (turned) {
+                if (Point.XYslide(head, body.get(0)) == 1)
+                    head.setXY(body.get(0).getX() + Point.whichDirection(body.get(0), head)*distance,
+                        body.get(0).getY());
+                if (Point.XYslide(head, body.get(0)) == 2)
+                    head.setXY(body.get(0).getX(),
+                        body.get(0).getY() + Point.whichDirection(body.get(0), head)*distance);
+            }
+            else head = newPoint;
         }
         else { // snake body is stacked, initial state
-            tail.setPoint(tail);
-            head = newPoint;
             // body part
-            if (meetGrid(newPoint)) {
-                body.addFirst(newPoint);
+            if (meetGrid(head)) {
+//                if (meetGrid(newPoint)) {
+//                body.addFirst(Point.addPoint(newPoint));
+                body.addFirst(Point.addPoint(head));
                 body.removeLast();
             }
+            tail.setPoint(tail);
+            head = newPoint;
         }
-
         head2body0 = Point.DistanceBetween(body.get(0), head);
         tail2bodyr1 = Point.DistanceBetween(body.get(length-1), tail);
-        int tempp = 1;
+    }
+    private void setTail(int Direction) {
+//        private void setTail(int Direction, double distance) {
+        if (Point.XYslide(body.get(length-1), body.get(length-2)) == 1)
+            tail.setXY(body.get(length-1).getX() +
+                Direction*tailDirection*distance,
+                    body.get(length-1).getY());
+        if (Point.XYslide(body.get(length-1), body.get(length-2)) == 2)
+            tail.setXY(body.get(length-1).getX(),
+                body.get(length-1).getY() +
+                        Direction*tailDirection*distance);
     }
     private boolean meetGrid(Point newPoint) {
         double x, y;
@@ -131,7 +156,7 @@ public class Snake {
             return true;
         else return false;
     }
-    private void tailShift() {}
+//    private void tailShift() {}
     private boolean bodyStacked() {
         boolean stacked = false;
         for(int i=0; i<length-1; i++) {
@@ -139,16 +164,18 @@ public class Snake {
         }
         return stacked;
     }
-    private boolean isTurned(Point newOne) {
-        if ((Point.XYslide(head , newOne) !=
-            Point.XYslide(body.get(0), head)) &
-            Point.XYslide(body.get(0), head) != 0)
-            return true;
-        else return false;
-    }
+//    private boolean isTurned(Point newOne) {
+//        if ((Point.XYslide(head , newOne) !=
+//                Point.XYslide(body.get(0), head)) &
+//                Point.XYslide(body.get(0), head) != 0)
+//            return true;
+//        else return false;
+//    }
+    public boolean isTurned() { return turned;}
     private boolean isStatic() {
-        if ((xVelocity == 0 & yVelocity == 0) |
-            (headDirection == 0 & tailDirection == 0))
+        if ((xVelocity == 0 & yVelocity == 0))
+//            if ((xVelocity == 0 & yVelocity == 0) |
+//                    (headDirection == 0 & tailDirection == 0))
             return true;
         else return false;
     }
