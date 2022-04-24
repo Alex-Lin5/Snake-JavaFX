@@ -37,14 +37,14 @@ public class Painter {
             gc.strokeLine(0, i*size, board.getWidth()-gc.getLineWidth(), i*size);
 
         gc.setFill(SnakeColor);
-        for(int i=0; i<board.getSnake().getLength()-1; i++) {
-            DrawSquare(SnakeColor, board.getSnake().getBody().get(i), size);
+        for(int i=0; i<board.getSnake(0).getLength()-1; i++) {
+            DrawSquare(SnakeColor, board.getSnake(0).getBody().get(i), size);
         }
-        DrawSquare(SnakeColor, board.getSnake().getHead(), size);
-        DrawSquare(SnakeColor, board.getSnake().getTail(), size);
+        DrawSquare(SnakeColor, board.getSnake(0).getHead(), size);
+        DrawSquare(SnakeColor, board.getSnake(0).getTail(), size);
 
-        if (board.getSnake().isDead()) {
-            DrawSquare(DeadColor, board.getSnake().getHead(), size);
+        if (board.getSnake(0).isDead()) {
+            DrawSquare(DeadColor, board.getSnake(0).getHead(), size);
         }
 
         DrawSquare(FoodColor, board.getFood().getFoodPoint(), size);

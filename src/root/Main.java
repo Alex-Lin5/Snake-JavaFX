@@ -14,7 +14,7 @@ public class Main extends Application {
     public static final int BOARD_WIDTH = 300;
     public static final int BOARD_HEIGHT = 200;
     public static final int PANEL_WIDTH = 0;
-    public static final int PANEL_HEIGHT = 40;
+    public static final int PANEL_HEIGHT = 50;
     public boolean restart;
 
     private ThreadLoop loop;
@@ -37,7 +37,7 @@ public class Main extends Application {
         myGraphicsContext = myCanvas.getGraphicsContext2D();
 
         loop = new ThreadLoop(myGraphicsContext);
-        Keypad keypad1 = new Keypad(loop.board.getSnake(), myCanvas);
+        Keypad keypad1 = new Keypad(loop, myCanvas);
         restart = keypad1.getKey();
         myStack.getChildren().add(myCanvas);
         Scene myScene = new Scene(myStack);
@@ -54,7 +54,7 @@ public class Main extends Application {
         new Thread(loop).start();
 //        (new Thread(loop)).start();
 //        new Thread().start(); // wrong
-//        if (restart & loop.board.getSnake().isDead()) {
+//        if (restart & loop.board.getSnake(0).isDead()) {
 ////            loop = new ThreadLoop(board, myGraphicsContext);
 //            new Thread(loop).start();
 //        }

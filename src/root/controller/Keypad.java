@@ -7,10 +7,12 @@ public class Keypad {
     private boolean restart;
     private final Canvas canvas;
     private final Snake snake;
+    private final Debugger debugger;
 
-    public Keypad(Snake snake, Canvas myCanvas) {
+    public Keypad(ThreadLoop loop, Canvas myCanvas) {
         canvas = myCanvas;
-        this.snake = snake;
+        snake = loop.board.getSnake(0);
+        debugger = loop.debugger;
     }
     public boolean getKey() {
 //        public boolean getKey(boolean restart) {
@@ -36,6 +38,17 @@ public class Keypad {
                 case DIGIT1:
                     snake.setStatic();
                     break;
+                case DIGIT0:
+                    if (debugger.on)
+                        debugger.on = false;
+                    else debugger.on = true;
+                    break;
+                case PAGE_DOWN:
+                    debugger.backSteps -= 1;
+                    break;
+                case PAGE_UP:
+                    debugger.backSteps += 1;
+                    break;
                 case ENTER:
                     if (snake.isDead())
                         restart = true;
@@ -47,6 +60,7 @@ public class Keypad {
             if (snake.isDead())
                 ;
 //                return;
+            else if (debugger.on) ;
             else snake.setTurned();
         });
         return restart;

@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import static root.model.Board.SIZE;
 
 public class Snake {
+    private int serialNum;
     private boolean spawn;
     private float speed;
     private int length;
@@ -19,11 +20,13 @@ public class Snake {
     private boolean turned;
     private boolean dead;
     private boolean moving;
+    private boolean resting;
 //    private boolean growing;
 
-    private final int step = SIZE;
+    private final int stride = SIZE;
 
-    public Snake(Point SpawnPoint) {
+    public Snake(Point SpawnPoint, int num) {
+        serialNum = num;
         score = 0;
         xVelocity = 0;
         yVelocity = 0;
@@ -31,11 +34,12 @@ public class Snake {
         tailDirection = 0;
 //        speed = 80f; // from 0 to 1000, ms to traverse a block
         speed = 20f; // from 0 to 50, number of blocks traverse in 1s
-        length = 10;
+        length = 3;
         turned = false;
         dead = false;
         moving = false;
         spawn = true;
+        resting = true;
 
         head = Point.addPoint(SpawnPoint);
         tail = Point.addPoint(SpawnPoint);
@@ -48,20 +52,28 @@ public class Snake {
     public int[] getDirection() {
         return new int[]{xVelocity, yVelocity};
     }
+    public boolean isMoving() {
+        if ((xVelocity == 0 & yVelocity == 0))
+            return false;
+        else return true;
+    }
+    public int getSerialNum() { return serialNum;}
     public boolean isSpawned() { return spawn;}
-    public boolean isMoving() { return moving;}
     public void setTurned() { this.turned = true;}
+    public void setAlive() { this.dead = false;}
     public void setDead() { this.dead = true;}
     public boolean isDead() { return dead;}
     public void setScore(int scoreNew) { this.score = scoreNew;}
     public int getScore() { return score;}
     public LinkedList<Point> getBody() { return body;}
+    public void setHead(Point point) { head = point;}
     public Point getHead() { return head;}
     public Point getTail() { return tail;}
+    public void setTail(Point point) { tail = point;}
     public int getLength() { return length;}
-    public float getSpeed() {
-        return speed;
-    }
+    public void setLength(int num) { length = num;}
+    public float getSpeed() { return speed;}
+    public boolean isTurned() { return turned;}
 
     public void grow() {
         double x, y, xNew, yNew;
@@ -76,22 +88,27 @@ public class Snake {
     }
     public void move(int width, int height) {
         double x, y, xNew, yNew, head2body0, tail2bodyr1;
-//        double distance;
+        boolean toMove;
         x = head.getX();
         y = head.getY();
         xNew = x + xVelocity;
         yNew = y + yVelocity;
         Point newPoint = new Point(xNew, yNew);
 
-        moving = (!isStatic());
         headDirection = Point.whichDirection(body.get(1), body.get(0));
         tailDirection = Point.whichDirection(body.get(length-1), body.get(length-2));
         distance = Point.DistanceBetween(body.get(0), newPoint);
 
-        if (xNew<0) xNew = width-step;
-        if (xNew>width-step) xNew = 0;
-        if (yNew<0) yNew = height-step;
-        if (yNew>height-step) yNew = 0;
+        moving = isMoving();
+        if (resting == moving & moving == true)
+            toMove = true;
+        else toMove = false;
+        resting = !moving;
+
+        if (xNew<0) xNew = width-stride;
+        if (xNew>width-stride) xNew = 0;
+        if (yNew<0) yNew = height-stride;
+        if (yNew>height-stride) yNew = 0;
         Point wrappedPoint = new Point(xNew, yNew);
         boolean wrapped = true;
         if (!Point.Equal(wrappedPoint, newPoint))
@@ -103,31 +120,32 @@ public class Snake {
             spawn = false;
             // tail part
             if (Point.onAdjacentGrid(body.get(length-1), body.get(length-2))) {
-                setTail(1);}
+                tailShift(1);}
             else {
-                setTail(-1);}
+                tailShift(-1);}
 
             // body part
-            if (head.meetGrid()) {
+            if (!toMove & head.meetGrid()) {
                 body.addFirst(Point.addPoint(head));
                 body.removeLast();
                 turned = false;
             }
-//            turned = isTurned(newPoint);
             // head part
             if (turned) {
                 if (Point.XYslide(head, body.get(0)) == 1)
                     head.setXY(body.get(0).getX() + Point.whichDirection(body.get(0), head)*distance,
                         body.get(0).getY());
-                if (Point.XYslide(head, body.get(0)) == 2)
+                else if (Point.XYslide(head, body.get(0)) == 2)
                     head.setXY(body.get(0).getX(),
                         body.get(0).getY() + Point.whichDirection(body.get(0), head)*distance);
+                else if (Point.XYslide(head, body.get(0)) == 0)
+                    head = newPoint;
             }
             else head = newPoint;
         }
         else { // snake body is stacked, initial state
             // body part
-            if (head.meetGrid()) {
+            if (!toMove & head.meetGrid()) {
                 body.addFirst(Point.addPoint(head));
                 body.removeLast();
             }
@@ -137,8 +155,7 @@ public class Snake {
         head2body0 = Point.DistanceBetween(body.get(0), head);
         tail2bodyr1 = Point.DistanceBetween(body.get(length-1), tail);
     }
-    private void setTail(int Direction) {
-//        private void setTail(int Direction, double distance) {
+    private void tailShift(int Direction) {
         if (Point.XYslide(body.get(length-1), body.get(length-2)) == 1)
             tail.setXY(body.get(length-1).getX() +
                 Direction*tailDirection*distance,
@@ -148,15 +165,6 @@ public class Snake {
                 body.get(length-1).getY() +
                         Direction*tailDirection*distance);
     }
-//    private boolean meetGrid(Point newPoint) {
-//        double x, y;
-//        x = newPoint.getX(); y = newPoint.getY();
-//        if (x == newPoint.GetXGrid()*step &
-//            y == newPoint.GetYGrid()*step)
-//            return true;
-//        else return false;
-//    }
-//    private void tailShift() {}
     private boolean bodyStacked() {
         boolean stacked = false;
         for(int i=0; i<length-1; i++) {
@@ -164,15 +172,11 @@ public class Snake {
         }
         return stacked;
     }
-    public boolean isTurned() { return turned;}
-    private boolean isStatic() {
-        if ((xVelocity == 0 & yVelocity == 0))
-            return true;
-        else return false;
-    }
     public void setStatic() {
         xVelocity = 0;
         yVelocity = 0;
+        moving = false;
+        resting = true;
     }
     public void setUp() {
         if (yVelocity == 1 && length > 1) return;
