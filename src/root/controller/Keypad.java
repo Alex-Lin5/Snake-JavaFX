@@ -1,6 +1,7 @@
 package root.controller;
 
 import javafx.scene.canvas.Canvas;
+import javafx.stage.Stage;
 import root.model.Snake;
 
 public class Keypad {
@@ -8,17 +9,19 @@ public class Keypad {
     private final Canvas canvas;
     private final Snake snake;
     private final Debugger debugger;
+    private final Stage theStage;
 
-    public Keypad(ThreadLoop loop, Canvas myCanvas) {
-        canvas = myCanvas;
+    public Keypad(ThreadLoop loop, Canvas myCanvas, Stage stage) {
+        theStage = stage;
+        this.canvas = myCanvas;
         snake = loop.board.getSnake(0);
         debugger = loop.debugger;
     }
-    public boolean getKey() {
-//        public boolean getKey(boolean restart) {
+    public void getKey() {
         restart = false;
         canvas.setOnKeyPressed(event -> {
-            if (snake.isTurned()) {
+            if (snake.isDead()) ;
+            else if (snake.isTurned()) {
                 if (snake.isMoving())
                     return;
             }
@@ -55,14 +58,14 @@ public class Keypad {
                     break;
                 default:
                     break;
-
             }
-            if (snake.isDead())
-                ;
-//                return;
-            else if (debugger.on) ;
+            if (debugger.on) ;
             else snake.setTurned();
+
+            if (restart) {
+                Initializer init = new Initializer(theStage);
+                init.initialize();
+            }
         });
-        return restart;
     }
 }

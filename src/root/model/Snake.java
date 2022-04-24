@@ -6,7 +6,6 @@ import static root.model.Board.SIZE;
 
 public class Snake {
     private int serialNum;
-    private boolean spawn;
     private float speed;
     private int length;
     private LinkedList<Point> body;
@@ -21,7 +20,7 @@ public class Snake {
     private boolean dead;
     private boolean moving;
     private boolean resting;
-//    private boolean growing;
+    private boolean spawn;
 
     private final int stride = SIZE;
 
@@ -34,7 +33,7 @@ public class Snake {
         tailDirection = 0;
 //        speed = 80f; // from 0 to 1000, ms to traverse a block
         speed = 20f; // from 0 to 50, number of blocks traverse in 1s
-        length = 3;
+        length = 9;
         turned = false;
         dead = false;
         moving = false;
@@ -44,8 +43,8 @@ public class Snake {
         head = Point.addPoint(SpawnPoint);
         tail = Point.addPoint(SpawnPoint);
         body = new LinkedList<Point>();
-        body.addFirst(Point.addPoint(SpawnPoint));
-        for(int i=1; i<length; i++){
+//        body.addFirst(Point.addPoint(SpawnPoint));
+        for(int i=0; i<length; i++){
             body.add(i, Point.addPoint(SpawnPoint));
         }
     }
@@ -57,11 +56,14 @@ public class Snake {
             return false;
         else return true;
     }
+    public void setDead() {
+        this.dead = true;
+        setStatic();
+    }
     public int getSerialNum() { return serialNum;}
     public boolean isSpawned() { return spawn;}
     public void setTurned() { this.turned = true;}
     public void setAlive() { this.dead = false;}
-    public void setDead() { this.dead = true;}
     public boolean isDead() { return dead;}
     public void setScore(int scoreNew) { this.score = scoreNew;}
     public int getScore() { return score;}
@@ -110,11 +112,11 @@ public class Snake {
         if (yNew<0) yNew = height-stride;
         if (yNew>height-stride) yNew = 0;
         Point wrappedPoint = new Point(xNew, yNew);
-        boolean wrapped = true;
+//        boolean wrapped = true;
         if (!Point.Equal(wrappedPoint, newPoint))
             newPoint = wrappedPoint;
-        else
-            wrapped = false;
+//        else
+//            wrapped = false;
 
         if (!bodyStacked()) { // snake body is not stacked
             spawn = false;

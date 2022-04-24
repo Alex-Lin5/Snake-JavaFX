@@ -69,24 +69,25 @@ public class ThreadLoop implements Runnable {
 
                 delay = System.currentTimeMillis() - delay;
                 timeLast = System.currentTimeMillis() - timeInitial;
-//                if (delay < interval) {
-//                    try {
-//                        Thread.sleep((long) (interval - delay));
-//                    } catch (InterruptedException ignore) {
-//                    }
-//                }
-//                else {
-//                    try {
-//                        Thread.sleep((long) (interval));
-////                        Thread.sleep((long) (1));
-//                    } catch (InterruptedException ignore) {
-//                    }
-//                }
-                try {
-                    Thread.sleep((long) (interval));
-//                    LinkedList<Integer> temp = new LinkedList<>();
-                } catch (InterruptedException ignore) {
+                if (delay < interval) {
+                    try {
+                        Thread.sleep((long) (interval - delay));
+                    } catch (InterruptedException ignore) {
+                    }
                 }
+                else {
+                    try {
+                        Thread.sleep((long) (interval));
+//                        Thread.sleep((long) (1));
+                    } catch (InterruptedException ignore) {
+                    }
+                }
+
+//                try {
+//                    Thread.sleep((long) (interval));
+////                    LinkedList<Integer> temp = new LinkedList<>();
+//                } catch (InterruptedException ignore) {
+//                }
 
             }
             else { // thread is not running
