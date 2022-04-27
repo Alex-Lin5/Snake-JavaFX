@@ -1,7 +1,7 @@
 package root.controller;
 
 import root.model.Board;
-import root.model.DataPacket;
+import root.model.Trail;
 import root.model.Snake;
 
 import java.util.HashMap;
@@ -12,24 +12,20 @@ public class Recorder {
     private final Board board;
     private Snake snake;
 //    private T value;
-    private DataPacket value;
+    private Trail value;
 //    private Map<Integer, DataPacket> recording;
-    private HashMap<Integer, DataPacket> recording;
+    private HashMap<Integer, Trail> recording;
     public Recorder(Board board) {
         this.board = board;
         this.recording = new HashMap<>();
         snake = board.getSnake(0);
-//        this.list = new LinkedList<Point>();
         step = 0;
         timeTick = 0;
         
-        value = new DataPacket();
-        value.snakeDirection = snake.getDirection();
-        value.head = snake.getBody().get(0);
-        value.food = board.getFood().getFoodPoint();
-        value.length = snake.getLength();
-        value.score = snake.getScore();
-        recording.put(step, value);
+        value = new Trail(snake.getHead(),
+            board.getFood().getFoodPoint(), snake.getLength());
+        recording = new HashMap<>();
+        recording.put(snake.getSerialNum(), value);
 
     }
 
@@ -37,30 +33,43 @@ public class Recorder {
         timeTick += 1;
         if (board.isValidUpdate()) {
             step += 1;
-            value = new DataPacket();
-            value.snakeDirection = snake.getDirection();
-            value.head = snake.getBody().get(0);
-            value.food = board.getFood().getFoodPoint();
-            value.length = snake.getLength();
-            value.score = snake.getScore();
-            if (snake.isSpawned())
-                if (snake.isDead())
-                    value.dead = true;
+            value.setHead(step, snake.getBody().get(0));
+            if (snake.isGrowing()) {
+                value.setFood(step, board.getFood().getFoodPoint());
+                value.setLength(step, snake.getLength());
+                value.setScore(step, snake.getScore());
+            }
+            if (snake.isDead())
+                value.setLifespan(step);
+//            value = new DataPacket();
+//            value.snakeDirection = snake.getDirection();
+//            value.head = snake.getBody().get(0);
+//            value.food = board.getFood().getFoodPoint();
+//            value.length = snake.getLength();
+//            value.score = snake.getScore();
 
-            recording.put(step, value);
+//            if (snake.isSpawned())
+//                if (snake.isDead())
+//                    value.dead = true;
+
+//            recording.put(step, value);
 
         }
-//        list = board.getSnake(0).getBody();
     }
-    public void removeData(Integer index) { recording.remove(index);}
-    public DataPacket getData(Integer index) {
-        return recording.get(index);
+    public void removeData(int serialnum, Integer step) {
+        Trail data = getData(serialnum);
+        data.removeFrom(step);
     }
-    public void PrintValue(Integer index) {
-        DataPacket data = getData(index);
+    public Trail getData(Integer serialnum) {
+        return recording.get(serialnum);
+    }
+    public void PrintValue(Integer serialnum) {
+        Trail data = recording.get(serialnum);
+        int life = data.getLifespan();
         System.out.printf(
             "Score: %d, length: %d, head hits on (%d, %d).\n",
-                data.score, data.length, (int) data.head.getX(), (int) data.head.getY());
+                data.getScore(life), data.getLength(life),
+                (int) data.getHead(life).getX(), (int) data.getHead(life).getY());
     }
     public void setSteps(int step) { this.step = step;}
     public int getTimeTick() { return timeTick;}

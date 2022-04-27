@@ -60,7 +60,8 @@ public class Messenger {
             int life = recorder.getSteps();
             System.out.printf("Game over on %d steps. Timetick: %d.\n",
                 life, recorder.getTimeTick());
-            recorder.PrintValue(life);
+            recorder.PrintValue(0);
+//            recorder.PrintValue(life);
         }
         else if (debugger.on)
             gc.fillText("Debugger on", width/2, height+lineSpace*3);

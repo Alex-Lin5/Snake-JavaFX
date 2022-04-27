@@ -22,7 +22,7 @@ public class Board {
 
         snakeList = new LinkedList<>();
         snakeList.add(new Snake(RandomGenerator.generatePointonGrid(
-                new LinkedList<>(), width, height), 0));
+            new LinkedList<>(), width, height), 0, "Green"));
 
         snake = snakeList.get(0);
         this.food = new Food(RandomGenerator.generatePointonGrid(
@@ -33,7 +33,6 @@ public class Board {
         if (snake.isMoving() & snake.getHead().meetGrid())
             valid = true;
         else valid = false;
-
         if (!snake.isSpawned() & isCollided()){
             snake.setDead();
         }
@@ -48,10 +47,14 @@ public class Board {
             else
                 snake.move(width, height);
         }
+
     }
     private boolean isCollided() {
-        if (snake.getBody().get(0).isDuplicateIn(
-            snake.getBody(), 1, snake.getLength()))
+//        if (snake.getBody().get(0).isDuplicateIn(
+//                snake.getBody(), 1, snake.getLength()))
+//            return true;
+        if (snake.getHead().isDuplicateIn(
+                snake.getBody(), 1, snake.getLength()))
             return true;
         return false;
     }

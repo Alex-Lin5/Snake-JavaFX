@@ -54,10 +54,7 @@ public class Painter {
         gc.fillRect(point.getX(), point.getY(), size, size);
     }
 
-//    public static void clear(Canvas theCanvas, GraphicsContext gc) {
-//        gc.clearRect(0,0, theCanvas.getWidth(), theCanvas.getHeight());
-//    }
-public void clear() {
+    public void clear() {
 //    public static void clear(Board theBoard, GraphicsContext gc) {
 //    gc.clearRect(0,0, theBoard.getWidth(), theBoard.getHeight()+40);
     gc.clearRect(0,0, board.getWidth(), board.getHeight()+40);

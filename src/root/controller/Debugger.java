@@ -1,7 +1,7 @@
 package root.controller;
 
 import root.model.Board;
-import root.model.DataPacket;
+import root.model.Trail;
 import root.model.Snake;
 
 public class Debugger {
@@ -45,8 +45,9 @@ public class Debugger {
     }
 
     public void setSnake() {
-        DataPacket valueNext;
-        DataPacket valueLatest, valueTail;
+//        Trail valueNext;
+//        Trail valueLatest, valueTail;
+        Trail data = recorder.getData(0);
         Snake snake = board.getSnake(0);
         int LatestStep = recorder.getSteps();
         if (backSteps < 0)
@@ -61,31 +62,36 @@ public class Debugger {
         else if (currentStep == nextStep)
             goingBack = 0;
 
-        valueNext = recorder.getData(nextStep);
-        int tailindex = currentStep-valueNext.length;
+        int length = data.getLength(nextStep);
+//        valueNext = recorder.getData(nextStep);
+        int tailindex = currentStep-length;
         if (tailindex < 1)
             tailindex = 1;
-        valueTail = recorder.getData(tailindex);
+//        valueTail = recorder.getData(tailindex);
         snake.setAlive();
-        snake.setLength(valueNext.length);
-        snake.setScore(valueNext.score);
         snake.setStatic();
+        snake.setLength(length);
+        snake.setScore(data.getScore(nextStep));
 
-        int length = valueNext.length;
+//        int length = valueNext.length;
         if (goingBack == -1) { // going backward
             snake.getBody().removeFirst();
             if (snakeExtended(currentStep, nextStep) == 1) {
-                snake.getBody().addLast(valueTail.head);
-                snake.getBody().addLast(
-                    recorder.getData(tailindex-1).head
-                );
+//                snake.getBody().addLast(valueTail.head);
+//                snake.getBody().addLast(
+//                        recorder.getData(tailindex-1).head
+//                );
+                snake.getBody().addLast(data.getHead(tailindex));
+                snake.getBody().addLast(data.getHead(tailindex-1));
             }
             if (snakeExtended(currentStep, nextStep) == -1);
-            if (snakeExtended(currentStep, nextStep) == 0);
-                snake.getBody().addLast(valueTail.head);
+            if (snakeExtended(currentStep, nextStep) == 0)
+                snake.getBody().addLast(data.getHead(tailindex));
+//            snake.getBody().addLast(valueTail.head);
         }
         else if (goingBack == 1){ // going forward
-            snake.getBody().addFirst(valueNext.head);
+//            snake.getBody().addFirst(valueNext.head);
+            snake.getBody().addFirst(data.getHead(nextStep));
             if (snakeExtended(currentStep, nextStep) == 1);
             if (snakeExtended(currentStep, nextStep) == -1) {
                 snake.getBody().removeLast();
@@ -104,15 +110,22 @@ public class Debugger {
         }
 
     public void reset() {
-        recorder.setSteps(currentStep-backSteps);
-        for (int i=0; i<backSteps; i++)
-            recorder.removeData(currentStep-i);
+        int stepNow = currentStep-backSteps;
+        recorder.setSteps(stepNow);
+//        for (int i=0; i<backSteps; i++)
+//          recorder.removeData(currentStep-i);
+        recorder.removeData(
+            (Integer) board.getSnake(0).getSerialNum(),
+                stepNow);
         backSteps = 0;
         goingBack = 0;
     }
     private int snakeExtended(int currentStep, int nextStep) {
-        int currentLength = recorder.getData(currentStep).length;
-        int nextLength = recorder.getData(nextStep).length;
+//        int currentLength = recorder.getData(currentStep).length;
+//        int nextLength = recorder.getData(nextStep).length;
+        Trail data = recorder.getData(0);
+        int currentLength = data.getLength(currentStep);
+        int nextLength = data.getLength(nextStep);
         if (currentLength < nextLength)
             return 1; // will add length of 1 
         else if (currentLength > nextLength)
@@ -121,10 +134,10 @@ public class Debugger {
     }
 
     private void setFood() {
-        DataPacket value;
-        value = recorder.getData(
-            recorder.getSteps() - backSteps);
-        board.getFood().setFoodPoint(value.food);
+        Trail value = recorder.getData(0);
+//        value = recorder.getData(
+//            recorder.getSteps() - backSteps);
+        board.getFood().setFoodPoint(value.getFood(currentStep));
     }
 
 

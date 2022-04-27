@@ -6,6 +6,7 @@ import static root.model.Board.SIZE;
 
 public class Snake {
     private int serialNum;
+    private String name;
     private float speed;
     private int length;
     private LinkedList<Point> body;
@@ -19,38 +20,39 @@ public class Snake {
     private boolean turned;
     private boolean dead;
     private boolean moving;
-    private boolean resting;
+//    private boolean resting;
     private boolean spawn;
+    private boolean growing;
 
     private final int stride = SIZE;
 
-    public Snake(Point SpawnPoint, int num) {
+    public Snake(Point SpawnPoint, int num, String name) {
+        this.name = name;
         serialNum = num;
         score = 0;
         xVelocity = 0;
         yVelocity = 0;
         headDirection = 0;
         tailDirection = 0;
-//        speed = 80f; // from 0 to 1000, ms to traverse a block
         speed = 20f; // from 0 to 50, number of blocks traverse in 1s
         length = 9;
         turned = false;
         dead = false;
         moving = false;
         spawn = true;
-        resting = true;
+//        resting = true;
+        growing = false;
 
         head = Point.addPoint(SpawnPoint);
         tail = Point.addPoint(SpawnPoint);
         body = new LinkedList<Point>();
-//        body.addFirst(Point.addPoint(SpawnPoint));
         for(int i=0; i<length; i++){
             body.add(i, Point.addPoint(SpawnPoint));
         }
     }
-    public int[] getDirection() {
-        return new int[]{xVelocity, yVelocity};
-    }
+//    public int[] getDirection() {
+//        return new int[]{xVelocity, yVelocity};
+//    }
     public boolean isMoving() {
         if ((xVelocity == 0 & yVelocity == 0))
             return false;
@@ -60,6 +62,7 @@ public class Snake {
         this.dead = true;
         setStatic();
     }
+    public boolean isGrowing() { return growing;}
     public int getSerialNum() { return serialNum;}
     public boolean isSpawned() { return spawn;}
     public void setTurned() { this.turned = true;}
@@ -79,6 +82,7 @@ public class Snake {
 
     public void grow() {
         double x, y, xNew, yNew;
+        growing = true;
         length += 1;
         x = head.getX();
         y = head.getY();
@@ -101,11 +105,16 @@ public class Snake {
         tailDirection = Point.whichDirection(body.get(length-1), body.get(length-2));
         distance = Point.DistanceBetween(body.get(0), newPoint);
 
-        moving = isMoving();
-        if (resting == moving & moving == true)
+        growing = false;
+//        moving = isMoving();
+//        if (resting == moving & moving == true)
+//            toMove = true;
+//        else toMove = false;
+//        resting = !moving;
+        if (!moving & isMoving())
             toMove = true;
         else toMove = false;
-        resting = !moving;
+        moving = isMoving();
 
         if (xNew<0) xNew = width-stride;
         if (xNew>width-stride) xNew = 0;
@@ -178,7 +187,7 @@ public class Snake {
         xVelocity = 0;
         yVelocity = 0;
         moving = false;
-        resting = true;
+//        resting = true;
     }
     public void setUp() {
         if (yVelocity == 1 && length > 1) return;

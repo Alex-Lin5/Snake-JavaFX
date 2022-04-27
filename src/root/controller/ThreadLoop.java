@@ -10,14 +10,9 @@ import static root.model.Board.SIZE;
 
 public class ThreadLoop implements Runnable {
     public boolean running;
-//    private boolean restart;
-//    private boolean stopped;
-
     private float interval;
     private float timeInitial, timeLast;
-//    private static int FPS;
 
-//    private final GraphicsContext gc;
     public final Board board;
     private final Painter painter;
     private final Messenger messenger;
@@ -25,19 +20,18 @@ public class ThreadLoop implements Runnable {
     public final Debugger debugger;
 
     public ThreadLoop(GraphicsContext gc) {
-//        this.restart = restart;
-        timeInitial = System.currentTimeMillis();
-        timeLast = 0;
-//        this.gc = gc;
         board = new Board(BOARD_WIDTH, BOARD_HEIGHT);
-        float speed = board.getSnake(0).getSpeed();
-        float frames = SIZE*speed;
-        interval = 1000f/frames;
-        running = true;
         recorder = new Recorder(board);
         painter = new Painter(board, gc);
         debugger = new Debugger(recorder, board);
         messenger = new Messenger(PANEL_WIDTH, PANEL_HEIGHT, board, recorder, debugger, gc);
+
+        running = true;
+        timeInitial = System.currentTimeMillis();
+        timeLast = 0;
+        float speed = board.getSnake(0).getSpeed();
+        float frames = SIZE*speed;
+        interval = 1000f/frames;
     }
 
     @Override
@@ -103,13 +97,4 @@ public class ThreadLoop implements Runnable {
     }
 
 //    public Recorder getRecorder() { return recorder;}
-//    public boolean isRunning() { return running;}
-//    public void Pause() { running = false;}
-//    public void Resume() { running = true;}
-
-//    public boolean isOvered() { return stopped;}
-//    public void setOvered() { stopped = true;}
-//    public void setContinued() { stopped = false;}
-
-//    public static int getFPS() {return FPS;}
 }

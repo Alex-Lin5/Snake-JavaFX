@@ -12,8 +12,8 @@ public class Main extends Application {
     public static final int PANEL_HEIGHT = 50;
 
     public static void main(String[] args){
-        Application.launch(args);
-//        launch();
+//        Application.launch(args);
+        launch();
     }
     @Override
     public void start(Stage myStage) throws Exception{
