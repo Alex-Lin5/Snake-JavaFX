@@ -62,6 +62,7 @@ public class Snake {
         this.dead = true;
         setStatic();
     }
+    public String getName() { return name;}
     public boolean isGrowing() { return growing;}
     public int getSerialNum() { return serialNum;}
     public boolean isSpawned() { return spawn;}

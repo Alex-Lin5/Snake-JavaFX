@@ -42,9 +42,9 @@ public class Keypad {
                     snake.setStatic();
                     break;
                 case DIGIT0:
-                    if (debugger.on)
-                        debugger.on = false;
-                    else debugger.on = true;
+                    if (debugger.isOn())
+                        debugger.setOff();
+                    else debugger.setOn();
                     break;
                 case PAGE_DOWN:
                     debugger.backSteps -= 1;
@@ -59,7 +59,7 @@ public class Keypad {
                 default:
                     break;
             }
-            if (debugger.on) ;
+            if (debugger.isOn()) ;
             else snake.setTurned();
 
             if (restart) {

@@ -2,9 +2,13 @@ package root.view;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.text.TextAlignment;
 import root.controller.Debugger;
 import root.controller.Recorder;
 import root.model.Board;
+
+import static root.model.Board.SIZE;
+import static root.view.Painter.SnakeColor;
 
 public class Messenger {
     private static Color InfoColor = Color.BLACK;
@@ -23,7 +27,7 @@ public class Messenger {
     final int PanelHeight;
 
     public Messenger(final int InfoWidth, final int InfoHeight,
-                     Board board, Recorder recorder, Debugger debugger, GraphicsContext gc){
+                     Board board, Recorder recorder, Debugger debugger, GraphicsContext gc) {
         this.width = board.getWidth();
         this.height = board.getHeight();
         this.board = board;
@@ -36,38 +40,54 @@ public class Messenger {
     }
 
 
-    public void Print(int FPS){
-//        int width = board.getWidth();
-//        int height = board.getHeight();
+    public void Print(int FPS) {
         int lineSpace = 15;
         int columnSpace = 70;
         gc.setFill(BackgroundColor);
-        gc.fillRect(0 , height, width, PanelHeight);
-        gc.setFill(InfoColor);
-        // Line 1
-        gc.fillText("Score: " + board.getSnake(0).getScore(), 5, height+lineSpace);
-        if (debugger.on)
-            gc.fillText("Debugger on", width/2, height+lineSpace*3);
+        gc.fillRect(0, height, width, PanelHeight);
 
+        for (int line = 1; line <= 4; line++) {
+            if (line == 1) {
+                gc.setFill(SnakeColor);
+                gc.fillRect(5, height + lineSpace*line - SIZE, SIZE, SIZE);
+                gc.setFill(InfoColor);
+                gc.setTextAlign(TextAlignment.LEFT);
+                gc.fillText(board.getSnake(0).getName(), 10 + SIZE, height + lineSpace*line);
 
+            }
+            else if (line == 2) {
+                gc.fillText("Score: " + board.getSnake(0).getScore(), 5, height + lineSpace*line);
+            }
+            else if (line == 3) {
+                if (board.getSnake(0).isDead()) {
+                    gc.setFill(DeadColor);
+                    gc.fillText("snake is dead", 5, height + lineSpace * line);
+                } else if (!board.getSnake(0).isMoving() & !debugger.isOn())
+                    gc.fillText("Resting.", 5, height + lineSpace * line);
+//                gc.fillText("snake " + board.getSnake(0).getSerialNum() + " is resting.", 5, height + lineSpace * line);
+                //        gc.fillText("FPS: " + FPS,5, height+30);
+            }
+            else if (line == 4) {
+                if (debugger.isOn()) {
+                    gc.setFill(InfoColor);
+//                    gc.setTextAlign(TextAlignment.RIGHT);
+//                    gc.fillText("Debugger on", width, height + lineSpace * line);
+                    gc.fillText("Debugger on", 5, height + lineSpace * line);
+                }
+
+            }
+
+        }
         if (board.getSnake(0).isDead()) {
-            // Line 2
-            gc.setFill(DeadColor);
-            gc.fillText("snake is dead", 5, height+lineSpace*2);
             gc.setFill(OverColor);
-            gc.fillText("GAME OVER", width/2-35, height/2, 70);
+            gc.setTextAlign(TextAlignment.CENTER);
+            gc.fillText("GAME OVER", width / 2, height / 2, 70);
 
             int life = recorder.getSteps();
             System.out.printf("Game over on %d steps. Timetick: %d.\n",
-                life, recorder.getTimeTick());
+                    life, recorder.getTimeTick());
             recorder.PrintValue(0);
-//            recorder.PrintValue(life);
         }
-        else if (debugger.on)
-            gc.fillText("Debugger on", width/2, height+lineSpace*3);
-        else if (!board.getSnake(0).isMoving())
-            // Line 2
-            gc.fillText("snake "+board.getSnake(0).getSerialNum()+" is resting.", 5, height+lineSpace*2);
-        //        gc.fillText("FPS: " + FPS,5, height+30);
+
     }
 }

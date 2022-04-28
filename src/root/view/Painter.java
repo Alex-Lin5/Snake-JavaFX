@@ -10,7 +10,7 @@ import static root.model.Board.SIZE;
 public class Painter {
     private static Color PadColor = Color.BLACK;
     private static Color FoodColor = Color.WHEAT;
-    private static Color SnakeColor = Color.GREEN;
+    public static Color SnakeColor = Color.GREEN;
     private static Color GridColor = Color.GREY;
     private static Color DeadColor = Color.RED;
     private static int size = SIZE;
@@ -25,7 +25,6 @@ public class Painter {
     }
 
     public void Paint(){
-//        public static void paint(Board board, GraphicsContext gc){
         gc.setFill(PadColor);
         gc.fillRect(0 , 0, board.getWidth(), board.getHeight());
 
