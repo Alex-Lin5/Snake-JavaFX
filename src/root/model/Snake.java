@@ -100,9 +100,9 @@ public class Snake {
         yNew = y + yVelocity;
         Point newPoint = new Point(xNew, yNew);
 
-        headDirection = Point.whichDirection(body.get(1), body.get(0));
-        tailDirection = Point.whichDirection(body.get(length-1), body.get(length-2));
-        distance = Point.DistanceBetween(body.get(0), newPoint);
+        headDirection = body.get(1).directionTo(body.get(0));
+        tailDirection = body.get(length-1).directionTo(body.get(length-2));
+        distance = body.get(0).distanceTo(newPoint);
 
         growing = false;
         if (!moving & isMoving())
@@ -116,13 +116,12 @@ public class Snake {
         if (yNew>height-stride) yNew = 0;
         Point wrappedPoint = new Point(xNew, yNew);
         if (!wrappedPoint.isEqualTo(newPoint))
-//            if (!Point.Equal(wrappedPoint, newPoint))
             newPoint = wrappedPoint;
 
         if (!bodyStacked()) { // snake body is not stacked
             spawn = false;
             // tail part
-            if (Point.onAdjacentGrid(body.get(length-1), body.get(length-2))) {
+            if (body.get(length-1).isAdjacentTo(body.get(length-2))) {
                 tailShift(1);}
             else {
                 tailShift(-1);}
@@ -135,13 +134,13 @@ public class Snake {
             }
             // head part
             if (turned) {
-                if (Point.slideXY(head, body.get(0)) == Point.slide.X)
-                    head = new Point(body.get(0).getX() + Point.whichDirection(body.get(0), head)*distance,
+                if (head.slideInXY(body.get(0)) == Point.slide.X)
+                    head = new Point(body.get(0).getX() + body.get(0).directionTo(head)*distance,
                             body.get(0).getY());
-                else if (Point.slideXY(head, body.get(0)) == Point.slide.Y)
+                else if (head.slideInXY(body.get(0)) == Point.slide.Y)
                     head = new Point(body.get(0).getX(),
-                            body.get(0).getY() + Point.whichDirection(body.get(0), head)*distance);
-                else if (Point.slideXY(head, body.get(0)) == Point.slide.NONE)
+                            body.get(0).getY() + body.get(0).directionTo(head)*distance);
+                else if (head.slideInXY(body.get(0)) == Point.slide.NONE)
                     head = newPoint;
             }
             else head = newPoint;
@@ -155,15 +154,15 @@ public class Snake {
 //            tail = tail;
             head = newPoint;
         }
-        head2body0 = Point.DistanceBetween(body.get(0), head);
-        tail2bodyr1 = Point.DistanceBetween(body.get(length-1), tail);
+        head2body0 = body.get(0).distanceTo(head);
+        tail2bodyr1 = body.get(length-1).distanceTo(tail);
     }
     private void tailShift(int Direction) {
-        if (Point.slideXY(body.get(length-1), body.get(length-2)) == Point.slide.X)
+        if (body.get(length-1).slideInXY(body.get(length-2)) == Point.slide.X)
             tail= new Point(body.get(length-1).getX() +
                             Direction*tailDirection*distance,
                             body.get(length-1).getY());
-        if (Point.slideXY(body.get(length-1), body.get(length-2)) == Point.slide.Y)
+        if (body.get(length-1).slideInXY(body.get(length-2)) == Point.slide.Y)
             tail = new Point(body.get(length-1).getX(),
                             body.get(length-1).getY() +
                                 Direction*tailDirection*distance);
@@ -180,7 +179,6 @@ public class Snake {
         xVelocity = 0;
         yVelocity = 0;
         moving = false;
-//        resting = true;
     }
     public void setUp() {
         if (yVelocity == 1 && length > 1) return;

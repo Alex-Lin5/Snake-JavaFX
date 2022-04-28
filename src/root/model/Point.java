@@ -28,11 +28,6 @@ public class Point {
     public Point getPointOnGrid() {
         return new Point (Math.floor(x/SIZE)*SIZE , Math.floor(y/SIZE)*SIZE);
     }
-//    public static boolean Equal(Point point1, Point point2) {
-//        if (point1.getX() == point2.getX() & point1.getY() == point2.getY())
-//            return true;
-//        else return false;
-//    }
     public boolean isEqualTo(Point point1) {
         if (point1.getX() == x & point1.getY() == y)
             return true;
@@ -47,9 +42,8 @@ public class Point {
         return false;
     }
 
-    public static int whichDirection(Point preOne, Point newOne) {
-        double x, y, xNew, yNew;
-        x = preOne.getX(); y = preOne.getY();
+    public int directionTo(Point newOne) {
+        double xNew, yNew;
         xNew = newOne.getX(); yNew = newOne.getY();
         if (x == xNew & y == yNew) return 0;
         if ((x == xNew & y < yNew) |
@@ -58,34 +52,22 @@ public class Point {
         if ((x == xNew & y > yNew) |
                 x > xNew & y == yNew)
             return -1;
-        return 11;
+        return 100;
     }
-//    public static double DiffenceBetween(Point preOne, Point newOne) {
-//        double distance;
-//        distance = newOne.getX() - preOne.getX() +
-//                newOne.getY() - preOne.getY();
-//        return distance;
-//    }
-    public static double DistanceBetween(Point preOne, Point newOne) {
+    public double distanceTo(Point newOne) {
         double distance;
-        distance = Math.abs(newOne.getX() - preOne.getX()) +
-                Math.abs(newOne.getY() - preOne.getY());
+        distance = Math.abs(newOne.getX() - x) +
+                Math.abs(newOne.getY() - y);
         return distance;
     }
-    public static boolean onAdjacentGrid(Point point1, Point point2) {
-        if (Point.DistanceBetween(point1, point2) <= 10)
+    public boolean isAdjacentTo(Point point1) {
+        if (point1.distanceTo(new Point(x, y)) <= 10)
             return true;
         else return false;
     }
-    public static slide slideXY(Point point1, Point point2) {
-        double x, y, xNew, yNew;
-        x = point1.getX(); y = point1.getY();
+    public slide slideInXY(Point point2) {
+        double xNew, yNew;
         xNew = point2.getX(); yNew = point2.getY();
-//        if (x == xNew & y == yNew) return 0; // no slide
-//        if (x != xNew & y == yNew) return 1; // X slide
-//        if (x == xNew & y != yNew) return 2; // Y slide
-//        if (x != xNew & y != yNew) return 3; // XY slide
-//        return -1; // error
         if (x == xNew & y == yNew) return slide.NONE; // no slide
         if (x != xNew & y == yNew) return slide.X; // X slide
         if (x == xNew & y != yNew) return slide.Y; // Y slide
