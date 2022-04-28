@@ -19,8 +19,10 @@ public class RandomGenerator {
             x = random.nextInt(width);
             y = random.nextInt(height);
             point = new Point(x, y);
-            point = point.getXYonGrid();
-            if (point.isDuplicateIn(body, 0, body.size()))
+            point = point.getPointOnGrid();
+//            if (point.isDuplicateIn(body, 0, body.size()))
+//                stacked = true;
+            if (body.contains(point))
                 stacked = true;
         } while (stacked);
         return point;

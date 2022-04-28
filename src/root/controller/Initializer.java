@@ -35,6 +35,5 @@ public class Initializer {
         Keypad keypad1 = new Keypad(loop, myCanvas, myStage);
         keypad1.getKey();
         new Thread(loop).start();
-//        return myStage;
     }
 }

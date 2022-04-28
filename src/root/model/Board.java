@@ -38,7 +38,8 @@ public class Board {
         }
         else if (!snake.isMoving());
         else {
-            if (Point.Equal(food.getFoodPoint(), snake.getHead())) {
+            if (food.getFoodPoint().isEqualTo(snake.getHead())) {
+//                if (Point.Equal(food.getFoodPoint(), snake.getHead())) {
                 snake.grow();
                 snake.setScore(snake.getScore() + food.getScore());
                 food.setFoodPoint(RandomGenerator.generatePointonGrid(
@@ -50,12 +51,17 @@ public class Board {
 
     }
     private boolean isCollided() {
-//        if (snake.getBody().get(0).isDuplicateIn(
-//                snake.getBody(), 1, snake.getLength()))
-//            return true;
         if (snake.getHead().isDuplicateIn(
                 snake.getBody(), 1, snake.getLength()))
             return true;
+//        if (snake.getBody().contains(snake.getBody().get(0)))
+//        if (snake.getBody().contains(snake.getHead()))
+//            return true;
+
+        // Linkedlist contains method should include equal comparator
+//        int index = snake.getBody().indexOf(snake.getHead());
+//        if (index>0 & index<=snake.getLength())
+//            return true;
         return false;
     }
     public boolean isValidUpdate() { return valid;}
