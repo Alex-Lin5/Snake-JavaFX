@@ -11,7 +11,7 @@ public class Snake {
     private int length;
     private LinkedList<Point> body;
     private Point head, tail;
-    private int headDirection, tailDirection;
+    private Point.direction headDirection, tailDirection;
     private double distance;
     private int score;
 
@@ -31,8 +31,6 @@ public class Snake {
         score = 0;
         xVelocity = 0;
         yVelocity = 0;
-        headDirection = 0;
-        tailDirection = 0;
         speed = 20f; // from 0 to 50, number of blocks traverse in 1s
         length = 11;
         turned = false;
@@ -118,13 +116,13 @@ public class Snake {
         if (!wrappedPoint.isEqualTo(newPoint))
             newPoint = wrappedPoint;
 
-        if (!bodyStacked()) { // snake body is not stacked
+        if (!isBodyStacked()) { // snake body is not stacked
             spawn = false;
             // tail part
             if (body.get(length-1).isAdjacentTo(body.get(length-2))) {
-                tailShift(1);}
+                tailShift(Point.direction.POS);}
             else {
-                tailShift(-1);}
+                tailShift(Point.direction.NEG);}
 
             // body part
             if (!toMove & head.meetGrid()) {
@@ -134,12 +132,19 @@ public class Snake {
             }
             // head part
             if (turned) {
+                Point.direction front = body.get(0).directionTo(head);
+                int factor;
+                if (front == Point.direction.POS)
+                    factor = 1;
+                else if (front == Point.direction.NEG)
+                    factor = -1;    
+                else factor = 0;
                 if (head.slideInXY(body.get(0)) == Point.slide.X)
-                    head = new Point(body.get(0).getX() + body.get(0).directionTo(head)*distance,
+                    head = new Point(body.get(0).getX() + factor*distance,
                             body.get(0).getY());
                 else if (head.slideInXY(body.get(0)) == Point.slide.Y)
                     head = new Point(body.get(0).getX(),
-                            body.get(0).getY() + body.get(0).directionTo(head)*distance);
+                            body.get(0).getY() + factor*distance);
                 else if (head.slideInXY(body.get(0)) == Point.slide.NONE)
                     head = newPoint;
             }
@@ -157,21 +162,31 @@ public class Snake {
         head2body0 = body.get(0).distanceTo(head);
         tail2bodyr1 = body.get(length-1).distanceTo(tail);
     }
-    private void tailShift(int Direction) {
+    private void tailShift(Point.direction split) {
+        int factorS, factorT;
+        if (split == Point.direction.POS)
+            factorS = 1;
+        else if (split == Point.direction.NEG)
+            factorS = -1;
+        else factorS = 0;
+        if (tailDirection == Point.direction.POS)
+            factorT = 1;
+        else if (tailDirection == Point.direction.NEG)
+            factorT = -1;
+        else factorT = 0;
         if (body.get(length-1).slideInXY(body.get(length-2)) == Point.slide.X)
             tail= new Point(body.get(length-1).getX() +
-                            Direction*tailDirection*distance,
+                            factorS*factorT*distance,
                             body.get(length-1).getY());
         if (body.get(length-1).slideInXY(body.get(length-2)) == Point.slide.Y)
             tail = new Point(body.get(length-1).getX(),
                             body.get(length-1).getY() +
-                                Direction*tailDirection*distance);
+                                factorS*factorT*distance);
     }
-    private boolean bodyStacked() {
+    private boolean isBodyStacked() {
         boolean stacked = false;
         for(int i=0; i<length-1; i++) {
             stacked |= body.get(i).isEqualTo(body.get(i+1));
-//            stacked |= Point.Equal(body.get(i), body.get(i+1));
         }
         return stacked;
     }
@@ -185,19 +200,16 @@ public class Snake {
         xVelocity = 0;
         yVelocity = -1;
     }
-
     public void setDown() {
         if (yVelocity == -1 && length > 1) return;
         xVelocity = 0;
         yVelocity = 1;
     }
-
     public void setLeft() {
         if (xVelocity == 1 && length > 1) return;
         xVelocity = -1;
         yVelocity = 0;
     }
-
     public void setRight() {
         if (xVelocity == -1 && length > 1) return;
         xVelocity = 1;

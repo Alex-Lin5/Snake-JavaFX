@@ -8,6 +8,7 @@ public class Point {
     private final double x;    // The X coordinate
     private final double y;    // The Y coordinate
     enum slide { X, Y, XY, NONE, WRONG};
+    enum direction { POS, NEG, STILL, WRONG};
     public Point(double x, double y) {
         this.x = x;
         this.y = y;
@@ -15,19 +16,32 @@ public class Point {
 
     public double getX(){ return (double) x;}
     public double getY(){ return (double) y;}
-    public int getXGrid() { return (int) Math.round(x/SIZE);}
-    public int getYGrid() { return (int) Math.round(y/SIZE);}
+    public double distanceTo(Point newOne) {
+        double distance;
+        distance = Math.abs(newOne.getX() - x) +
+                Math.abs(newOne.getY() - y);
+        return distance;
+    }
+//    public int getXGrid() { return (int) Math.round(x/SIZE);}
+//    public int getYGrid() { return (int) Math.round(y/SIZE);}
+    public Point getPointOnGrid() {
+        return new Point (Math.floor(x/SIZE)*SIZE , Math.floor(y/SIZE)*SIZE);
+    }
+    public Point getPointNearGrid() {
+        Point point = new Point(
+            (int) Math.round(x/SIZE)*SIZE,
+                (int) Math.round(y/SIZE)*SIZE);
+        return point;
+    }
     public boolean meetGrid() {
         Point point = new Point(x, y);
-        if (x == point.getXGrid()*SIZE &
-                y == point.getYGrid()*SIZE)
+//        if (x == point.getXGrid()*SIZE &
+//                y == point.getYGrid()*SIZE)
+        if (point.isEqualTo(point.getPointNearGrid()))
             return true;
         else return false;
     }
 
-    public Point getPointOnGrid() {
-        return new Point (Math.floor(x/SIZE)*SIZE , Math.floor(y/SIZE)*SIZE);
-    }
     public boolean isEqualTo(Point point1) {
         if (point1.getX() == x & point1.getY() == y)
             return true;
@@ -42,28 +56,22 @@ public class Point {
         return false;
     }
 
-    public int directionTo(Point newOne) {
-        double xNew, yNew;
-        xNew = newOne.getX(); yNew = newOne.getY();
-        if (x == xNew & y == yNew) return 0;
-        if ((x == xNew & y < yNew) |
-            x < xNew & y == yNew)
-            return 1;
-        if ((x == xNew & y > yNew) |
-                x > xNew & y == yNew)
-            return -1;
-        return 100;
-    }
-    public double distanceTo(Point newOne) {
-        double distance;
-        distance = Math.abs(newOne.getX() - x) +
-                Math.abs(newOne.getY() - y);
-        return distance;
-    }
     public boolean isAdjacentTo(Point point1) {
         if (point1.distanceTo(new Point(x, y)) <= 10)
             return true;
         else return false;
+    }
+    public direction directionTo(Point newOne) {
+        double xNew, yNew;
+        xNew = newOne.getX(); yNew = newOne.getY();
+        if (x == xNew & y == yNew) return direction.STILL;
+        if ((x == xNew & y < yNew) |
+                x < xNew & y == yNew)
+            return direction.POS;
+        if ((x == xNew & y > yNew) |
+                x > xNew & y == yNew)
+            return direction.NEG;
+        return direction.WRONG;
     }
     public slide slideInXY(Point point2) {
         double xNew, yNew;

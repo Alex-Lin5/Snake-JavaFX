@@ -5,18 +5,20 @@ import root.model.Trail;
 import root.model.Snake;
 
 public class Debugger {
+    enum status { BACK, FORWARD, STILL};
+    enum len { LONGER, SHORTER, STILL};
+    status object;
     private boolean on;
     private boolean tuned;
-    public int backSteps;
+    private int backSteps;
     private int currentStep;
-    public int goingBack;
     private final Recorder recorder;
     private final Board board;
 
     public Debugger(Recorder recorder, Board board) {
         on = false;
         tuned = false;
-        goingBack = 0;
+        object = status.STILL;
         backSteps = 0;
         currentStep = 0;
         this.recorder = recorder;
@@ -42,43 +44,43 @@ public class Debugger {
             backSteps = LatestStep-1;
         int nextStep = LatestStep-backSteps;
         if (currentStep < nextStep)
-            goingBack = 1; // goingBack = false;
+            object = status.FORWARD;
         else if (currentStep > nextStep)
-            goingBack = -1;// goingBack = true;
+            object = status.BACK;
         else if (currentStep == nextStep)
-            goingBack = 0;
+            object = status.STILL;
 
         int length = data.getLength(nextStep);
-        int tailindex = currentStep-length;
-        if (tailindex < 1)
-            tailindex = 1;
+        int tailIndex = currentStep-length;
+        if (tailIndex < 1)
+            tailIndex = 1;
         snake.setAlive();
         snake.setStatic();
         snake.setLength(length);
         snake.setScore(data.getScore(nextStep));
 
-        if (goingBack == -1) { // going backward
+        if (object == status.BACK) { // going backward
             snake.getBody().removeFirst();
-            if (snakeExtended(currentStep, nextStep) == 1) {
-                snake.getBody().addLast(data.getHead(tailindex));
-                snake.getBody().addLast(data.getHead(tailindex-1));
+            if (snakeExtended(currentStep, nextStep) == len.LONGER) {
+                snake.getBody().addLast(data.getHead(tailIndex));
+                snake.getBody().addLast(data.getHead(tailIndex-1));
             }
-            if (snakeExtended(currentStep, nextStep) == -1);
-            if (snakeExtended(currentStep, nextStep) == 0)
-                snake.getBody().addLast(data.getHead(tailindex));
+            if (snakeExtended(currentStep, nextStep) == len.SHORTER);
+            if (snakeExtended(currentStep, nextStep) == len.STILL)
+                snake.getBody().addLast(data.getHead(tailIndex));
         }
-        else if (goingBack == 1){ // going forward
+        else if (object == status.FORWARD){ // going forward
             snake.getBody().addFirst(data.getHead(nextStep));
-            if (snakeExtended(currentStep, nextStep) == 1);
-            if (snakeExtended(currentStep, nextStep) == -1) {
+            if (snakeExtended(currentStep, nextStep) == len.LONGER);
+            if (snakeExtended(currentStep, nextStep) == len.SHORTER) {
                 snake.getBody().removeLast();
                 snake.getBody().removeLast();
             }
-            if (snakeExtended(currentStep, nextStep) == 0);
+            if (snakeExtended(currentStep, nextStep) == len.STILL);
                 snake.getBody().removeLast();
 
         }
-        else if (goingBack == 0); // no key input, no operation
+        else if (object == status.STILL); // no key input, no operation
 
         snake.setHead(snake.getBody().get(0));
         snake.setTail(snake.getBody().get(length-1));
@@ -93,18 +95,28 @@ public class Debugger {
             (Integer) board.getSnake(0).getSerialNum(),
                 stepNow);
         backSteps = 0;
-        goingBack = 0;
+        object = status.STILL;
         tuned = false;
     }
-    private int snakeExtended(int currentStep, int nextStep) {
+//    private int snakeExtended(int currentStep, int nextStep) {
+//        Trail data = recorder.getData(0);
+//        int currentLength = data.getLength(currentStep);
+//        int nextLength = data.getLength(nextStep);
+//        if (currentLength < nextLength)
+//            return 1; // will add length of 1
+//        else if (currentLength > nextLength)
+//            return -1; // will subtract length of 1
+//        else return 0;
+//    }
+    private len snakeExtended(int currentStep, int nextStep) {
         Trail data = recorder.getData(0);
         int currentLength = data.getLength(currentStep);
         int nextLength = data.getLength(nextStep);
         if (currentLength < nextLength)
-            return 1; // will add length of 1 
+            return len.LONGER; // will add length of 1
         else if (currentLength > nextLength)
-            return -1; // will subtract length of 1
-        else return 0;
+            return len.SHORTER; // will subtract length of 1
+        else return len.STILL;
     }
 
     private void setFood() {
@@ -115,4 +127,8 @@ public class Debugger {
     public void setOn() { on = true;}
     public void setOff() { on = false;}
     public boolean isTuned() { return tuned;}
+
+    public void setBackSteps(int step) {
+        this.backSteps += step;
+    }
 }
