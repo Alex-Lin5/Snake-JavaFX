@@ -55,9 +55,6 @@ public class Trail {
 
     public void removeFrom(Integer step) {
         removeKeys(step, head);
-//        int stepLatest = head.size();
-//        for (int i=0; i<stepLatest-step; i++)
-//            head.remove(stepLatest-i);
         removeKeys(step, food);
         removeKeys(step, length);
         removeKeys(step, score);
@@ -70,7 +67,6 @@ public class Trail {
 //        }
         int stepLatest = head.size();
         for (int i=0; i<stepLatest-step; i++) {
-
             if (obj.containsKey(stepLatest-i))
                 obj.remove(stepLatest-i);
         }

@@ -87,7 +87,7 @@ public class Messenger {
             int life = recorder.getSteps();
             System.out.printf("Game over on %d steps. TimeTick: %d.\n",
                     life, recorder.getTimeTick());
-            recorder.PrintDeath(0);
+            recorder.printDeath(0);
             processed = true;
         }
 

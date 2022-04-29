@@ -12,6 +12,7 @@ public class Debugger {
     private boolean tuned;
     private int backSteps;
     private int currentStep;
+    private int nextStep;
     private final Recorder recorder;
     private final Board board;
 
@@ -30,25 +31,15 @@ public class Debugger {
             currentStep = recorder.getSteps();
         }
 
+        checkStatus();
         setSnake();
         setFood();
+        currentStep = nextStep;
     }
 
     public void setSnake() {
         Trail data = recorder.getData(0);
         Snake snake = board.getSnake(0);
-        int LatestStep = recorder.getSteps();
-        if (backSteps < 0)
-            backSteps = 0;
-        else if (backSteps > LatestStep-1)
-            backSteps = LatestStep-1;
-        int nextStep = LatestStep-backSteps;
-        if (currentStep < nextStep)
-            object = status.FORWARD;
-        else if (currentStep > nextStep)
-            object = status.BACK;
-        else if (currentStep == nextStep)
-            object = status.STILL;
 
         int length = data.getLength(nextStep);
         int tailIndex = currentStep-length;
@@ -65,18 +56,18 @@ public class Debugger {
                 snake.getBody().addLast(data.getHead(tailIndex));
                 snake.getBody().addLast(data.getHead(tailIndex-1));
             }
-            if (snakeExtended(currentStep, nextStep) == len.SHORTER);
-            if (snakeExtended(currentStep, nextStep) == len.STILL)
+            else if (snakeExtended(currentStep, nextStep) == len.SHORTER);
+            else if (snakeExtended(currentStep, nextStep) == len.STILL)
                 snake.getBody().addLast(data.getHead(tailIndex));
         }
         else if (object == status.FORWARD){ // going forward
             snake.getBody().addFirst(data.getHead(nextStep));
             if (snakeExtended(currentStep, nextStep) == len.LONGER);
-            if (snakeExtended(currentStep, nextStep) == len.SHORTER) {
+            else if (snakeExtended(currentStep, nextStep) == len.SHORTER) {
                 snake.getBody().removeLast();
                 snake.getBody().removeLast();
             }
-            if (snakeExtended(currentStep, nextStep) == len.STILL);
+            else if (snakeExtended(currentStep, nextStep) == len.STILL)
                 snake.getBody().removeLast();
 
         }
@@ -85,7 +76,9 @@ public class Debugger {
         snake.setHead(snake.getBody().get(0));
         snake.setTail(snake.getBody().get(length-1));
 
-        currentStep = nextStep;        
+        if (object != status.STILL)
+            recorder.printValue(0, nextStep, object);
+//        currentStep = nextStep;
         }
 
     public void reset() {
@@ -98,16 +91,6 @@ public class Debugger {
         object = status.STILL;
         tuned = false;
     }
-//    private int snakeExtended(int currentStep, int nextStep) {
-//        Trail data = recorder.getData(0);
-//        int currentLength = data.getLength(currentStep);
-//        int nextLength = data.getLength(nextStep);
-//        if (currentLength < nextLength)
-//            return 1; // will add length of 1
-//        else if (currentLength > nextLength)
-//            return -1; // will subtract length of 1
-//        else return 0;
-//    }
     private len snakeExtended(int currentStep, int nextStep) {
         Trail data = recorder.getData(0);
         int currentLength = data.getLength(currentStep);
@@ -122,6 +105,20 @@ public class Debugger {
     private void setFood() {
         Trail value = recorder.getData(0);
         board.getFood().setFoodPoint(value.getFood(currentStep));
+    }
+    private void checkStatus() {
+        int LatestStep = recorder.getSteps();
+        if (backSteps < 0)
+            backSteps = 0;
+        else if (backSteps > LatestStep-1)
+            backSteps = LatestStep-1;
+        nextStep = LatestStep-backSteps;
+        if (currentStep < nextStep)
+            object = status.FORWARD;
+        else if (currentStep > nextStep)
+            object = status.BACK;
+        else if (currentStep == nextStep)
+            object = status.STILL;
     }
     public boolean isOn() { return on;}
     public void setOn() { on = true;}

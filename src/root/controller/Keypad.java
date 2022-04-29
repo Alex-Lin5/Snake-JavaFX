@@ -47,10 +47,10 @@ public class Keypad {
                     else debugger.setOn();
                     break;
                 case PAGE_DOWN:
-                    debugger.setBackSteps(-1);
+                    debugger.setBackSteps(1);
                     break;
                 case PAGE_UP:
-                    debugger.setBackSteps(1);
+                    debugger.setBackSteps(-1);
                     break;
                 case ENTER:
                     if (snake.isDead())

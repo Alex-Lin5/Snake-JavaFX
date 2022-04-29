@@ -30,6 +30,9 @@ public class Painter {
 
         gc.setFill(GridColor);
         gc.setStroke(GridColor);
+
+        DrawSquare(FoodColor, board.getFood().getFoodPoint(), size);
+
         for (int i=0; i<board.getWidth()/size; i++)
             gc.strokeLine(i*size, 0, i*size, board.getHeight()-gc.getLineWidth());
         for (int i=0; i<board.getHeight()/size; i++)
@@ -41,12 +44,10 @@ public class Painter {
         }
         DrawSquare(SnakeColor, board.getSnake(0).getHead(), size);
         DrawSquare(SnakeColor, board.getSnake(0).getTail(), size);
-
         if (board.getSnake(0).isDead()) {
             DrawSquare(DeadColor, board.getSnake(0).getHead(), size);
         }
 
-        DrawSquare(FoodColor, board.getFood().getFoodPoint(), size);
     }
     private void DrawSquare(Color color, Point point, int size) {
         gc.setFill(color);

@@ -53,13 +53,27 @@ public class Recorder {
     public Trail getData(Integer serialNum) {
         return recording.get(serialNum);
     }
-    public void PrintDeath(Integer serialNum) {
+    public void printDeath(Integer serialNum) {
         Trail data = recording.get(serialNum);
         int life = data.getLifespan();
         System.out.printf(
-            "Score: %d, length: %d, head hits on (%d, %d).\n",
+                "Score: %d, length: %d, head hits on (%d, %d).\n",
                 data.getScore(life), data.getLength(life),
                 (int) data.getHead(life).getX(), (int) data.getHead(life).getY());
+    }
+    public void printValue(Integer serialNum, Integer step, Debugger.status theStatus) {
+        Trail data = recording.get(serialNum);
+        String sign;
+        if (theStatus == Debugger.status.BACK)
+            sign = "--";
+        else if (theStatus == Debugger.status.FORWARD)
+            sign = "++";
+        else
+            sign = "==";
+        System.out.printf(
+                "%s Step: %d, Score: %d, length: %d, head on (%d, %d).\n",
+                sign, step, data.getScore(step), data.getLength(step),
+                (int) data.getHead(step).getX(), (int) data.getHead(step).getY());
     }
     public void setSteps(int step) { this.step = step;}
     public int getTimeTick() { return timeTick;}

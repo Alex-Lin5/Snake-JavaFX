@@ -32,7 +32,7 @@ public class Snake {
         xVelocity = 0;
         yVelocity = 0;
         speed = 20f; // from 0 to 50, number of blocks traverse in 1s
-        length = 11;
+        length = 3;
         turned = false;
         dead = false;
         moving = false;
@@ -116,9 +116,9 @@ public class Snake {
         if (!wrappedPoint.isEqualTo(newPoint))
             newPoint = wrappedPoint;
 
+        // tail part
         if (!isBodyStacked()) { // snake body is not stacked
             spawn = false;
-            // tail part
             if (body.get(length-1).isAdjacentTo(body.get(length-2))) {
                 tailShift(Point.direction.POS);}
             else {
