@@ -123,42 +123,34 @@ public class Snake {
                 tailShift(Point.direction.POS);}
             else {
                 tailShift(Point.direction.NEG);}
+        }
+//        else tail = tail;
 
-            // body part
-            if (!toMove & head.meetGrid()) {
-                body.addFirst(head);
-                body.removeLast();
-                turned = false;
-            }
-            // head part
-            if (turned) {
-                Point.direction front = body.get(0).directionTo(head);
-                int factor;
-                if (front == Point.direction.POS)
-                    factor = 1;
-                else if (front == Point.direction.NEG)
-                    factor = -1;    
-                else factor = 0;
-                if (head.slideInXY(body.get(0)) == Point.slide.X)
-                    head = new Point(body.get(0).getX() + factor*distance,
-                            body.get(0).getY());
-                else if (head.slideInXY(body.get(0)) == Point.slide.Y)
-                    head = new Point(body.get(0).getX(),
-                            body.get(0).getY() + factor*distance);
-                else if (head.slideInXY(body.get(0)) == Point.slide.NONE)
-                    head = newPoint;
-            }
-            else head = newPoint;
+        // body part
+        if (!toMove & head.meetGrid()) {
+            body.addFirst(head);
+            body.removeLast();
+            turned = false;
         }
-        else { // snake body is stacked, initial state
-            // body part
-            if (!toMove & head.meetGrid()) {
-                body.addFirst(head);
-                body.removeLast();
-            }
-//            tail = tail;
-            head = newPoint;
+        // head part
+        if (turned) {
+            Point.direction front = body.get(0).directionTo(head);
+            int factor;
+            if (front == Point.direction.POS)
+                factor = 1;
+            else if (front == Point.direction.NEG)
+                factor = -1;
+            else factor = 0;
+            if (head.slideInXY(body.get(0)) == Point.slide.X)
+                head = new Point(body.get(0).getX() + factor*distance,
+                        body.get(0).getY());
+            else if (head.slideInXY(body.get(0)) == Point.slide.Y)
+                head = new Point(body.get(0).getX(),
+                        body.get(0).getY() + factor*distance);
+            else if (head.slideInXY(body.get(0)) == Point.slide.NONE)
+                head = newPoint;
         }
+        else head = newPoint;
         head2body0 = body.get(0).distanceTo(head);
         tail2bodyr1 = body.get(length-1).distanceTo(tail);
     }

@@ -21,10 +21,11 @@ public class Messenger {
     private final Recorder recorder;
     private final Debugger debugger;
 
-    final int width;
-    final int height;
-    final int PanelWidth;
-    final int PanelHeight;
+    private final int width;
+    private final int height;
+    private final int PanelWidth;
+    private final int PanelHeight;
+    private boolean processed;
 
     public Messenger(final int InfoWidth, final int InfoHeight,
                      Board board, Recorder recorder, Debugger debugger, GraphicsContext gc) {
@@ -40,7 +41,7 @@ public class Messenger {
     }
 
 
-    public void Print(int FPS) {
+    public void Print() {
         int lineSpace = 15;
         int columnSpace = 70;
         gc.setFill(BackgroundColor);
@@ -61,7 +62,7 @@ public class Messenger {
             else if (line == 3) {
                 if (board.getSnake(0).isDead()) {
                     gc.setFill(DeadColor);
-                    gc.fillText("snake is dead", 5, height + lineSpace * line);
+                    gc.fillText("Dead.", 5, height + lineSpace * line);
                 } else if (!board.getSnake(0).isMoving() & !debugger.isOn())
                     gc.fillText("Resting.", 5, height + lineSpace * line);
 //                gc.fillText("snake " + board.getSnake(0).getSerialNum() + " is resting.", 5, height + lineSpace * line);
@@ -78,15 +79,16 @@ public class Messenger {
             }
 
         }
-        if (board.getSnake(0).isDead()) {
+        if (!processed & board.getSnake(0).isDead()) {
             gc.setFill(OverColor);
             gc.setTextAlign(TextAlignment.CENTER);
             gc.fillText("GAME OVER", width / 2, height / 2, 70);
 
             int life = recorder.getSteps();
-            System.out.printf("Game over on %d steps. Timetick: %d.\n",
+            System.out.printf("Game over on %d steps. TimeTick: %d.\n",
                     life, recorder.getTimeTick());
             recorder.PrintDeath(0);
+            processed = true;
         }
 
     }
