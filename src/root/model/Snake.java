@@ -32,7 +32,7 @@ public class Snake {
         xVelocity = 0;
         yVelocity = 0;
         speed = 20f; // from 0 to 50, number of blocks traverse in 1s
-        length = 3;
+        length = 9;
         turned = false;
         dead = false;
         moving = false;

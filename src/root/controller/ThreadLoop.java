@@ -41,10 +41,7 @@ public class ThreadLoop implements Runnable {
                 float delay = System.currentTimeMillis();
                 int FPS = (int) (1000/interval);
 
-                if (board.getSnake(0).isDead()) {
-//                    running = false;
-//                    System.out.printf("Game lasts %f.\n", timeLast);
-                }
+                if (board.getSnake(0).isDead());
                 else if (!debugger.isOn()){
                     board.update();
                     recorder.record();
@@ -73,13 +70,6 @@ public class ThreadLoop implements Runnable {
                     } catch (InterruptedException ignore) {
                     }
                 }
-
-//                try {
-//                    Thread.sleep((long) (interval));
-////                    LinkedList<Integer> temp = new LinkedList<>();
-//                } catch (InterruptedException ignore) {
-//                }
-
             }
             else { // thread is not running
                 try {
@@ -90,6 +80,4 @@ public class ThreadLoop implements Runnable {
             }
         }
     }
-
-//    public Recorder getRecorder() { return recorder;}
 }

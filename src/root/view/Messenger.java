@@ -77,18 +77,20 @@ public class Messenger {
                 }
 
             }
-
         }
-        if (!processed & board.getSnake(0).isDead()) {
+
+        if (board.getSnake(0).isDead()) {
+//            if (!processed & board.getSnake(0).isDead()) {
             gc.setFill(OverColor);
             gc.setTextAlign(TextAlignment.CENTER);
             gc.fillText("GAME OVER", width / 2, height / 2, 70);
-
-            int life = recorder.getSteps();
-            System.out.printf("Game over on %d steps. TimeTick: %d.\n",
-                    life, recorder.getTimeTick());
-            recorder.printDeath(0);
-            processed = true;
+            if (!processed) {
+                int life = recorder.getSteps();
+                System.out.printf("Game over on %d steps. TimeTick: %d.\n",
+                        life, recorder.getTimeTick());
+                recorder.printDeath(0);
+                processed = true;
+            }
         }
 
     }
