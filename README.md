@@ -40,13 +40,23 @@ instructed by player
 - in-app debugger allows to manipulate the snake back and forth,
 even if the snake is dead
 
+## UseCase
+This project is designed to be a guide for cross-platform
+open-source small game development in Java,
+by implementing the object-oriented design methodology and typical
+design patterns like model-view-controller, singleton, template etc. 
+The basic function of game should be included in all cases,
+e.g., game restart and pause, progress save and load, GUI design.
+
 ## Roadmap
-- Implement multi-function food on board, invincible status, greater score,
-speed fruit
+- Implement multi-function food on board, like invincible status, 
+greater score, speed fruit
 - Implement snake molting behavior, reduce snake length on regular timely
 manner
-- Implement multi-snake initialization and gaming
-- Implement game process saving and loading function, file I/O involved
+- Implement multi-snake initialization and gaming, new snake can be added
+while the game is running
+- Implement game process loading and automatic saving function, 
+file I/O involved
 
 More?
 
@@ -121,6 +131,8 @@ Restart the application will refresh the GUI and play again.
 - Snake might bite itself head-to-head when user invokes the snake
 to move in opposite direction of snake body as snake status changes
 from resting to moving
+- You might rebuild the entire project, if the IDE throws out
+error that certain package is not found
 
 ## Acknowledge
 - Professor Nadeem Ghani \

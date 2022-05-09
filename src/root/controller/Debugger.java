@@ -37,7 +37,7 @@ public class Debugger {
         currentStep = nextStep;
     }
 
-    public void setSnake() {
+    private void setSnake() {
         Trail data = recorder.getData(0);
         Snake snake = board.getSnake(0);
 
@@ -110,8 +110,8 @@ public class Debugger {
         int LatestStep = recorder.getSteps();
         if (backSteps < 0)
             backSteps = 0;
-        else if (backSteps > LatestStep-1)
-            backSteps = LatestStep-1;
+        else if (backSteps > LatestStep)
+            backSteps = LatestStep;
         nextStep = LatestStep-backSteps;
         if (currentStep < nextStep)
             object = status.FORWARD;

@@ -6,8 +6,11 @@ import java.util.LinkedList;
 import java.util.Random;
 
 public class Arbiter {
+    
     public Arbiter(){}
-    public static Point generatePointonGrid (
+    
+    public Point generatePoint (
+//            public static Point generatePoint (
         LinkedList<Point> body, int width, int height) {
         int x, y;
         boolean stacked;
@@ -20,10 +23,10 @@ public class Arbiter {
             y = random.nextInt(height);
             point = new Point(x, y);
             point = point.getPointOnGrid();
-//            if (point.isDuplicateIn(body, 0, body.size()))
-//                stacked = true;
-            if (body.contains(point))
+            if (point.isDuplicateIn(body, 0, body.size()))
                 stacked = true;
+//            if (body.contains(point))
+//                stacked = true;
         } while (stacked);
         return point;
     }

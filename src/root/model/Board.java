@@ -2,6 +2,7 @@ package root.model;
 
 import root.controller.Arbiter;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Board {
@@ -9,23 +10,32 @@ public class Board {
 
     private final int width;
     private final int height;
+//    private final int snakeNum;
     private boolean valid;
 
     private Snake snake;
     private LinkedList<Snake> snakeList;
+//    private Snake[] snakeList;
     private Food food;
+    private Arbiter arbiter;
 
     public Board(final int width, final int height) {
+        arbiter = new Arbiter();
         valid = false;
         this.width = width;
         this.height = height;
 
-        snakeList = new LinkedList<>();
-        snakeList.add(new Snake(Arbiter.generatePointonGrid(
-            new LinkedList<>(), width, height), 0, "Green"));
+//        snakeNum = 1;
+//        snake = new Snake(arbiter.generatePoint(
+//                new LinkedList<>(), width, height), 0, "Green");
+//        snakeList = new Snake[]{snake};
 
+        snakeList = new LinkedList<>();
+        snakeList.add(new Snake(arbiter.generatePoint(
+            new LinkedList<>(), width, height), 0, "Green"));
         snake = snakeList.get(0);
-        this.food = new Food(Arbiter.generatePointonGrid(
+
+        this.food = new Food(arbiter.generatePoint(
             snake.getBody(), width, height));
     }
 
@@ -38,11 +48,10 @@ public class Board {
         }
         else if (!snake.isMoving());
         else {
-            if (food.getFoodPoint().isEqualTo(snake.getHead())) {
-//                if (Point.Equal(food.getFoodPoint(), snake.getHead())) {
+            if (food.getFoodPoint().equals(snake.getHead())) {
                 snake.grow();
                 snake.setScore(snake.getScore() + food.getScore());
-                food.setFoodPoint(Arbiter.generatePointonGrid(
+                food.setFoodPoint(arbiter.generatePoint(
                     snake.getBody(), width, height));
             }
             else
@@ -69,6 +78,7 @@ public class Board {
     public int getHeight() { return height;}
 
     public Snake getSnake(int serialNum) { return snakeList.get(serialNum);}
+//    public Snake getSnake(int serialNum) { return snakeList[serialNum];}
     public Food getFood() { return food;}
 
 }
