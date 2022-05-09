@@ -1,6 +1,6 @@
 package root.model;
 
-import root.controller.RandomGenerator;
+import root.controller.Arbiter;
 
 import java.util.LinkedList;
 
@@ -21,11 +21,11 @@ public class Board {
         this.height = height;
 
         snakeList = new LinkedList<>();
-        snakeList.add(new Snake(RandomGenerator.generatePointonGrid(
+        snakeList.add(new Snake(Arbiter.generatePointonGrid(
             new LinkedList<>(), width, height), 0, "Green"));
 
         snake = snakeList.get(0);
-        this.food = new Food(RandomGenerator.generatePointonGrid(
+        this.food = new Food(Arbiter.generatePointonGrid(
             snake.getBody(), width, height));
     }
 
@@ -42,7 +42,7 @@ public class Board {
 //                if (Point.Equal(food.getFoodPoint(), snake.getHead())) {
                 snake.grow();
                 snake.setScore(snake.getScore() + food.getScore());
-                food.setFoodPoint(RandomGenerator.generatePointonGrid(
+                food.setFoodPoint(Arbiter.generatePointonGrid(
                     snake.getBody(), width, height));
             }
             else

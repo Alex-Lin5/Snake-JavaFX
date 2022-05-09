@@ -1,7 +1,10 @@
-package root.controller;
+package root.model;
 
 import javafx.scene.canvas.Canvas;
 import javafx.stage.Stage;
+import root.controller.Debugger;
+import root.controller.Initializer;
+import root.controller.ThreadLoop;
 import root.model.Snake;
 
 public class Keypad {

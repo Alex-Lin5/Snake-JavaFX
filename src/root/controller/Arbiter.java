@@ -5,8 +5,8 @@ import root.model.Point;
 import java.util.LinkedList;
 import java.util.Random;
 
-public class RandomGenerator {
-    public RandomGenerator(){}
+public class Arbiter {
+    public Arbiter(){}
     public static Point generatePointonGrid (
         LinkedList<Point> body, int width, int height) {
         int x, y;

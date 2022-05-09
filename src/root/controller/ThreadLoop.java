@@ -22,8 +22,8 @@ public class ThreadLoop implements Runnable {
     public ThreadLoop(GraphicsContext gc) {
         board = new Board(BOARD_WIDTH, BOARD_HEIGHT);
         recorder = new Recorder(board);
-        painter = new Painter(board, gc);
         debugger = new Debugger(recorder, board);
+        painter = new Painter(board, gc);
         messenger = new Messenger(PANEL_WIDTH, PANEL_HEIGHT, board, recorder, debugger, gc);
 
         running = true;
