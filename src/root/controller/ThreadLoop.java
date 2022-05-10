@@ -14,13 +14,15 @@ public class ThreadLoop implements Runnable {
     private float timeInitial, timeLast;
 
     public final Board board;
+//    private final Arbiter arbiter;
     private final Painter painter;
     private final Messenger messenger;
     private final Recorder recorder;
     public final Debugger debugger;
 
     public ThreadLoop(GraphicsContext gc) {
-        board = new Board(BOARD_WIDTH, BOARD_HEIGHT);
+        board = new Board(1, false, BOARD_WIDTH, BOARD_HEIGHT);
+//        arbiter = new Arbiter(board);
         recorder = new Recorder(board);
         debugger = new Debugger(recorder, board);
         painter = new Painter(board, gc);

@@ -1,41 +1,46 @@
 package root.model;
 
-import root.controller.Arbiter;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Random;
 
 public class Board {
     public static final int SIZE = 10;
 
     private final int width;
     private final int height;
-//    private final int snakeNum;
+    private final long seed;
     private boolean valid;
+//    private boolean receiveSeed;
 
     private Snake snake;
     private LinkedList<Snake> snakeList;
-//    private Snake[] snakeList;
     private Food food;
-    private Arbiter arbiter;
+    private Random random;
+//    private Arbiter arbiter;
 
-    public Board(final int width, final int height) {
-        arbiter = new Arbiter();
+    public Board(final long seed, final boolean receive,
+                 final int width, final int height) {
+        random = new Random();
+        if (receive)
+            this.seed = seed;
+        else
+//            this.seed = Double.doubleToLongBits(Math.random());
+            this.seed = random.nextLong();
         valid = false;
         this.width = width;
         this.height = height;
-
-//        snakeNum = 1;
-//        snake = new Snake(arbiter.generatePoint(
-//                new LinkedList<>(), width, height), 0, "Green");
-//        snakeList = new Snake[]{snake};
+//        random = new Random(seed);
+//        Seed is 4592301758907433040
+//        random.setSeed(seed);
 
         snakeList = new LinkedList<>();
-        snakeList.add(new Snake(arbiter.generatePoint(
+        snakeList.add(new Snake(generatePoint(
             new LinkedList<>(), width, height), 0, "Green"));
         snake = snakeList.get(0);
 
-        this.food = new Food(arbiter.generatePoint(
+        this.food = new Food(generatePoint(
             snake.getBody(), width, height));
     }
 
@@ -51,34 +56,42 @@ public class Board {
             if (food.getFoodPoint().equals(snake.getHead())) {
                 snake.grow();
                 snake.setScore(snake.getScore() + food.getScore());
-                food.setFoodPoint(arbiter.generatePoint(
-                    snake.getBody(), width, height));
+                food.setFoodPoint(generatePoint( snake.getBody(),
+                    width, height));
             }
             else
                 snake.move(width, height);
         }
 
     }
-    private boolean isCollided() {
-        if (snake.getHead().isDuplicateIn(
-                snake.getBody(), 1, snake.getLength()))
-            return true;
-//        if (snake.getBody().contains(snake.getBody().get(0)))
-//        if (snake.getBody().contains(snake.getHead()))
-//            return true;
 
-        // Linkedlist contains method should include equal comparator
-//        int index = snake.getBody().indexOf(snake.getHead());
-//        if (index>0 & index<=snake.getLength())
-//            return true;
+    private Point generatePoint (LinkedList<Point> list, int width, int height) {
+        int x, y;
+        boolean stacked;
+        Point point;
+//        LinkedList<Point> body = getSnake(0).getBody();
+
+        do {
+            stacked = false;
+            x = random.nextInt(width);
+            y = random.nextInt(height);
+            point = new Point(x, y);
+            point = point.getPointOnGrid();
+            if (list.contains(point))
+                stacked = true;
+        } while (stacked);
+        return point;
+    }
+    private boolean isCollided() {
+        if (snake.getBody().contains(snake.getHead()))
+            return true;
         return false;
     }
     public boolean isValidUpdate() { return valid;}
     public int getWidth() { return width;}
     public int getHeight() { return height;}
-
     public Snake getSnake(int serialNum) { return snakeList.get(serialNum);}
-//    public Snake getSnake(int serialNum) { return snakeList[serialNum];}
     public Food getFood() { return food;}
+    public long getSeed() { return seed;}
 
 }

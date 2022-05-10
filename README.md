@@ -137,7 +137,12 @@ error that certain package is not found
 ## Acknowledge
 - Professor Nadeem Ghani \
   https://ecs.syracuse.edu/faculty-staff/nadeem-ghani
+  - Provide suggestion on cleaning up Point class 
+  - Provide suggestion of instantiate a static board to be referenced
+  by other objects
 
 - snake project by @Subh0m0y or @hungrybluedev \
 https://github.com/Subh0m0y/Snake
+  - Provide architecture of game restart and initialization function
+  - provide architecture of point, snake, board class relationship
 

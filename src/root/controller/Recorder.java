@@ -57,9 +57,11 @@ public class Recorder {
         Trail data = recording.get(serialNum);
         int life = data.getLifespan();
         System.out.printf(
-                "Score: %d, length: %d, head hits on (%d, %d).\n",
+                "Score: %d, length: %d, head hits on (%d, %d).\n" +
+                        "Seed is %d\n",
                 data.getScore(life), data.getLength(life),
-                (int) data.getHead(life).getX(), (int) data.getHead(life).getY());
+                (int) data.getHead(life).getX(), (int) data.getHead(life).getY(),
+                board.getSeed());
     }
     public void printValue(Integer serialNum, Integer step, Debugger.status theStatus) {
         Trail data = recording.get(serialNum);

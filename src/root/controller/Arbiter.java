@@ -1,21 +1,26 @@
 package root.controller;
 
+import root.model.Board;
 import root.model.Point;
 
 import java.util.LinkedList;
 import java.util.Random;
 
 public class Arbiter {
-    
-    public Arbiter(){}
-    
-    public Point generatePoint (
-//            public static Point generatePoint (
-        LinkedList<Point> body, int width, int height) {
+    private Random random;
+    private Board board;
+    public Arbiter(Board board){
+        this.board = board;
+        random = new Random();
+//        random.setSeed(1);
+    }
+
+    public Point generatePoint (int width, int height) {
+//        public Point generatePoint (int width, int height) {
         int x, y;
         boolean stacked;
         Point point;
-        Random random = new Random();
+        LinkedList<Point> body = board.getSnake(0).getBody();
 
         do {
             stacked = false;
@@ -23,10 +28,8 @@ public class Arbiter {
             y = random.nextInt(height);
             point = new Point(x, y);
             point = point.getPointOnGrid();
-            if (point.isDuplicateIn(body, 0, body.size()))
+            if (body.contains(point))
                 stacked = true;
-//            if (body.contains(point))
-//                stacked = true;
         } while (stacked);
         return point;
     }

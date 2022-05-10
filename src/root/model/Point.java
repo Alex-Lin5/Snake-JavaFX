@@ -7,7 +7,7 @@ import java.util.List;
 
 import static root.model.Board.SIZE;
 
-public class Point extends LinkedList {
+public class Point {
     private final double x;    // The X coordinate
     private final double y;    // The Y coordinate
     enum slide { X, Y, XY, NONE, WRONG};
@@ -41,25 +41,22 @@ public class Point extends LinkedList {
         else return false;
     }
 
-//    @Override
-    public boolean equals(@NotNull Point point1) {
-        if (point1.getX() == x & point1.getY() == y)
+    @Override
+    public boolean equals(@NotNull Object pointOther) {
+        if (!(pointOther instanceof Point)) return false;
+        Point point = (Point) pointOther;
+        if (point.getX() == x & point.getY() == y)
             return true;
         else return false;
     }
-//    public boolean isEqualTo(Point point1) {
-//        if (point1.getX() == x & point1.getY() == y)
-//            return true;
-//        else return false;
+//    public boolean isDuplicateIn (LinkedList<Point> list, int begin, int end) {
+//        Point point = new Point(x, y);
+//        for (int i=begin; i<end; i++) {
+//            if (point.equals(list.get(i)))
+//                return true;
+//        }
+//        return false;
 //    }
-    public boolean isDuplicateIn (LinkedList<Point> list, int begin, int end) {
-        Point point = new Point(x, y);
-        for (int i=begin; i<end; i++) {
-            if (point.equals(list.get(i)))
-                return true;
-        }
-        return false;
-    }
 
     public boolean isAdjacentTo(Point point1) {
         if (point1.distanceTo(new Point(x, y)) <= SIZE)
