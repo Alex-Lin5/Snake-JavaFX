@@ -1,6 +1,7 @@
 package root.controller;
 
 import root.model.Board;
+import root.model.Food;
 import root.model.Trail;
 import root.model.Snake;
 
@@ -104,7 +105,8 @@ public class Debugger {
 
     private void setFood() {
         Trail value = recorder.getData(0);
-        board.getFood().setFoodPoint(value.getFood(currentStep));
+        board.getFood().setPoint(value.getFood(currentStep));
+//        board.getFood() = new Food(value.getFood(currentStep));
     }
     private void checkStatus() {
         int LatestStep = recorder.getSteps();

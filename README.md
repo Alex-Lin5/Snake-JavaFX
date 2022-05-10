@@ -128,6 +128,9 @@ GUI crashing
 - GUI might crash after a few minutes of gaming depending on the 
 machine, but the logic behind the GUI is working normally.
 Restart the application will refresh the GUI and play again.
+  - More than 1 objects are running parallel on the background, such as
+  Painter and messenger. The application keeps instantiating new
+  objects.
 - Snake might bite itself head-to-head when user invokes the snake
 to move in opposite direction of snake body as snake status changes
 from resting to moving

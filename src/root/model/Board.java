@@ -33,7 +33,7 @@ public class Board {
         this.height = height;
 //        random = new Random(seed);
 //        Seed is 4592301758907433040
-//        random.setSeed(seed);
+        random.setSeed(this.seed);
 
         snakeList = new LinkedList<>();
         snakeList.add(new Snake(generatePoint(
@@ -53,10 +53,10 @@ public class Board {
         }
         else if (!snake.isMoving());
         else {
-            if (food.getFoodPoint().equals(snake.getHead())) {
+            if (food.getPoint().equals(snake.getHead())) {
                 snake.grow();
                 snake.setScore(snake.getScore() + food.getScore());
-                food.setFoodPoint(generatePoint( snake.getBody(),
+                food.setPoint(generatePoint( snake.getBody(),
                     width, height));
             }
             else
@@ -75,6 +75,7 @@ public class Board {
             stacked = false;
             x = random.nextInt(width);
             y = random.nextInt(height);
+//            System.out.printf("(%d, %d)\n", x, y);
             point = new Point(x, y);
             point = point.getPointOnGrid();
             if (list.contains(point))

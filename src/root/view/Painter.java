@@ -31,7 +31,7 @@ public class Painter {
         gc.setFill(GridColor);
         gc.setStroke(GridColor);
 
-        DrawSquare(FoodColor, board.getFood().getFoodPoint(), size);
+        DrawSquare(FoodColor, board.getFood().getPoint(), size);
 
         for (int i=0; i<board.getWidth()/size; i++)
             gc.strokeLine(i*size, 0, i*size, board.getHeight()-gc.getLineWidth());

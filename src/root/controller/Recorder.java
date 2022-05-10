@@ -21,7 +21,7 @@ public class Recorder {
         timeTick = 0;
         
         value = new Trail(snake.getHead(),
-            board.getFood().getFoodPoint(), snake.getLength());
+            board.getFood().getPoint(), snake.getLength());
         recording = new HashMap<>();
         recording.put(snake.getSerialNum(), value);
 
@@ -33,7 +33,7 @@ public class Recorder {
             step += 1;
             value.setHead(step, snake.getBody().get(0));
             if (snake.isGrowing()) {
-                value.setFood(step, board.getFood().getFoodPoint());
+                value.setFood(step, board.getFood().getPoint());
                 value.setLength(step, snake.getLength());
                 value.setScore(step, snake.getScore());
             }
