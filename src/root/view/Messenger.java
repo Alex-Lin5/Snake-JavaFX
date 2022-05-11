@@ -6,6 +6,7 @@ import javafx.scene.text.TextAlignment;
 import root.controller.Debugger;
 import root.controller.Recorder;
 import root.model.Board;
+import root.model.Snake;
 
 import static root.model.Board.SIZE;
 import static root.view.Painter.SnakeColor;
@@ -47,25 +48,26 @@ public final class Messenger {
         gc.setFill(BackgroundColor);
         gc.fillRect(0, height, width, PanelHeight);
 
+        Snake snake = board.getSnake((byte) 0);
         for (int line = 1; line <= 4; line++) {
             if (line == 1) {
                 gc.setFill(SnakeColor);
                 gc.fillRect(5, height + lineSpace*line - SIZE, SIZE, SIZE);
                 gc.setFill(InfoColor);
                 gc.setTextAlign(TextAlignment.LEFT);
-                gc.fillText(board.getSnake(0).getName(), 10 + SIZE, height + lineSpace*line);
+                gc.fillText(snake.getName(), 10 + SIZE, height + lineSpace*line);
 
             }
             else if (line == 2) {
-                gc.fillText("Score: " + board.getSnake(0).getScore(), 5, height + lineSpace*line);
+                gc.fillText("Score: " + snake.getScore(), 5, height + lineSpace*line);
             }
             else if (line == 3) {
-                if (board.getSnake(0).isDead()) {
+                if (snake.isDead()) {
                     gc.setFill(DeadColor);
                     gc.fillText("Dead.", 5, height + lineSpace * line);
-                } else if (!board.getSnake(0).isMoving() & !debugger.isOn())
+                } else if (!snake.isMoving() & !debugger.isOn())
                     gc.fillText("Resting.", 5, height + lineSpace * line);
-//                gc.fillText("snake " + board.getSnake(0).getSerialNum() + " is resting.", 5, height + lineSpace * line);
+//                gc.fillText("snake " + snake.getSerialNum() + " is resting.", 5, height + lineSpace * line);
                 //        gc.fillText("FPS: " + FPS,5, height+30);
             }
             else if (line == 4) {
@@ -79,8 +81,8 @@ public final class Messenger {
             }
         }
 
-        if (board.getSnake(0).isDead()) {
-//            if (!processed & board.getSnake(0).isDead()) {
+        if (snake.isDead()) {
+//            if (!processed & snake.isDead()) {
             gc.setFill(OverColor);
             gc.setTextAlign(TextAlignment.CENTER);
             gc.fillText("GAME OVER", width / 2, height / 2, 70);
@@ -88,7 +90,7 @@ public final class Messenger {
                 int life = recorder.getSteps();
                 System.out.printf("Game over on %d steps. TimeTick: %d.\n",
                         life, recorder.getTimeTick());
-                recorder.printDeath(0);
+                recorder.printDeath((byte) 0);
                 processed = true;
             }
         }

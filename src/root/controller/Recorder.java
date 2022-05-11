@@ -10,13 +10,15 @@ public final class Recorder {
     private int step;
     private int timeTick;
     private final Board board;
+    private final Arbiter arbiter;
     private Snake snake;
     private Trail value;
-    private HashMap<Integer, Trail> recording;
-    public Recorder(Board board) {
+    private HashMap<Byte, Trail> recording;
+    public Recorder(Board board, Arbiter arbiter) {
         this.board = board;
+        this.arbiter = arbiter;
         this.recording = new HashMap<>();
-        snake = board.getSnake(0);
+        snake = board.getSnake((byte) 0);
         step = 0;
         timeTick = 0;
         
@@ -29,7 +31,7 @@ public final class Recorder {
 
     public void record() {
         timeTick += 1;
-        if (board.isValidUpdate()) {
+        if (arbiter.isValidUpdate()) {
             step += 1;
             value.setHead(step, snake.getBody().get(0));
             if (snake.isGrowing()) {
@@ -46,14 +48,14 @@ public final class Recorder {
             
         }
     }
-    public void removeData(int serialNum, Integer step) {
+    public void removeData(Byte serialNum, Integer step) {
         Trail data = getData(serialNum);
         data.removeFrom(step);
     }
-    public Trail getData(Integer serialNum) {
+    public Trail getData(Byte serialNum) {
         return recording.get(serialNum);
     }
-    public void printDeath(Integer serialNum) {
+    public void printDeath(Byte serialNum) {
         Trail data = recording.get(serialNum);
         int life = data.getLifespan();
         System.out.printf(
@@ -61,9 +63,9 @@ public final class Recorder {
                         "Seed is %d\n",
                 data.getScore(life), data.getLength(life),
                 (int) data.getHead(life).getX(), (int) data.getHead(life).getY(),
-                board.getSeed());
+                arbiter.getSeed());
     }
-    public void printValue(Integer serialNum, Integer step, Debugger.status theStatus) {
+    public void printValue(Byte serialNum, Integer step, Debugger.status theStatus) {
         Trail data = recording.get(serialNum);
         String sign;
         if (theStatus == Debugger.status.BACK)

@@ -17,7 +17,7 @@ public final class Debugger {
     private final Recorder recorder;
     private final Board board;
 
-    public Debugger(Recorder recorder, Board board) {
+    public Debugger(Board board, Recorder recorder) {
         on = false;
         tuned = false;
         object = status.STILL;
@@ -39,10 +39,10 @@ public final class Debugger {
     }
 
     private void setSnake() {
-        Trail data = recorder.getData(0);
-        Snake snake = board.getSnake(0);
+        Trail data = recorder.getData((byte) 0);
+        Snake snake = board.getSnake((byte) 0);
 
-        short length = (short) data.getLength(nextStep);
+        short length = data.getLength(nextStep);
         int tailIndex = currentStep-length;
         if (tailIndex < 1)
             tailIndex = 1;
@@ -78,22 +78,23 @@ public final class Debugger {
         snake.setTail(snake.getBody().get(length-1));
 
         if (object != status.STILL)
-            recorder.printValue(0, nextStep, object);
+            recorder.printValue((byte) 0, nextStep, object);
 //        currentStep = nextStep;
         }
 
     public void reset() {
         int stepNow = currentStep-backSteps;
         recorder.setSteps(stepNow);
-        recorder.removeData(
-            board.getSnake(0).getSerialNum(),
-                stepNow);
+//        recorder.removeData(
+//                board.getSnake((byte) 0).getSerialNum(),
+//                stepNow);
+        recorder.removeData((byte) 0, stepNow);
         backSteps = 0;
         object = status.STILL;
         tuned = false;
     }
     private len snakeExtended(int currentStep, int nextStep) {
-        Trail data = recorder.getData(0);
+        Trail data = recorder.getData((byte) 0);
         int currentLength = data.getLength(currentStep);
         int nextLength = data.getLength(nextStep);
         if (currentLength < nextLength)
@@ -104,7 +105,7 @@ public final class Debugger {
     }
 
     private void setFood() {
-        Trail value = recorder.getData(0);
+        Trail value = recorder.getData((byte) 0);
         board.getFood().setPoint(value.getFood(currentStep));
 //        board.getFood() = new Food(value.getFood(currentStep));
     }

@@ -3,6 +3,7 @@ package root.model;
 public class Food {
     private Point FoodPoint;
     private int Score;
+    public Food() { this.Score = 100;}
     public Food(Point thePoint){
         this.FoodPoint = thePoint;
         this.Score = 100;

@@ -14,24 +14,24 @@ public final class ThreadLoop implements Runnable {
     private float timeInitial, timeLast;
 
     public final Board board;
-//    private final Arbiter arbiter;
+    private final Arbiter arbiter;
     private final Painter painter;
     private final Messenger messenger;
     private final Recorder recorder;
     public final Debugger debugger;
 
     public ThreadLoop(GraphicsContext gc) {
-        board = new Board(1, false, BOARD_WIDTH, BOARD_HEIGHT);
-//        arbiter = new Arbiter(board);
-        recorder = new Recorder(board);
-        debugger = new Debugger(recorder, board);
+        board = new Board(BOARD_WIDTH, BOARD_HEIGHT);
+        arbiter = new Arbiter(board, 1, false);
+        recorder = new Recorder(board, arbiter);
+        debugger = new Debugger(board, recorder);
         painter = new Painter(board, gc);
         messenger = new Messenger(PANEL_WIDTH, PANEL_HEIGHT, board, recorder, debugger, gc);
 
         running = true;
         timeInitial = System.currentTimeMillis();
         timeLast = 0;
-        float speed = board.getSnake(0).getSpeed();
+        float speed = board.getSnake((byte) 0).getSpeed();
         float frames = SIZE*speed;
         interval = 1000f/frames;
     }
@@ -43,9 +43,9 @@ public final class ThreadLoop implements Runnable {
                 float delay = System.currentTimeMillis();
                 int FPS = (int) (1000/interval);
 
-                if (board.getSnake(0).isDead());
+                if (board.getSnake((byte) 0).isDead());
                 else if (!debugger.isOn()){
-                    board.update();
+                    arbiter.update();
                     recorder.record();
                 }
                 if (debugger.isOn())
@@ -68,7 +68,6 @@ public final class ThreadLoop implements Runnable {
                 else {
                     try {
                         Thread.sleep((long) (interval));
-//                        Thread.sleep((long) (1));
                     } catch (InterruptedException ignore) {
                     }
                 }

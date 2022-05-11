@@ -4,6 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import root.model.Board;
 import root.model.Point;
+import root.model.Snake;
 
 import static root.model.Board.SIZE;
 //import static root.Main.PANEL
@@ -25,6 +26,7 @@ public final class Painter {
     }
 
     public void Paint(){
+        Snake snake = board.getSnake((byte) 0);
         gc.setFill(PadColor);
         gc.fillRect(0 , 0, board.getWidth(), board.getHeight());
 
@@ -39,13 +41,13 @@ public final class Painter {
             gc.strokeLine(0, i*size, board.getWidth()-gc.getLineWidth(), i*size);
 
         gc.setFill(SnakeColor);
-        for(int i=0; i<board.getSnake(0).getLength()-1; i++) {
-            DrawSquare(SnakeColor, board.getSnake(0).getBody().get(i), size);
+        for(int i=0; i<snake.getLength()-1; i++) {
+            DrawSquare(SnakeColor, snake.getBody().get(i), size);
         }
-        DrawSquare(SnakeColor, board.getSnake(0).getHead(), size);
-        DrawSquare(SnakeColor, board.getSnake(0).getTail(), size);
-        if (board.getSnake(0).isDead()) {
-            DrawSquare(DeadColor, board.getSnake(0).getHead(), size);
+        DrawSquare(SnakeColor, snake.getHead(), size);
+        DrawSquare(SnakeColor, snake.getTail(), size);
+        if (snake.isDead()) {
+            DrawSquare(DeadColor, snake.getHead(), size);
         }
 
     }

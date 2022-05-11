@@ -7,11 +7,11 @@ public final class Trail {
     private HashMap<Integer, Point> head; // current point of head
 //    private ArrayList<Point> head; // current point of head
     private HashMap<Integer, Point> food;
-    private HashMap<Integer, Integer> length;
+    private HashMap<Integer, Short> length;
     private HashMap<Integer, Integer> score;
     private int lifespan;
 
-    public Trail(Point head, Point food, int length) {
+    public Trail(Point head, Point food, Short length) {
         this.head = new HashMap<>();
 //        this.head = new ArrayList<>();
         this.food = new HashMap<>();
@@ -25,7 +25,6 @@ public final class Trail {
         this.length.put(0, length);
         score.put(0, 0);
     }
-
 
     public void removeFrom(Integer step) {
         removeKeys(step, head);
@@ -64,7 +63,7 @@ public final class Trail {
         food.put(step, point);
     }
     public Point getFood(int step) {
-        return food.get(getKey((Integer) step, food));
+        return food.get(getKey(step, food));
     }
     public void setHead(int step, Point point) {
         head.put(step, point);
@@ -72,17 +71,17 @@ public final class Trail {
     public Point getHead(int step) {
         return head.get(step);
     }
-    public void setLength(int step, int length) {
+    public void setLength(int step, Short length) {
         this.length.put(step, length);
     }
-    public int getLength(int step) {
-        return length.get(getKey((Integer) step, length));
+    public short getLength(int step) {
+        return length.get(getKey(step, length));
     }
     public void setScore(int step, int score) {
         this.score.put(step, score);
     }
     public int getScore(int step) {
-        return score.get(getKey((Integer) step, score));
+        return score.get(getKey(step, score));
     }
 
 }

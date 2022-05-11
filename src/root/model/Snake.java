@@ -195,7 +195,7 @@ public final class Snake {
     }
     public String getName() { return name;}
     public boolean isGrowing() { return growing;}
-    public int getSerialNum() { return serialNum;}
+    public byte getSerialNum() { return serialNum;}
     public boolean isSpawned() { return spawn;}
     public void setTurned() { this.turned = true;}
     public void setAlive() { this.dead = false;}
@@ -207,7 +207,7 @@ public final class Snake {
     public Point getHead() { return head;}
     public Point getTail() { return tail;}
     public void setTail(Point point) { tail = point;}
-    public int getLength() { return length;}
+    public short getLength() { return length;}
     public void setLength(short num) { length = num;}
     public float getSpeed() { return speed;}
     public boolean isTurned() { return turned;}
