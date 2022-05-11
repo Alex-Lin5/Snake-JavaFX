@@ -23,7 +23,7 @@ in the top-right corner modify options
 #### Gaming
 - provide a seed to the application, or leave empty let the application 
 decide by itself, the random seed is for specific snake spawn point and 
-food generation pattern
+foodBase generation pattern
 - set up the initial length of snake
 - control the snake by four arrow keys, press `DIGIT 1` to pause moving
 - press `DIGIT 0` to enable debugger mode, press `PAGE_UP` and `PAGE_DOWN`
@@ -49,7 +49,7 @@ The basic function of game should be included in all cases,
 e.g., game restart and pause, progress save and load, GUI design.
 
 ## Roadmap
-- Implement multi-function food on board, like invincible status, 
+- Implement multi-function foodBase on board, like invincible status, 
 greater score, speed fruit
 - Implement snake molting behavior, reduce snake length on regular timely
 manner
@@ -86,9 +86,9 @@ Table below concludes the process of instantiating different objects.
 
 #### Model-View-Controller
 - Point is the basic unit indicates the coordination of objects, like
-snake and food
-- Snake and food are instantiated on the board, initialization of snake
-and food are controlled by arbiter
+snake and foodBase
+- Snake and foodBase are instantiated on the board, initialization of snake
+and foodBase are controlled by engine
 - Board, debugger, recorder are instantiated on the thread
 - Initializer is instantiated as the JavaFX application is started,
 and whenever the game is restarted

@@ -10,13 +10,13 @@ public final class Recorder {
     private int step;
     private int timeTick;
     private final Board board;
-    private final Arbiter arbiter;
+    private final Engine engine;
     private Snake snake;
     private Trail value;
     private HashMap<Byte, Trail> recording;
-    public Recorder(Board board, Arbiter arbiter) {
+    public Recorder(Board board, Engine engine) {
         this.board = board;
-        this.arbiter = arbiter;
+        this.engine = engine;
         this.recording = new HashMap<>();
         snake = board.getSnake(0);
         step = 0;
@@ -31,7 +31,7 @@ public final class Recorder {
 
     public void record() {
         timeTick += 1;
-        if (arbiter.isValidUpdate()) {
+        if (engine.isValid()) {
             step += 1;
             value.setHead(step, snake.getBody().get(0));
             if (snake.isGrowing()) {
@@ -39,8 +39,7 @@ public final class Recorder {
                 value.setLength(step, snake.getLength());
                 value.setScore(step, snake.getScore());
             }
-            if (snake.isDead())
-                value.setLifespan(step);
+            value.setLifespan(step);
 
 //            if (snake.isSpawned())
 //                if (snake.isDead())
@@ -63,7 +62,7 @@ public final class Recorder {
                     "Seed is %d\n",
             data.getScore(life), data.getLength(life),
             data.getHead(life).getX(), data.getHead(life).getY(),
-            arbiter.getSeed());
+            engine.getSeed());
     }
     public void printValue(Number serialNum, Integer step, Debugger.status theStatus) {
         Trail data = getData(serialNum);

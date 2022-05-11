@@ -2,7 +2,7 @@ package root.view;
 
 import javafx.scene.paint.Color;
 
-public class ColorPaint {
+public class Palette {
     static Color WHITE(){ return Color.WHITE;}
     static Color BLACK(){ return Color.BLACK;}
     static Color WHEAT(){ return Color.WHEAT;}

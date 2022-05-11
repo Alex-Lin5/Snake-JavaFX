@@ -28,11 +28,8 @@ public final class Board {
         return snakeList.get(serialNum.byteValue());
     }
     public LinkedList<Snake> getSnakeList() { return snakeList;}
-    public byte getSnakeNum() {
-        return snakeNum;
-    }
-    public void setSnakeNum(byte snakeNum) {
-        this.snakeNum = snakeNum;
-    }
     public Food getFood() { return foodList.get(0);}
+    public LinkedList<Food> getFoodList() { return foodList;}
+    public byte getSnakeNum() { return snakeNum;}
+    public void setSnakeNum(byte snakeNum) { this.snakeNum = snakeNum;}
 }

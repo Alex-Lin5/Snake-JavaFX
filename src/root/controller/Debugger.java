@@ -1,7 +1,6 @@
 package root.controller;
 
 import root.model.Board;
-import root.model.Food;
 import root.model.Trail;
 import root.model.Snake;
 
@@ -48,7 +47,7 @@ public final class Debugger {
             tailIndex = 1;
         snake.setAlive();
         snake.setStatic();
-        snake.setLength(length);
+//        snake.setLength(length);
         snake.setScore(data.getScore(nextStep));
 
         if (object == status.BACK) { // going backward

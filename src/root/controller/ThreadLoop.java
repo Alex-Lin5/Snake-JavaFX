@@ -14,16 +14,17 @@ public final class ThreadLoop implements Runnable {
     private float timeInitial, timeLast;
 
     private final Board board;
-    private final Arbiter arbiter;
+    private final Engine engine;
     private final Painter painter;
     private final Messenger messenger;
     private final Recorder recorder;
     private final Debugger debugger;
 
+//    public ThreadLoop(Pen canvas) {
     public ThreadLoop(GraphicsContext gc) {
         board = new Board(BOARD_WIDTH, BOARD_HEIGHT);
-        arbiter = new Arbiter(board, 1, false);
-        recorder = new Recorder(board, arbiter);
+        engine = new Engine(board, 1, false);
+        recorder = new Recorder(board, engine);
         debugger = new Debugger(board, recorder);
 
         painter = new Painter(board, gc);
@@ -46,7 +47,7 @@ public final class ThreadLoop implements Runnable {
 
                 if (board.getSnake((byte) 0).isDead());
                 else if (!debugger.isOn()){
-                    arbiter.update();
+                    engine.work();
                     recorder.record();
                 }
                 if (debugger.isOn())

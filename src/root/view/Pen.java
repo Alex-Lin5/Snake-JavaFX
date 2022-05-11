@@ -5,9 +5,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import root.model.Point;
 
-public final class Canvas implements Toolkit {
+public final class Pen implements Toolkit {
     private final GraphicsContext gc;
-    public Canvas(GraphicsContext graph){
+    public Pen(GraphicsContext graph){
         gc = graph;
     }
     @Override

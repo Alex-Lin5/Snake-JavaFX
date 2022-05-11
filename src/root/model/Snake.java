@@ -8,14 +8,14 @@ public final class Snake {
     private final byte serialNum;
     private final String name;
     private float speed;
-    private short length;
+    private int score;
     private final LinkedList<Point> body;
+
     private Point head, tail;
     private int distance;
-    private int score;
-
     private int xVelocity;
     private int yVelocity;
+
     private boolean turned;
     private boolean dead;
     private boolean moving;
@@ -23,13 +23,14 @@ public final class Snake {
     private boolean growing;
 
     public Snake(Point SpawnPoint, Byte num, String name) {
+        short length = 9;
+
         this.name = name;
         serialNum = num;
         score = 0;
         xVelocity = 0;
         yVelocity = 0;
         speed = 20f; // from 0 to 50, number of blocks traverse in 1s
-        length = 9;
         turned = false;
         dead = false;
         moving = false;
@@ -46,7 +47,7 @@ public final class Snake {
     public void grow() {
         int x, y, xNew, yNew;
         growing = true;
-        length += 1;
+//        length += 1;
         x = head.getX();
         y = head.getY();
         xNew = x + xVelocity;
@@ -56,8 +57,10 @@ public final class Snake {
     }
     public void move(int width, int height) {
         int x, y, xNew, yNew;
+//        int distance;
 //        int head2body0, tail2bodyr1;
         boolean toMove;
+        short length = getLength();
         x = head.getX();
         y = head.getY();
         xNew = x + xVelocity;
@@ -110,6 +113,8 @@ public final class Snake {
         return newPoint;
     }
     private void headMove(Point newPoint) {
+//        int distance = body.get(0).distanceTo(newPoint);
+
         if (turned) {
             Point.direction front = body.get(0).directionTo(head);
             int factor;
@@ -134,6 +139,9 @@ public final class Snake {
     private void tailMove(Point.direction split,
                           Point.direction tailDirection) {
         int factorS, factorT;
+        int length = getLength();
+//        int distance = body.get(0).distanceTo(newPoint);
+
         if (split == Point.direction.POS)
             factorS = 1;
         else if (split == Point.direction.NEG)
@@ -156,6 +164,7 @@ public final class Snake {
     }
     private boolean isBodyStacked() {
         boolean stacked = false;
+        int length = getLength();
         for(int i=0; i<length-1; i++) {
             stacked |= body.get(i).equals(body.get(i+1));
         }
@@ -167,22 +176,22 @@ public final class Snake {
         moving = false;
     }
     public void setUp() {
-        if (yVelocity == 1 && length > 1) return;
+        if (yVelocity == 1) return;
         xVelocity = 0;
         yVelocity = -1;
     }
     public void setDown() {
-        if (yVelocity == -1 && length > 1) return;
+        if (yVelocity == -1) return;
         xVelocity = 0;
         yVelocity = 1;
     }
     public void setLeft() {
-        if (xVelocity == 1 && length > 1) return;
+        if (xVelocity == 1) return;
         xVelocity = -1;
         yVelocity = 0;
     }
     public void setRight() {
-        if (xVelocity == -1 && length > 1) return;
+        if (xVelocity == -1) return;
         xVelocity = 1;
         yVelocity = 0;
     }
@@ -207,8 +216,7 @@ public final class Snake {
     public Point getHead() { return head;}
     public Point getTail() { return tail;}
     public void setTail(Point point) { tail = point;}
-    public short getLength() { return length;}
-    public void setLength(short num) { length = num;}
+    public short getLength() { return (short) body.size();}
     public float getSpeed() { return speed;}
     public boolean isTurned() { return turned;}
     

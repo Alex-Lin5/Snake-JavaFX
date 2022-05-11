@@ -8,21 +8,20 @@ import root.model.Snake;
 import java.util.LinkedList;
 import java.util.Random;
 
-public final class Arbiter {
-    private Random generator;
-    private Board board;
+public final class Engine {
+    private final Random generator;
+    private final Board board;
     private final long seed;
     private boolean valid;
 
-    public Arbiter(Board board, final long seedNew,
-                   final boolean receive){
+    public Engine(Board board, long seedNew, boolean receive){
         this.board = board;
         int width, height;
         width = board.getWidth();
         height = board.getHeight();
         Byte serialNum = (byte) 0;
         LinkedList<Snake> snakeList = board.getSnakeList();
-        Food food = board.getFood();
+        Food foodBase = board.getFood();
         valid = false;
         generator = new Random();
         if (receive)
@@ -34,7 +33,8 @@ public final class Arbiter {
         snakeList.add(new Snake(generatePoint(
             new LinkedList<>()), serialNum, "Green"));
         Snake snake = board.getSnake(serialNum);
-        food.setPoint(generatePoint(snake.getBody()));
+        foodBase.setPoint(generatePoint(snake.getBody()));
+
 
     }
 
@@ -60,9 +60,9 @@ public final class Arbiter {
         return point;
     }
 
-    public void update() {
+    public void work() {
         Snake snake = board.getSnake(0);
-        Food food = board.getFood();
+        Food foodBase = board.getFood();
         int width, height;
         width = board.getWidth();
         height = board.getHeight();
@@ -72,10 +72,10 @@ public final class Arbiter {
                 valid = true;
             else valid = false;
             // update head
-            if (food.getPoint().equals(snake.getHead())) {
+            if (foodBase.getPoint().equals(snake.getHead())) {
                 snake.grow();
-                snake.setScore(snake.getScore() + food.getScore());
-                food.setPoint(generatePoint(snake.getBody()));
+                snake.setScore(snake.getScore() + foodBase.getScore());
+                foodBase.setPoint(generatePoint(snake.getBody()));
             }
             else
                 snake.move(width, height);
@@ -95,7 +95,7 @@ public final class Arbiter {
             return true;
         return false;
     }
-    public boolean isValidUpdate() { return valid;}
+    public boolean isValid() { return valid;}
     public long getSeed() { return seed;}
 
 }

@@ -9,7 +9,8 @@ public final class Trail {
     private HashMap<Integer, Integer> score;
     private int lifespan;
 
-    public Trail(Point head, Point food, Short length) {
+    public Trail(Point head, Point food, Number length) {
+//    public Trail(Point head, Point food, Short length) {
         this.head = new HashMap<>();
 //        this.head = new ArrayList<>();
         this.food = new HashMap<>();
@@ -19,7 +20,7 @@ public final class Trail {
         lifespan = 0;
         this.head.put(0, head);
         this.food.put(0, food);
-        this.length.put(0, length);
+        this.length.put(0, length.shortValue());
         score.put(0, 0);
     }
 
@@ -68,8 +69,8 @@ public final class Trail {
     public Point getHead(int step) {
         return head.get(step);
     }
-    public void setLength(int step, Short length) {
-        this.length.put(step, length);
+    public void setLength(int step, Number length) {
+        this.length.put(step, length.shortValue());
     }
     public short getLength(int step) {
         return length.get(getKey(step, length));

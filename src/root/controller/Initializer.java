@@ -6,24 +6,28 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import root.model.Keypad;
+import root.view.Pen;
 
 import static root.Main.*;
 
 public final class Initializer {
-    public final GraphicsContext myGraphicsContext;
-    public final Canvas myCanvas;
-    public final Scene myScene;
-    public final Stage myStage;
+    private final GraphicsContext myGraphicsContext;
+    private final Canvas canvasFX;
+    private final Scene myScene;
+    private final Stage myStage;
+    
+    private final Pen myCanvas;
 
     public Initializer(Stage myStage) {
         StackPane myStack = new StackPane();
-        myCanvas = new Canvas(
+        canvasFX = new Canvas(
                 BOARD_WIDTH+PANEL_WIDTH, BOARD_HEIGHT+PANEL_HEIGHT);
-        myCanvas.setFocusTraversable(true);
-        myGraphicsContext = myCanvas.getGraphicsContext2D();
-        myStack.getChildren().add(myCanvas);
+        canvasFX.setFocusTraversable(true);
+        myGraphicsContext = canvasFX.getGraphicsContext2D();
+        myStack.getChildren().add(canvasFX);
         myScene = new Scene(myStack);
         this.myStage = myStage;
+        myCanvas = new Pen(myGraphicsContext);
     }
     public void initialize() {
         myStage.setResizable((false));
@@ -33,7 +37,8 @@ public final class Initializer {
         myStage.show();
 
         ThreadLoop loop = new ThreadLoop(myGraphicsContext);
-        Keypad keypad1 = new Keypad(loop, myCanvas, myStage);
+//        ThreadLoop loop = new ThreadLoop(myCanvas);
+        Keypad keypad1 = new Keypad(loop, canvasFX, myStage);
         keypad1.getKey();
         new Thread(loop).start();
     }
