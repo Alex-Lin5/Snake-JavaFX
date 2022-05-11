@@ -61,7 +61,7 @@ public final class Arbiter {
     }
 
     public void update() {
-        Snake snake = board.getSnake((byte) 0);
+        Snake snake = board.getSnake(0);
         Food food = board.getFood();
         int width, height;
         width = board.getWidth();
@@ -90,7 +90,7 @@ public final class Arbiter {
     }
 
     private boolean isCollided() {
-        Snake snake = board.getSnake((byte) 0);
+        Snake snake = board.getSnake(0);
         if (snake.getBody().contains(snake.getHead()))
             return true;
         return false;

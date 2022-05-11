@@ -18,7 +18,7 @@ public final class Recorder {
         this.board = board;
         this.arbiter = arbiter;
         this.recording = new HashMap<>();
-        snake = board.getSnake((byte) 0);
+        snake = board.getSnake(0);
         step = 0;
         timeTick = 0;
         
@@ -48,25 +48,25 @@ public final class Recorder {
             
         }
     }
-    public void removeData(Byte serialNum, Integer step) {
+    public Trail getData(Number serialNum) {
+        return recording.get(serialNum.byteValue());
+    }
+    public void removeData(Number serialNum, Integer step) {
         Trail data = getData(serialNum);
         data.removeFrom(step);
     }
-    public Trail getData(Byte serialNum) {
-        return recording.get(serialNum);
-    }
-    public void printDeath(Byte serialNum) {
-        Trail data = recording.get(serialNum);
+    public void printDeath(Number serialNum) {
+        Trail data = getData(serialNum);
         int life = data.getLifespan();
         System.out.printf(
-                "Score: %d, length: %d, head hits on (%d, %d).\n" +
-                        "Seed is %d\n",
-                data.getScore(life), data.getLength(life),
-                (int) data.getHead(life).getX(), (int) data.getHead(life).getY(),
-                arbiter.getSeed());
+            "Score: %d, length: %d, head hits on (%d, %d).\n" +
+                    "Seed is %d\n",
+            data.getScore(life), data.getLength(life),
+            data.getHead(life).getX(), data.getHead(life).getY(),
+            arbiter.getSeed());
     }
-    public void printValue(Byte serialNum, Integer step, Debugger.status theStatus) {
-        Trail data = recording.get(serialNum);
+    public void printValue(Number serialNum, Integer step, Debugger.status theStatus) {
+        Trail data = getData(serialNum);
         String sign;
         if (theStatus == Debugger.status.BACK)
             sign = "--";
@@ -75,9 +75,9 @@ public final class Recorder {
         else
             sign = "==";
         System.out.printf(
-                "%s Step: %d, Score: %d, length: %d, head on (%d, %d).\n",
-                sign, step, data.getScore(step), data.getLength(step),
-                (int) data.getHead(step).getX(), (int) data.getHead(step).getY());
+            "%s Step: %d, Score: %d, length: %d, head on (%d, %d).\n",
+            sign, step, data.getScore(step), data.getLength(step),
+            data.getHead(step).getX(), data.getHead(step).getY());
     }
     public void setSteps(int step) { this.step = step;}
     public int getTimeTick() { return timeTick;}

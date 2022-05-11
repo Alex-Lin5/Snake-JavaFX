@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import static root.model.Board.SIZE;
 
-public class Point {
+public final class Point {
     private final int x;    // The X coordinate
     private final int y;    // The Y coordinate
     enum slide { X, Y, XY, NONE, WRONG}
@@ -12,21 +12,19 @@ public class Point {
 
     public int getX(){ return x;}
     public int getY(){ return y;}
-    public Point(final Integer x, final Integer y) {
+    public Point(final int x, final int y) {
         this.x = x;
         this.y = y;
     }
 
     @Override
     public boolean equals(@NotNull Object pointOther) {
-        if (!(pointOther instanceof Point)) return false;
-        Point point = (Point) pointOther;
+        if (!(pointOther instanceof Point point)) return false;
         return point.getX() == x & point.getY() == y;
     }
     @Override
     public int hashCode(){
-        int result = x << 16 + y;
-        return result;
+        return x << 16 + y;
     }
     public int distanceTo(Point pointNew) {
         int distance;
@@ -35,15 +33,16 @@ public class Point {
         return distance;
     }
     public Point getPointOnGrid() {
-        Number xNew = Math.floor(x/SIZE)*SIZE;
-        Number yNew = Math.floor(y/SIZE)*SIZE;
+        float xF = (float) x;
+        float yF = (float) y;
+        Number xNew = Math.floor(xF/SIZE)*SIZE;
+        Number yNew = Math.floor(yF/SIZE)*SIZE;
         return new Point(xNew.intValue(), yNew.intValue());
     }
     public Point getPointNearGrid() {
-        Point point = new Point(
+        return new Point(
             Math.round(x/SIZE)*SIZE,
             Math.round(y/SIZE)*SIZE);
-        return point;
     }
     public boolean meetGrid() {
         Point point = new Point(x, y);

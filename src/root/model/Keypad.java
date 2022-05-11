@@ -17,8 +17,8 @@ public class Keypad {
     public Keypad(ThreadLoop loop, Canvas myCanvas, Stage stage) {
         theStage = stage;
         this.canvas = myCanvas;
-        snake = loop.board.getSnake((byte) 0);
-        debugger = loop.debugger;
+        snake = loop.getBoard().getSnake((byte) 0);
+        debugger = loop.getDebugger();
     }
     public void getKey() {
         restart = false;

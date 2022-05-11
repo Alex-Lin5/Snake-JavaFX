@@ -24,7 +24,9 @@ public final class Board {
 
     public int getWidth() { return width;}
     public int getHeight() { return height;}
-    public Snake getSnake(Byte serialNum) { return snakeList.get(serialNum);}
+    public Snake getSnake(Number serialNum) {
+        return snakeList.get(serialNum.byteValue());
+    }
     public LinkedList<Snake> getSnakeList() { return snakeList;}
     public byte getSnakeNum() {
         return snakeNum;
@@ -32,6 +34,5 @@ public final class Board {
     public void setSnakeNum(byte snakeNum) {
         this.snakeNum = snakeNum;
     }
-
     public Food getFood() { return foodList.get(0);}
 }

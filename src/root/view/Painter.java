@@ -15,8 +15,6 @@ public final class Painter {
     private static Color GridColor = Color.GREY;
     private static Color DeadColor = Color.RED;
     private static int size = SIZE;
-//    private static int panelWidth = PANEL_WIDTH;
-//    private static int panelHeight = PANEL_HEIGHT;
     private final GraphicsContext gc;
     private final Board board;
 
@@ -57,8 +55,7 @@ public final class Painter {
     }
 
     public void clear() {
-//    public static void clear(Board theBoard, GraphicsContext gc) {
 //    gc.clearRect(0,0, theBoard.getWidth(), theBoard.getHeight()+40);
-    gc.clearRect(0,0, board.getWidth(), board.getHeight()+40);
+    gc.clearRect(0,0, board.getWidth(), board.getHeight());
     }
 }

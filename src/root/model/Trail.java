@@ -1,11 +1,9 @@
 package root.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public final class Trail {
     private HashMap<Integer, Point> head; // current point of head
-//    private ArrayList<Point> head; // current point of head
     private HashMap<Integer, Point> food;
     private HashMap<Integer, Short> length;
     private HashMap<Integer, Integer> score;
@@ -19,7 +17,6 @@ public final class Trail {
         score = new HashMap<>();
 
         lifespan = 0;
-//        this.head.add(0, head);
         this.head.put(0, head);
         this.food.put(0, food);
         this.length.put(0, length);

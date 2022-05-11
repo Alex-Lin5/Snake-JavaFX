@@ -13,18 +13,19 @@ public final class ThreadLoop implements Runnable {
     private float interval;
     private float timeInitial, timeLast;
 
-    public final Board board;
+    private final Board board;
     private final Arbiter arbiter;
     private final Painter painter;
     private final Messenger messenger;
     private final Recorder recorder;
-    public final Debugger debugger;
+    private final Debugger debugger;
 
     public ThreadLoop(GraphicsContext gc) {
         board = new Board(BOARD_WIDTH, BOARD_HEIGHT);
         arbiter = new Arbiter(board, 1, false);
         recorder = new Recorder(board, arbiter);
         debugger = new Debugger(board, recorder);
+
         painter = new Painter(board, gc);
         messenger = new Messenger(PANEL_WIDTH, PANEL_HEIGHT, board, recorder, debugger, gc);
 
@@ -81,4 +82,6 @@ public final class ThreadLoop implements Runnable {
             }
         }
     }
+    public Debugger getDebugger() { return debugger;}
+    public Board getBoard() { return board;}
 }
