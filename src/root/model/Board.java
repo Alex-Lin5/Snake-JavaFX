@@ -12,7 +12,6 @@ public class Board {
     private final int height;
     private final long seed;
     private boolean valid;
-//    private boolean receiveSeed;
 
     private Snake snake;
     private LinkedList<Snake> snakeList;
@@ -20,24 +19,22 @@ public class Board {
     private Random random;
 //    private Arbiter arbiter;
 
-    public Board(final long seed, final boolean receive,
+    public Board(final long seedNew, final boolean receive,
                  final int width, final int height) {
         random = new Random();
+        Byte serialNum = (byte) 0;
         if (receive)
-            this.seed = seed;
+            this.seed = seedNew;
         else
-//            this.seed = Double.doubleToLongBits(Math.random());
             this.seed = random.nextLong();
         valid = false;
         this.width = width;
         this.height = height;
-//        random = new Random(seed);
-//        Seed is 4592301758907433040
         random.setSeed(this.seed);
 
         snakeList = new LinkedList<>();
         snakeList.add(new Snake(generatePoint(
-            new LinkedList<>(), width, height), 0, "Green"));
+            new LinkedList<>(), width, height), serialNum, "Green"));
         snake = snakeList.get(0);
 
         this.food = new Food(generatePoint(
@@ -69,7 +66,6 @@ public class Board {
         int x, y;
         boolean stacked;
         Point point;
-//        LinkedList<Point> body = getSnake(0).getBody();
 
         do {
             stacked = false;

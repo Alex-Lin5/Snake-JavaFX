@@ -51,7 +51,7 @@ public class Painter {
     }
     private void DrawSquare(Color color, Point point, int size) {
         gc.setFill(color);
-        gc.fillRect(point.getX(), point.getY(), size, size);
+        gc.fillRect(point.getX().doubleValue(), point.getY().doubleValue(), size, size);
     }
 
     public void clear() {

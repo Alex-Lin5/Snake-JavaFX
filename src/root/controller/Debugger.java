@@ -42,7 +42,7 @@ public class Debugger {
         Trail data = recorder.getData(0);
         Snake snake = board.getSnake(0);
 
-        int length = data.getLength(nextStep);
+        short length = (short) data.getLength(nextStep);
         int tailIndex = currentStep-length;
         if (tailIndex < 1)
             tailIndex = 1;

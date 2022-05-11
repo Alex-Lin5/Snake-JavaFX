@@ -65,39 +65,23 @@ This project applies Model-View-Controller, and Singleton design pattern.
 
 Table below concludes the process of instantiating different objects.
 
-|    Main     |||||
-|:-----------:|:----------------:|:-----:|:---:|:---:|
-|   &#8595;   |||||
-| Initializer |    &#8594;     | Keypad| &#8594; | (Initializer)
-|  |    &#8594;     | Threadloop|  |
-|             | |   &#8595;   | |
-|||Board|&#8594;| Arbiter|
-||||&#8594;| Snake|
-||||&#8594;| Food|
-|||&#8595;|||
-|||Recorder|&#8594;|Trail|
-|||&#8595;|||
-|||Debugger|||
-|||&#8595;|||
-|||Painter|||
-|||&#8595;|||
-|||Messenger|||
-
-<!-- |    Main     |||||
-|:-----------:|:----------------:|:-----:|:---:|:---:|
-|   &#8595;   |||||
-| Initializer |    &#8594;     | Threadloop|  |
-|             | |   &#8595;   | |
-|||Board|&#8594;| Snake|
-||||&#8594;| Food|
-|||&#8595;|||
-|||Recorder|&#8594;|Trail|
-|||&#8595;|||
-|||Painter|||
-|||&#8595;|||
-|||Debugger|||
-|||&#8595;|||
-|||Messenger||| -->
+|    Main     |||||||
+|:-----------:|:----------------:|:-----:|:---:|:---:|:---:|:---:|
+|   &#8595;   |||||||
+| Initializer |    &#8594;     | Keypad| &#8594; | (Initializer)||
+|             |    &#8594;     | Threadloop|  |||
+|             | |   &#8595;   | |||
+|||   Arbiter   |&#8594;|[Generator] || ||
+|||             |&#8594;|Board |&#8594;| Snake||
+||||||   &#8594;   | Food||
+|||   &#8595;   ||||
+|||  Recorder   |&#8594;|Trail||
+|||   &#8595;   ||||
+|||  Debugger   ||||
+|||   &#8595;   ||||
+|||   Painter   ||||
+|||   &#8595;   ||||
+|||  Messenger  ||||
 
 #### Model-View-Controller
 - Point is the basic unit indicates the coordination of objects, like
