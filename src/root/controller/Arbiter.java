@@ -6,7 +6,7 @@ import root.model.Point;
 import java.util.LinkedList;
 import java.util.Random;
 
-public class Arbiter {
+public final class Arbiter {
     private Random random;
     private Board board;
     public Arbiter(Board board){

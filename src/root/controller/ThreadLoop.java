@@ -8,7 +8,7 @@ import root.view.Painter;
 import static root.Main.*;
 import static root.model.Board.SIZE;
 
-public class ThreadLoop implements Runnable {
+public final class ThreadLoop implements Runnable {
     public boolean running;
     private float interval;
     private float timeInitial, timeLast;

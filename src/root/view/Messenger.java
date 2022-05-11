@@ -10,7 +10,7 @@ import root.model.Board;
 import static root.model.Board.SIZE;
 import static root.view.Painter.SnakeColor;
 
-public class Messenger {
+public final class Messenger {
     private static Color InfoColor = Color.BLACK;
     private static Color DeadColor = Color.RED;
     private static Color OverColor = Color.IVORY;
@@ -92,6 +92,7 @@ public class Messenger {
                 processed = true;
             }
         }
+        else processed = false;
 
     }
 }

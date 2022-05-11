@@ -2,16 +2,12 @@ package root.model;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import static root.model.Board.SIZE;
 
 public class Point {
     private final int x;    // The X coordinate
     private final int y;    // The Y coordinate
     enum slide { X, Y, XY, NONE, WRONG}
-
     enum direction { POS, NEG, STILL, WRONG}
 
     public int getX(){ return x;}
@@ -53,7 +49,6 @@ public class Point {
         Point point = new Point(x, y);
         return point.equals(point.getPointNearGrid());
     }
-
 
     public boolean isAdjacentTo(Point pointNew) {
         return pointNew.distanceTo(new Point(x, y)) <= SIZE;

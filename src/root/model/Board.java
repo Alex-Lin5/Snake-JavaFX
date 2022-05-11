@@ -42,23 +42,26 @@ public final class Board {
     }
 
     public void update() {
-        if (snake.isMoving() & snake.getHead().meetGrid())
-            valid = true;
-        else valid = false;
-        if (!snake.isSpawned() & isCollided()){
-            snake.setDead();
-        }
-        else if (!snake.isMoving());
-        else {
+        if (snake.isMoving()) {
+            if (snake.getHead().meetGrid())
+                valid = true;
+            else valid = false;
+            // update head
             if (food.getPoint().equals(snake.getHead())) {
                 snake.grow();
                 snake.setScore(snake.getScore() + food.getScore());
                 food.setPoint(generatePoint( snake.getBody(),
-                    width, height));
+                        width, height));
             }
             else
                 snake.move(width, height);
+            // set snake dead
+            if (!snake.isSpawned() & isCollided()){
+                snake.setDead();
+            }
+
         }
+        else if (!snake.isMoving());
 
     }
 

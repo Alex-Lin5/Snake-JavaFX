@@ -5,9 +5,9 @@ import root.model.Food;
 import root.model.Trail;
 import root.model.Snake;
 
-public class Debugger {
-    enum status { BACK, FORWARD, STILL};
-    enum len { LONGER, SHORTER, STILL};
+public final class Debugger {
+    enum status { BACK, FORWARD, STILL}
+    enum len { LONGER, SHORTER, STILL}
     status object;
     private boolean on;
     private boolean tuned;
@@ -86,7 +86,7 @@ public class Debugger {
         int stepNow = currentStep-backSteps;
         recorder.setSteps(stepNow);
         recorder.removeData(
-            (Integer) board.getSnake(0).getSerialNum(),
+            board.getSnake(0).getSerialNum(),
                 stepNow);
         backSteps = 0;
         object = status.STILL;

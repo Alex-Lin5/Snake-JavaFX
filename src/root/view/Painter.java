@@ -7,7 +7,7 @@ import root.model.Point;
 
 import static root.model.Board.SIZE;
 //import static root.Main.PANEL
-public class Painter {
+public final class Painter {
     private static Color PadColor = Color.BLACK;
     private static Color FoodColor = Color.WHEAT;
     public static Color SnakeColor = Color.GREEN;

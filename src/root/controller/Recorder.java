@@ -6,7 +6,7 @@ import root.model.Snake;
 
 import java.util.HashMap;
 
-public class Recorder {
+public final class Recorder {
     private int step;
     private int timeTick;
     private final Board board;

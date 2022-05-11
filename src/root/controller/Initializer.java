@@ -9,7 +9,7 @@ import root.model.Keypad;
 
 import static root.Main.*;
 
-public class Initializer {
+public final class Initializer {
     public final GraphicsContext myGraphicsContext;
     public final Canvas myCanvas;
     public final Scene myScene;

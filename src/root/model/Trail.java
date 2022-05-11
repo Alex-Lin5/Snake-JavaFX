@@ -3,7 +3,7 @@ package root.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Trail {
+public final class Trail {
     private HashMap<Integer, Point> head; // current point of head
 //    private ArrayList<Point> head; // current point of head
     private HashMap<Integer, Point> food;
