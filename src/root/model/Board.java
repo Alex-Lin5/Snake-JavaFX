@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 
-public class Board {
+public final class Board {
     public static final int SIZE = 10;
 
     private final int width;
