@@ -1,23 +1,21 @@
 package root.view;
 
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
-import javafx.scene.text.TextAlignment;
 import root.controller.Debugger;
 import root.controller.Recorder;
 import root.model.Board;
+import root.model.Point;
 import root.model.Snake;
 
 import static root.model.Board.SIZE;
 import static root.view.Painter.SnakeColor;
 
 public final class Messenger {
-    private static Color InfoColor = Color.BLACK;
-    private static Color DeadColor = Color.RED;
-    private static Color OverColor = Color.IVORY;
-    private static Color BackgroundColor = Color.WHITE;
+    private static String InfoColor = Palette.BLACK;
+    private static String DeadColor = Palette.RED;
+    private static String OverColor = Palette.WHITE;
+    private static String BackgroundColor = Palette.WHITE;
 
-    private final GraphicsContext gc;
+    private final Pen pen;
     private final Board board;
     private final Recorder recorder;
     private final Debugger debugger;
@@ -29,11 +27,11 @@ public final class Messenger {
     private boolean processed;
 
     public Messenger(final int InfoWidth, final int InfoHeight,
-                     Board board, Recorder recorder, Debugger debugger, GraphicsContext gc) {
+                     Board board, Recorder recorder, Debugger debugger, Pen pen) {
         this.width = board.getWidth();
         this.height = board.getHeight();
         this.board = board;
-        this.gc = gc;
+        this.pen = pen;
         this.recorder = recorder;
         this.debugger = debugger;
         PanelWidth = InfoWidth;
@@ -45,37 +43,39 @@ public final class Messenger {
     public void Print() {
         int lineSpace = 15;
         int columnSpace = 70;
-        gc.setFill(BackgroundColor);
-        gc.fillRect(0, height, width, PanelHeight);
+        pen.setColor(BackgroundColor);
+        pen.drawRect(new Point(0, height),
+                new Point(width, PanelHeight));
 
-        Snake snake = board.getSnake((byte) 0);
+        Snake snake = board.getSnake(0);
         for (int line = 1; line <= 4; line++) {
             if (line == 1) {
-                gc.setFill(SnakeColor);
-                gc.fillRect(5, height + lineSpace*line - SIZE, SIZE, SIZE);
-                gc.setFill(InfoColor);
-                gc.setTextAlign(TextAlignment.LEFT);
-                gc.fillText(snake.getName(), 10 + SIZE, height + lineSpace*line);
-
+                pen.setColor(SnakeColor);
+                pen.drawSquare(new Point(5, height + lineSpace*line - SIZE), SIZE);
+//                pen.fillRect(5, height + lineSpace*line - SIZE, SIZE, SIZE);
+                pen.setColor(InfoColor);
+                pen.setAlign(Pen.Align.LEFT);
+                pen.textCanvas(snake.getName(),
+                    new Point(10 + SIZE, height + lineSpace*line));
             }
             else if (line == 2) {
-                gc.fillText("Score: " + snake.getScore(), 5, height + lineSpace*line);
+                pen.textCanvas("Score: " + snake.getScore(),
+                    new Point(5, height + lineSpace*line));
             }
             else if (line == 3) {
                 if (snake.isDead()) {
-                    gc.setFill(DeadColor);
-                    gc.fillText("Dead.", 5, height + lineSpace * line);
+                    pen.setColor(DeadColor);
+                    pen.textCanvas("Dead.",
+                        new Point(5, height + lineSpace * line));
                 } else if (!snake.isMoving() & !debugger.isOn())
-                    gc.fillText("Resting.", 5, height + lineSpace * line);
-//                gc.fillText("snake " + snake.getSerialNum() + " is resting.", 5, height + lineSpace * line);
-                //        gc.fillText("FPS: " + FPS,5, height+30);
+                    pen.textCanvas("Resting.",
+                        new Point(5, height + lineSpace * line));
             }
             else if (line == 4) {
                 if (debugger.isOn()) {
-                    gc.setFill(InfoColor);
-//                    gc.setTextAlign(TextAlignment.RIGHT);
-//                    gc.fillText("Debugger on", width, height + lineSpace * line);
-                    gc.fillText("Debugger on", 5, height + lineSpace * line);
+                    pen.setColor(InfoColor);
+                    pen.textCanvas("Debugger on",
+                        new Point(5, height + lineSpace * line));
                 }
 
             }
@@ -83,9 +83,10 @@ public final class Messenger {
 
         if (snake.isDead()) {
 //            if (!processed & snake.isDead()) {
-            gc.setFill(OverColor);
-            gc.setTextAlign(TextAlignment.CENTER);
-            gc.fillText("GAME OVER", width / 2, height / 2, 70);
+            pen.setColor(OverColor);
+            pen.setAlign(Pen.Align.CENTER);
+            pen.textCanvas("GAME OVER",
+                new Point(width / 2, height / 2));
             if (!processed) {
                 int life = recorder.getSteps();
                 System.out.printf("Game over on %d steps. TimeTick: %d.\n",

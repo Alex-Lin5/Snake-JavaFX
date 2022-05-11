@@ -17,39 +17,68 @@ public final class Pen implements Toolkit {
     }
 
     @Override
-    public void drawSquare(Color theColor, Point location,
+    public void setColor(String color) {
+        Color colorNew = Color.web(color, 1);
+        gc.setFill(colorNew);
+        gc.setStroke(colorNew);
+    }
+
+    @Override
+    public void drawRect(Point start, Point end) {
+        gc.fillRect(start.getX(), start.getY(), end.getX(), end.getY());
+    }
+
+    @Override
+    public void drawSquare(Point location,
                            int size) {
-        gc.setFill(theColor);
         gc.fillRect(location.getX(), location.getY(), size, size);
     }
 
     @Override
-    public void drawLine(Color theColor, Point start, Point end,
+    public void drawLine(Point start, Point end,
                          int strokeWidth) {
-        gc.setFill(theColor);
         gc.strokeLine(start.getX(), start.getY(),
                 end.getX(), end.getY());
     }
 
     @Override
-    public void drawGrid(Color theColor, int width, int height, int size) {
-        gc.setFill(theColor);
+    public void drawGrid(int width, int height, int size) {
         for (int i=0; i<width/size; i++)
             gc.strokeLine(i*size, 0, i*size, height-gc.getLineWidth());
         for (int i=0; i<height/size; i++)
             gc.strokeLine(0, i*size, width-gc.getLineWidth(), i*size);
     }
 
+    enum Align{
+        LEFT(TextAlignment.LEFT),
+        RIGHT(TextAlignment.RIGHT), 
+        CENTER(TextAlignment.CENTER);
+        
+        TextAlignment position;
+        Align(TextAlignment pos) {
+            this.position = pos;
+        }
+        public TextAlignment getLib(){
+            return position;
+        }
+//        public String  getStr(){
+//            return "0";
+//        }
+    }
+
     @Override
-    public void typeCanvas(Color theColor, String text,
-                           align pos, Point location) {
-        gc.setFill(theColor);
-        gc.setTextAlign(TextAlignment.CENTER);
+    public void setAlign(Align pos) {
+        gc.setTextAlign(pos.getLib());
+
+    }
+
+    @Override
+    public void textCanvas(String text, Point location) {
         gc.fillText(text, location.getX(), location.getY());
     }
 
     @Override
-    public void typeConsole(String text) {
+    public void inkConsole(String text) {
         System.out.print(text);
     }
 }

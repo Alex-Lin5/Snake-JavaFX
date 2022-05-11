@@ -4,6 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import root.model.Board;
 import root.view.Messenger;
 import root.view.Painter;
+import root.view.Pen;
 
 import static root.Main.*;
 import static root.model.Board.SIZE;
@@ -20,15 +21,16 @@ public final class ThreadLoop implements Runnable {
     private final Recorder recorder;
     private final Debugger debugger;
 
-//    public ThreadLoop(Pen canvas) {
-    public ThreadLoop(GraphicsContext gc) {
+    public ThreadLoop(Pen pen) {
+//    public ThreadLoop(GraphicsContext gc) {
         board = new Board(BOARD_WIDTH, BOARD_HEIGHT);
         engine = new Engine(board, 1, false);
         recorder = new Recorder(board, engine);
         debugger = new Debugger(board, recorder);
 
-        painter = new Painter(board, gc);
-        messenger = new Messenger(PANEL_WIDTH, PANEL_HEIGHT, board, recorder, debugger, gc);
+        painter = new Painter(board, pen);
+        messenger = new Messenger(PANEL_WIDTH, PANEL_HEIGHT,
+                board, recorder, debugger, pen);
 
         running = true;
         timeInitial = System.currentTimeMillis();

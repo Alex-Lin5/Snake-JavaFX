@@ -16,7 +16,7 @@ public final class Initializer {
     private final Scene myScene;
     private final Stage myStage;
     
-    private final Pen myCanvas;
+    private final Pen pen;
 
     public Initializer(Stage myStage) {
         StackPane myStack = new StackPane();
@@ -27,7 +27,7 @@ public final class Initializer {
         myStack.getChildren().add(canvasFX);
         myScene = new Scene(myStack);
         this.myStage = myStage;
-        myCanvas = new Pen(myGraphicsContext);
+        pen = new Pen(myGraphicsContext);
     }
     public void initialize() {
         myStage.setResizable((false));
@@ -36,8 +36,8 @@ public final class Initializer {
         myStage.setScene(myScene);
         myStage.show();
 
-        ThreadLoop loop = new ThreadLoop(myGraphicsContext);
-//        ThreadLoop loop = new ThreadLoop(myCanvas);
+//        ThreadLoop loop = new ThreadLoop(myGraphicsContext);
+        ThreadLoop loop = new ThreadLoop(pen);
         Keypad keypad1 = new Keypad(loop, canvasFX, myStage);
         keypad1.getKey();
         new Thread(loop).start();
