@@ -2,7 +2,7 @@ package root.model.Point;
 
 import static root.model.Board.SIZE;
 
-public final class RectPoint extends Point{
+public final class RectPoint extends BasePoint {
     public enum slide { X, Y, XY, NONE, WRONG}
     public enum direction { POS, NEG, STILL, WRONG}
 

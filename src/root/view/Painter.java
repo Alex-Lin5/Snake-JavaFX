@@ -3,16 +3,16 @@ package root.view;
 import root.model.Board;
 import root.model.Food;
 import root.model.Point.RectPoint;
-//import root.model.RectPoint;
+
 import root.model.Snake;
 
 import static root.model.Board.SIZE;
 public final class Painter {
-    private static String PadColor = Palette.BLACK;
-    private static String FoodColor = Palette.WHEAT;
-    public static String SnakeColor = Palette.BROWN;
-    private static String GridColor = Palette.GREY;
-    private static String DeadColor = Palette.RED;
+    private static Color PadColor = Color.BLACK;
+    private static Color FoodColor = Color.WHEAT;
+    public static Color SnakeColor = Color.BROWN;
+    private static Color GridColor = Color.GREY;
+    private static Color DeadColor = Color.RED;
     private static int size = SIZE;
     private final Pen pen;
     private final Board board;
@@ -30,10 +30,10 @@ public final class Painter {
 
         pen.setColor(GridColor);
         pen.drawGrid(board.getWidth(), board.getHeight(), size);
+
         pen.setColor(FoodColor);
         for (Food food: board.getFoodList())
             pen.drawSquare(food.getPoint(), size);
-
 
         pen.setColor(SnakeColor);
         for(int i=0; i<snake.getLength()-1; i++) {

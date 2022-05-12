@@ -12,10 +12,10 @@ import static root.model.Board.SIZE;
 import static root.view.Painter.SnakeColor;
 
 public final class Messenger {
-    private static String InfoColor = Palette.BLACK;
-    private static String DeadColor = Palette.RED;
-    private static String OverColor = Palette.WHITE;
-    private static String BackgroundColor = Palette.WHITE;
+    private static Color InfoColor = Color.BLACK;
+    private static Color DeadColor = Color.RED;
+    private static Color OverColor = Color.WHITE;
+    private static Color BackgroundColor = Color.WHITE;
 
     private final Pen pen;
     private final Board board;
@@ -53,7 +53,6 @@ public final class Messenger {
             if (line == 1) {
                 pen.setColor(SnakeColor);
                 pen.drawSquare(new RectPoint(5, height + lineSpace*line - SIZE), SIZE);
-//                pen.fillRect(5, height + lineSpace*line - SIZE, SIZE, SIZE);
                 pen.setColor(InfoColor);
                 pen.setAlign(Pen.Align.LEFT);
                 pen.textCanvas(snake.getName(),
@@ -83,7 +82,6 @@ public final class Messenger {
         }
 
         if (snake.isDead()) {
-//            if (!processed & snake.isDead()) {
             pen.setColor(OverColor);
             pen.setAlign(Pen.Align.CENTER);
             pen.textCanvas("GAME OVER",

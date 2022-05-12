@@ -2,11 +2,11 @@ package root.view;
 
 import javafx.scene.text.TextAlignment;
 import root.model.Point.RectPoint;
-//import root.model.RectPoint;
+
 
 public interface Toolkit {
     void clearField(RectPoint start, RectPoint end);
-    void setColor(String color);
+    void setColor(Color color);
     // for painter
     void drawRect(RectPoint start, RectPoint end);
     void drawSquare(RectPoint location, int size);

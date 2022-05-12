@@ -60,7 +60,6 @@ public final class Engine {
         int width, height;
         width = board.getWidth();
         height = board.getHeight();
-//        food.getPoint().x = 2;
 
         if (snake.isMoving()) {
             if (snake.getHead().meetGrid())

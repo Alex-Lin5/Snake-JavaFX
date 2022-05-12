@@ -1,12 +1,10 @@
 package root.controller;
 
-import javafx.scene.canvas.GraphicsContext;
 import root.model.Board;
 import root.view.Messenger;
 import root.view.Painter;
 import root.view.Pen;
 
-import static root.Main.*;
 import static root.model.Board.SIZE;
 
 public final class ThreadLoop implements Runnable {

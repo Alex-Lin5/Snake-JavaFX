@@ -4,7 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import root.model.Point.RectPoint;
-//import root.model.RectPoint;
+
 
 public final class Pen implements Toolkit {
     private final GraphicsContext gc;
@@ -18,8 +18,8 @@ public final class Pen implements Toolkit {
     }
 
     @Override
-    public void setColor(String color) {
-        Color colorNew = Color.web(color, 1);
+    public void setColor(root.view.Color color) {
+        Color colorNew = Color.web(color.getWeb(), 1);
         gc.setFill(colorNew);
         gc.setStroke(colorNew);
     }
