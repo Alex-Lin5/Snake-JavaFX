@@ -13,12 +13,13 @@ For development purpose, please follow the instruction below.
 - Go through the official JavaFX getting started guide from [here](https://openjfx.io/openjfx-docs/#introduction)
   - The guide provide basic hello world demonstration on system terminal
   - If you use certain IDE or build tool, you can skip to specific topic
-- For IntelliJ environment, you will include two more modules to compile 
-the project by adding VM options on configurations,
-it is default hidden on the user interface in Windows OS, you can find it
-in the top-right corner modify options
-- In project structure, set the language level to 17 or greater, or default
-- Run or debug project !
+- For IntelliJ environment
+  - include two more modules to compile 
+  the project by adding VM options on configurations,
+  it is default hidden on the user interface in Windows OS, you can find it
+  in the top-right corner modify options
+  - In project structure, set the language level to 17 or greater, or default
+- Run or debug project!
 
 #### Gaming
 - provide a seed to the application, or leave empty let the application 
@@ -61,7 +62,7 @@ file I/O involved
 More?
 
 ## Architecture
-This project applies Model-View-Controller, and Singleton design pattern. 
+This project applies Model-View-Controller, adapter and Singleton design pattern. 
 
 Table below concludes the process of instantiating different objects.
 
@@ -69,10 +70,10 @@ Table below concludes the process of instantiating different objects.
 |:-----------:|:----------------:|:-----:|:---:|:---:|:---:|:---:|:---:|:---:|
 |   &#8595;   |||||||
 | Initializer |    &#8594;     |Threadloop|
-|| &#8594;|Pen|---|[Palette]|||||
+|| &#8594;|Pen|---|[Color]|||||
 |             |    &#8594;     |  Keypad| &#8594; | (Initializer)||  
 |             | |   &#8595;   | |||
-|             ||Board |&#8594;| Snake|***|RectPoint|+++|Point
+|             ||Board |&#8594;| Snake|***|RectPoint|+++|BasePoint
 ||||   &#8594;   | Food|||
 |||   &#8595;   ||||
 |||   Engine   || || ||
@@ -85,22 +86,53 @@ Table below concludes the process of instantiating different objects.
 |||   &#8595;   ||||
 |||  Messenger  ||||
 
-#### Model-View-Controller
-- Point is the basic unit indicates the coordination of objects, like
-snake and foodBase
-- Snake and foodBase are instantiated on the board, initialization of snake
-and foodBase are controlled by engine
-- Board, debugger, recorder are instantiated on the thread
+
+### Model-View-Controller
+#### - Model
+- Package Point is the basic unit indicates the coordination of objects, like
+snake and food
+- BasePoint provide equals and hashCode method to support the manipulation of 
+Collection
+- RectPoint is inherited from BasePoint, all objects calls the RectPoint as
+their attributes
+- Might implement HexPoint inherited from BasePoint as another approach to 
+operate model
+- Keypad receive keyboard input event and respond to snake and other objects
+- snakeList and foodList are instantiated on the board
+- Food is enumed as different types of functional food, and stored in foodList
+- Snake performs grow, move and molt as it is included in the class file 
+#### - View
+- Enum Color with several provide color like black, red and white etc., each
+one stores a web value as string passed to member method in pen
+- Color is passed to snake and food as static object as part of attribute
+- Painter will paint the GUI of board, snake body is partially painted, the
+head and tail is painted independently for sliding through the grid
+- Messenger will provide information of game, like snake info including name,
+color, score and status, and debugger status indication
+
+
+####    - Controller
 - Initializer is instantiated as the JavaFX application is started,
 and whenever the game is restarted
+- Engine initializes and manipulates snake and food in certain rule
 - Class Trail stores the history behavior of snake in 
-length, head, score regarding the time stamp
-- Painter will paint the GUI of board, Messenger will provide
-information of snake
+length, head, score, and food location regarding the time stamp
+- Recorder controls the process of class trail recording in steps
+- debugger is not working if engine is running, the status is indicated by
+a boolean value. While the debugger is on, it checks the current status and 
+setup the snake and food step by step, then cleans out the history behine the
+current step
 
-#### Singleton
-Initializer, recorder, debugger, painter, messenger are instantiated
-once in the application in 1 thread.
+### Adapter
+- Class Pen implement Toolkit interface including the basic method required
+for drawing and texting, it isolated the code of project and JavaFX libray code.
+- User-defined class Color is provided as enum that passed to the method in 
+class Pen
+
+### Singleton
+Initializer, engine, recorder, debugger, painter, messenger, pen are instantiated
+once in the application in 1 thread. Basically thye are the
+objects placed in first and second column of the instantiating table.
 ## Demonstration
 ![link](Images/Play.png "Title text") \
 Playing video
@@ -126,8 +158,10 @@ error that certain package is not found
 ## Acknowledge
 - Professor Nadeem Ghani \
   https://ecs.syracuse.edu/faculty-staff/nadeem-ghani
-  - Provide suggestion on cleaning up Point class 
-  - Provide suggestion of instantiate a static board to be referenced
+  - Provide suggestion of overriding equals and hashcode method,
+  and idea of possible HexPoint implementation as fundamental logic regarding
+   Point class
+  - Provide idea of instantiate a static board to be referenced
   by other objects
 
 - snake project by @Subh0m0y or @hungrybluedev \
