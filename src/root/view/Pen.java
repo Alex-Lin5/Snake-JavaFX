@@ -3,7 +3,8 @@ package root.view;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
-import root.model.Point;
+import root.model.Point.RectPoint;
+//import root.model.RectPoint;
 
 public final class Pen implements Toolkit {
     private final GraphicsContext gc;
@@ -11,7 +12,7 @@ public final class Pen implements Toolkit {
         gc = graph;
     }
     @Override
-    public void clearField(Point start, Point end) {
+    public void clearField(RectPoint start, RectPoint end) {
         gc.clearRect(start.getX(), start.getY(),
             end.getX(), end.getY());
     }
@@ -24,18 +25,18 @@ public final class Pen implements Toolkit {
     }
 
     @Override
-    public void drawRect(Point start, Point end) {
+    public void drawRect(RectPoint start, RectPoint end) {
         gc.fillRect(start.getX(), start.getY(), end.getX(), end.getY());
     }
 
     @Override
-    public void drawSquare(Point location,
+    public void drawSquare(RectPoint location,
                            int size) {
         gc.fillRect(location.getX(), location.getY(), size, size);
     }
 
     @Override
-    public void drawLine(Point start, Point end,
+    public void drawLine(RectPoint start, RectPoint end,
                          int strokeWidth) {
         gc.strokeLine(start.getX(), start.getY(),
                 end.getX(), end.getY());
@@ -69,7 +70,7 @@ public final class Pen implements Toolkit {
     }
 
     @Override
-    public void textCanvas(String text, Point location) {
+    public void textCanvas(String text, RectPoint location) {
         gc.fillText(text, location.getX(), location.getY());
     }
 

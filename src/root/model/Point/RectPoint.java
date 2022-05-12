@@ -1,58 +1,41 @@
-package root.model;
-
-import org.jetbrains.annotations.NotNull;
+package root.model.Point;
 
 import static root.model.Board.SIZE;
 
-public final class Point {
-    private final int x;    // The X coordinate
-    private final int y;    // The Y coordinate
-    enum slide { X, Y, XY, NONE, WRONG}
-    enum direction { POS, NEG, STILL, WRONG}
+public final class RectPoint extends Point{
+    public enum slide { X, Y, XY, NONE, WRONG}
+    public enum direction { POS, NEG, STILL, WRONG}
 
-    public int getX(){ return x;}
-    public int getY(){ return y;}
-    public Point(final int x, final int y) {
-        this.x = x;
-        this.y = y;
+    public RectPoint(int x, int y) {
+        super(x, y);
     }
-
-    @Override
-    public boolean equals(@NotNull Object pointOther) {
-        if (!(pointOther instanceof Point point)) return false;
-        return point.getX() == x & point.getY() == y;
-    }
-    @Override
-    public int hashCode(){
-        return x << 16 + y;
-    }
-    public int distanceTo(Point pointNew) {
+    public int distanceTo(RectPoint pointNew) {
         int distance;
         distance = Math.abs(pointNew.getX() - x) +
                 Math.abs(pointNew.getY() - y);
         return distance;
     }
-    public Point getPointOnGrid() {
+    public RectPoint getPointOnGrid() {
         float xF = (float) x;
         float yF = (float) y;
         Number xNew = Math.floor(xF/SIZE)*SIZE;
         Number yNew = Math.floor(yF/SIZE)*SIZE;
-        return new Point(xNew.intValue(), yNew.intValue());
+        return new RectPoint(xNew.intValue(), yNew.intValue());
     }
-    public Point getPointNearGrid() {
-        return new Point(
-            Math.round(x/SIZE)*SIZE,
-            Math.round(y/SIZE)*SIZE);
+    public RectPoint getPointNearGrid() {
+        return new RectPoint(
+                Math.round(x/SIZE)*SIZE,
+                Math.round(y/SIZE)*SIZE);
     }
     public boolean meetGrid() {
-        Point point = new Point(x, y);
+        RectPoint point = new RectPoint(x, y);
         return point.equals(point.getPointNearGrid());
     }
 
-    public boolean isAdjacentTo(Point pointNew) {
-        return pointNew.distanceTo(new Point(x, y)) <= SIZE;
+    public boolean isAdjacentTo(RectPoint pointNew) {
+        return pointNew.distanceTo(new RectPoint(x, y)) <= SIZE;
     }
-    public direction directionTo(Point pointNew) {
+    public direction directionTo(RectPoint pointNew) {
         int xNew, yNew;
         xNew = pointNew.getX(); yNew = pointNew.getY();
         if (x == xNew & y == yNew) return direction.STILL;
@@ -64,7 +47,7 @@ public final class Point {
             return direction.NEG;
         return direction.WRONG;
     }
-    public slide slideInXY(Point pointNew) {
+    public slide slideInXY(RectPoint pointNew) {
         int xNew, yNew;
         xNew = pointNew.getX(); yNew = pointNew.getY();
         if (x == xNew & y == yNew) return slide.NONE; // no slide

@@ -65,15 +65,15 @@ This project applies Model-View-Controller, and Singleton design pattern.
 
 Table below concludes the process of instantiating different objects.
 
-|    Main     |||||||
-|:-----------:|:----------------:|:-----:|:---:|:---:|:---:|:---:|
+|    Main     |||||||||
+|:-----------:|:----------------:|:-----:|:---:|:---:|:---:|:---:|:---:|:---:|
 |   &#8595;   |||||||
 | Initializer |    &#8594;     |Threadloop|
 || &#8594;|Pen|---|[Palette]|||||
 |             |    &#8594;     |  Keypad| &#8594; | (Initializer)||  
 |             | |   &#8595;   | |||
-|             ||Board |&#8594;| Snake||
-||||   &#8594;   | Food||
+|             ||Board |&#8594;| Snake|***|RectPoint|+++|Point
+||||   &#8594;   | Food|||
 |||   &#8595;   ||||
 |||   Engine   || || ||
 |||   &#8595;   ||||

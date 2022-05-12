@@ -2,7 +2,7 @@ package root.controller;
 
 import root.model.Board;
 import root.model.Food;
-import root.model.Point;
+import root.model.Point.RectPoint;
 import root.model.Snake;
 
 import java.util.LinkedList;
@@ -31,22 +31,22 @@ public final class Engine {
             new LinkedList<>()), serialNum, "Green"));
         Snake snake = board.getSnake(serialNum);
 //        foodList.add(new Food((generatePoint(snake.getBody()))));
-        foodList.add(Food.FoodBase);
-        Food.FoodBase.setPoint(generatePoint(snake.getBody()));
+        foodList.add(Food.Base);
+        Food.Base.setPoint(generatePoint(snake.getBody()));
     }
 
-    public Point generatePoint (LinkedList<Point> list) {
+    public RectPoint generatePoint (LinkedList<RectPoint> list) {
         boolean stacked;
         int x, y;
         int width, height;
         width = board.getWidth();
         height = board.getHeight();
-        Point point;
+        RectPoint point;
         do {
             stacked = false;
             x = generator.nextInt(width);
             y = generator.nextInt(height);
-            point = new Point(x, y);
+            point = new RectPoint(x, y);
             point = point.getPointOnGrid();
             if (list.contains(point))
                 stacked = true;
@@ -60,6 +60,7 @@ public final class Engine {
         int width, height;
         width = board.getWidth();
         height = board.getHeight();
+//        food.getPoint().x = 2;
 
         if (snake.isMoving()) {
             if (snake.getHead().meetGrid())

@@ -2,7 +2,8 @@ package root.view;
 
 import root.model.Board;
 import root.model.Food;
-import root.model.Point;
+import root.model.Point.RectPoint;
+//import root.model.RectPoint;
 import root.model.Snake;
 
 import static root.model.Board.SIZE;
@@ -24,8 +25,8 @@ public final class Painter {
     public void Paint(){
         Snake snake = board.getSnake(0);
         pen.setColor(PadColor);
-        pen.drawRect(new Point(0, 0),
-                new Point(board.getWidth(), board.getHeight()));
+        pen.drawRect(new RectPoint(0, 0),
+                new RectPoint(board.getWidth(), board.getHeight()));
 
         pen.setColor(GridColor);
         pen.drawGrid(board.getWidth(), board.getHeight(), size);

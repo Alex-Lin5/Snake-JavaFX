@@ -1,17 +1,19 @@
 package root.model;
 
+import root.model.Point.RectPoint;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 
 public final class Trail {
-    private final HashMap<Integer, Point> head; // current point of head
+    private final HashMap<Integer, RectPoint> head; // current point of head
     private final HashMap<Integer, LinkedList<Food>> foodList;
     private final HashMap<Integer, Short> length;
     private final HashMap<Integer, Integer> score;
     private int lifespan;
 
-    public Trail(Point head, LinkedList<Food> foodL, Number length) {
-//    public Trail(Point head, Point foodList, Short length) {
+    public Trail(RectPoint head, LinkedList<Food> foodL, Number length) {
+//    public Trail(RectPoint head, RectPoint foodList, Short length) {
         this.head = new HashMap<>();
 //        this.head = new ArrayList<>();
         this.foodList = new HashMap<>();
@@ -64,10 +66,10 @@ public final class Trail {
     public LinkedList<Food> getFood(int step) {
         return foodList.get(getKey(step, foodList));
     }
-    public void setHead(int step, Point point) {
+    public void setHead(int step, RectPoint point) {
         head.put(step, point);
     }
-    public Point getHead(int step) {
+    public RectPoint getHead(int step) {
         return head.get(step);
     }
     public void setLength(int step, Number length) {

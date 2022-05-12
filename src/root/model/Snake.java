@@ -1,5 +1,7 @@
 package root.model;
 
+import root.model.Point.RectPoint;
+
 import java.util.LinkedList;
 
 import static root.model.Board.SIZE;
@@ -9,9 +11,9 @@ public final class Snake {
     private final String name;
     private float speed;
     private int score;
-    private final LinkedList<Point> body;
+    private final LinkedList<RectPoint> body;
 
-    private Point head, tail;
+    private RectPoint head, tail;
     private int distance;
     private int xVelocity;
     private int yVelocity;
@@ -22,7 +24,7 @@ public final class Snake {
     private boolean spawn;
     private boolean growing;
 
-    public Snake(Point SpawnPoint, Byte num, String name) {
+    public Snake(RectPoint SpawnPoint, Byte num, String name) {
         short length = 9;
 
         this.name = name;
@@ -53,7 +55,7 @@ public final class Snake {
         xNew = x + xVelocity;
         yNew = y + yVelocity;
         body.addFirst(head);
-        head = new Point(xNew, yNew);
+        head = new RectPoint(xNew, yNew);
     }
     public void move(int width, int height) {
         int x, y, xNew, yNew;
@@ -65,9 +67,9 @@ public final class Snake {
         y = head.getY();
         xNew = x + xVelocity;
         yNew = y + yVelocity;
-        Point newPoint = new Point(xNew, yNew);
+        RectPoint newPoint = new RectPoint(xNew, yNew);
 
-        Point.direction headDirection, tailDirection;
+        RectPoint.direction headDirection, tailDirection;
 //        headDirection = body.get(1).directionTo(body.get(0));
         tailDirection = body.get(length-1).directionTo(body.get(length-2));
         distance = body.get(0).distanceTo(newPoint);
@@ -82,9 +84,9 @@ public final class Snake {
         if (!isBodyStacked()) { // snake body is not stacked
             spawn = false;
             if (body.get(length-1).isAdjacentTo(body.get(length-2))) {
-                tailMove(Point.direction.POS, tailDirection);}
+                tailMove(RectPoint.direction.POS, tailDirection);}
             else {
-                tailMove(Point.direction.NEG, tailDirection);}
+                tailMove(RectPoint.direction.NEG, tailDirection);}
         }
 //        else tail = tail;
 
@@ -100,65 +102,65 @@ public final class Snake {
 //        head2body0 = body.get(0).distanceTo(head);
 //        tail2bodyr1 = body.get(length-1).distanceTo(tail);
     }
-    private Point wrapMove(int xNew, int yNew, int width, int height) {
-        Point newPoint = new Point(xNew, yNew);
+    private RectPoint wrapMove(int xNew, int yNew, int width, int height) {
+        RectPoint newPoint = new RectPoint(xNew, yNew);
         int stride = SIZE; 
         if (xNew<0) xNew = width-stride;
         if (xNew>width-stride) xNew = 0;
         if (yNew<0) yNew = height-stride;
         if (yNew>height-stride) yNew = 0;
-        Point wrappedPoint = new Point(xNew, yNew);
+        RectPoint wrappedPoint = new RectPoint(xNew, yNew);
         if (!wrappedPoint.equals(newPoint))
             newPoint = wrappedPoint;
         return newPoint;
     }
-    private void headMove(Point newPoint) {
+    private void headMove(RectPoint newPoint) {
 //        int distance = body.get(0).distanceTo(newPoint);
 
         if (turned) {
-            Point.direction front = body.get(0).directionTo(head);
+            RectPoint.direction front = body.get(0).directionTo(head);
             int factor;
-            if (front == Point.direction.POS)
+            if (front == RectPoint.direction.POS)
                 factor = 1;
-            else if (front == Point.direction.NEG)
+            else if (front == RectPoint.direction.NEG)
                 factor = -1;
             else factor = 0;
 
-            if (head.slideInXY(body.get(0)) == Point.slide.X)
-                head = new Point(body.get(0).getX() + factor*distance,
+            if (head.slideInXY(body.get(0)) == RectPoint.slide.X)
+                head = new RectPoint(body.get(0).getX() + factor*distance,
                         body.get(0).getY());
-            else if (head.slideInXY(body.get(0)) == Point.slide.Y)
-                head = new Point(body.get(0).getX(),
+            else if (head.slideInXY(body.get(0)) == RectPoint.slide.Y)
+                head = new RectPoint(body.get(0).getX(),
                         body.get(0).getY() + factor*distance);
-            else if (head.slideInXY(body.get(0)) == Point.slide.NONE)
+            else if (head.slideInXY(body.get(0)) == RectPoint.slide.NONE)
                 head = newPoint;
         }
         else head = newPoint;
 
     }
-    private void tailMove(Point.direction split,
-                          Point.direction tailDirection) {
+    private void tailMove(RectPoint.direction split,
+                          RectPoint.direction tailDirection) {
         int factorS, factorT;
         int length = getLength();
 //        int distance = body.get(0).distanceTo(newPoint);
 
-        if (split == Point.direction.POS)
+        if (split == RectPoint.direction.POS)
             factorS = 1;
-        else if (split == Point.direction.NEG)
+        else if (split == RectPoint.direction.NEG)
             factorS = -1;
         else factorS = 0;
-        if (tailDirection == Point.direction.POS)
+        if (tailDirection == RectPoint.direction.POS)
             factorT = 1;
-        else if (tailDirection == Point.direction.NEG)
+        else if (tailDirection == RectPoint.direction.NEG)
             factorT = -1;
         else factorT = 0;
 
-        if (body.get(length-1).slideInXY(body.get(length-2)) == Point.slide.X)
-            tail= new Point(body.get(length-1).getX() +
+        if (body.get(length-1).slideInXY(body.get(length-2)) == RectPoint.slide.X)
+            tail= new RectPoint(body.get(length-1).getX() +
                     factorS*factorT*distance,
                     body.get(length-1).getY());
-        if (body.get(length-1).slideInXY(body.get(length-2)) == Point.slide.Y)
-            tail = new Point(body.get(length-1).getX(),
+        if (body.get(length-1).slideInXY(body.get(length-2)) == RectPoint.slide.Y)
+            tail = new RectPoint(body.get(length-1).getX(),
                     body.get(length-1).getY() +
                             factorS*factorT*distance);
     }
@@ -211,11 +213,11 @@ public final class Snake {
     public boolean isDead() { return dead;}
     public void setScore(int scoreNew) { this.score = scoreNew;}
     public int getScore() { return score;}
-    public LinkedList<Point> getBody() { return body;}
-    public void setHead(Point point) { head = point;}
-    public Point getHead() { return head;}
-    public Point getTail() { return tail;}
-    public void setTail(Point point) { tail = point;}
+    public LinkedList<RectPoint> getBody() { return body;}
+    public void setHead(RectPoint point) { head = point;}
+    public RectPoint getHead() { return head;}
+    public RectPoint getTail() { return tail;}
+    public void setTail(RectPoint point) { tail = point;}
     public short getLength() { return (short) body.size();}
     public float getSpeed() { return speed;}
     public boolean isTurned() { return turned;}
