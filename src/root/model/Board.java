@@ -3,6 +3,9 @@ package root.model;
 
 import java.util.LinkedList;
 
+import static root.Main.BOARD_HEIGHT;
+import static root.Main.BOARD_WIDTH;
+
 public final class Board {
     public static final int SIZE = 10;
 
@@ -10,16 +13,15 @@ public final class Board {
     private final int height;
     private final LinkedList<Snake> snakeList;
     private final LinkedList<Food> foodList;
-    private byte snakeNum;
+//    private byte snakeNum;
+//    private byte foodNum;
 
-    public Board(final int width, final int height) {
-        this.width = width;
-        this.height = height;
-        snakeNum = 1;
+    public Board() {
+        this.width = BOARD_WIDTH;
+        this.height = BOARD_HEIGHT;
 
         snakeList = new LinkedList<>();
         foodList = new LinkedList<>();
-        foodList.add(new Food());
     }
 
     public int getWidth() { return width;}
@@ -28,8 +30,8 @@ public final class Board {
         return snakeList.get(serialNum.byteValue());
     }
     public LinkedList<Snake> getSnakeList() { return snakeList;}
-    public Food getFood() { return foodList.get(0);}
+    public Food getFood(Number num) { return foodList.get(num.byteValue());}
     public LinkedList<Food> getFoodList() { return foodList;}
-    public byte getSnakeNum() { return snakeNum;}
-    public void setSnakeNum(byte snakeNum) { this.snakeNum = snakeNum;}
+//    public byte getSnakeNum() { return snakeNum;}
+//    public void setSnakeNum(byte snakeNum) { this.snakeNum = snakeNum;}
 }

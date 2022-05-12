@@ -51,9 +51,9 @@ public final class Pen implements Toolkit {
 
     enum Align{
         LEFT(TextAlignment.LEFT),
-        RIGHT(TextAlignment.RIGHT), 
+        RIGHT(TextAlignment.RIGHT),
         CENTER(TextAlignment.CENTER);
-        
+
         TextAlignment position;
         Align(TextAlignment pos) {
             this.position = pos;
@@ -61,15 +61,11 @@ public final class Pen implements Toolkit {
         public TextAlignment getLib(){
             return position;
         }
-//        public String  getStr(){
-//            return "0";
-//        }
     }
 
     @Override
     public void setAlign(Align pos) {
         gc.setTextAlign(pos.getLib());
-
     }
 
     @Override

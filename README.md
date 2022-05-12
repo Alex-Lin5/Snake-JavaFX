@@ -68,13 +68,14 @@ Table below concludes the process of instantiating different objects.
 |    Main     |||||||
 |:-----------:|:----------------:|:-----:|:---:|:---:|:---:|:---:|
 |   &#8595;   |||||||
-| Initializer |    &#8594;     | Keypad| &#8594; | (Initializer)||
-|             |    &#8594;     | Threadloop|  |||
+| Initializer |    &#8594;     |Threadloop|
+|| &#8594;|Pen|---|[Palette]|||||
+|             |    &#8594;     |  Keypad| &#8594; | (Initializer)||  
 |             | |   &#8595;   | |||
 |             ||Board |&#8594;| Snake||
 ||||   &#8594;   | Food||
 |||   &#8595;   ||||
-|||   Arbiter   || || ||
+|||   Engine   || || ||
 |||   &#8595;   ||||
 |||  Recorder   |&#8594;|Trail||
 |||   &#8595;   ||||

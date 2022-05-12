@@ -1,25 +1,26 @@
 package root.model;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public final class Trail {
-    private HashMap<Integer, Point> head; // current point of head
-    private HashMap<Integer, Point> food;
-    private HashMap<Integer, Short> length;
-    private HashMap<Integer, Integer> score;
+    private final HashMap<Integer, Point> head; // current point of head
+    private final HashMap<Integer, LinkedList<Food>> foodList;
+    private final HashMap<Integer, Short> length;
+    private final HashMap<Integer, Integer> score;
     private int lifespan;
 
-    public Trail(Point head, Point food, Number length) {
-//    public Trail(Point head, Point food, Short length) {
+    public Trail(Point head, LinkedList<Food> foodL, Number length) {
+//    public Trail(Point head, Point foodList, Short length) {
         this.head = new HashMap<>();
 //        this.head = new ArrayList<>();
-        this.food = new HashMap<>();
+        this.foodList = new HashMap<>();
         this.length = new HashMap<>();
         score = new HashMap<>();
 
         lifespan = 0;
         this.head.put(0, head);
-        this.food.put(0, food);
+        this.foodList.put(0, foodL);
         this.length.put(0, length.shortValue());
         score.put(0, 0);
     }
@@ -27,7 +28,7 @@ public final class Trail {
     public void removeFrom(Integer step) {
         removeKeys(step, head);
 
-        removeKeys(step, food);
+        removeKeys(step, foodList);
         removeKeys(step, length);
         removeKeys(step, score);
         lifespan = step;
@@ -44,8 +45,8 @@ public final class Trail {
         int target = step;
         int min = step;
         for (Integer key: obj.keySet()) {
-            if (key == step) break;
-            else if (key > step) ;
+            if (key.equals(step)) break;
+//            else if (key > step) ;
             else if (key < step) {
                 if (step-key <= min) {
                     min = step-key;
@@ -57,11 +58,11 @@ public final class Trail {
     }
     public int getLifespan() { return lifespan;}
     public void setLifespan(int step) { lifespan = step;}
-    public void setFood(int step, Point point) {
-        food.put(step, point);
+    public void setFood(int step, LinkedList<Food> point) {
+        foodList.put(step, point);
     }
-    public Point getFood(int step) {
-        return food.get(getKey(step, food));
+    public LinkedList<Food> getFood(int step) {
+        return foodList.get(getKey(step, foodList));
     }
     public void setHead(int step, Point point) {
         head.put(step, point);
@@ -85,7 +86,7 @@ public final class Trail {
 }
 
 //class packet{
-//    private Food food;
+//    private Food foodList;
 //    private int length;
 //    private int score;
 //}

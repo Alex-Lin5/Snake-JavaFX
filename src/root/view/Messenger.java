@@ -6,6 +6,8 @@ import root.model.Board;
 import root.model.Point;
 import root.model.Snake;
 
+import static root.Main.PANEL_HEIGHT;
+import static root.Main.PANEL_WIDTH;
 import static root.model.Board.SIZE;
 import static root.view.Painter.SnakeColor;
 
@@ -26,16 +28,15 @@ public final class Messenger {
     private final int PanelHeight;
     private boolean processed;
 
-    public Messenger(final int InfoWidth, final int InfoHeight,
-                     Board board, Recorder recorder, Debugger debugger, Pen pen) {
+    public Messenger(Board board, Recorder recorder, Debugger debugger, Pen pen) {
         this.width = board.getWidth();
         this.height = board.getHeight();
         this.board = board;
         this.pen = pen;
         this.recorder = recorder;
         this.debugger = debugger;
-        PanelWidth = InfoWidth;
-        PanelHeight = InfoHeight;
+        PanelWidth = PANEL_WIDTH;
+        PanelHeight = PANEL_HEIGHT;
 
     }
 

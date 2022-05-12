@@ -1,7 +1,5 @@
 package root.view;
 
-import javafx.scene.paint.Color;
-
 public class Palette {
 //    Color(double red, double green, double blue, double opacity)
 //    Color c = Color.web("0x0000FF",1.0);

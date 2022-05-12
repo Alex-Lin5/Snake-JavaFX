@@ -22,15 +22,13 @@ public final class ThreadLoop implements Runnable {
     private final Debugger debugger;
 
     public ThreadLoop(Pen pen) {
-//    public ThreadLoop(GraphicsContext gc) {
-        board = new Board(BOARD_WIDTH, BOARD_HEIGHT);
+        board = new Board();
         engine = new Engine(board, 1, false);
         recorder = new Recorder(board, engine);
         debugger = new Debugger(board, recorder);
 
         painter = new Painter(board, pen);
-        messenger = new Messenger(PANEL_WIDTH, PANEL_HEIGHT,
-                board, recorder, debugger, pen);
+        messenger = new Messenger(board, recorder, debugger, pen);
 
         running = true;
         timeInitial = System.currentTimeMillis();
