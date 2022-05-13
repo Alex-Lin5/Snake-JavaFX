@@ -5,6 +5,7 @@ import root.model.Food;
 import root.model.Point.RectPoint;
 import root.model.Snake;
 
+import java.awt.*;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -12,6 +13,8 @@ public final class Engine {
     private final Random generator;
     private final Board board;
     private final long seed;
+//    private LinkedList<Snake> snakeList;
+//    private LinkedList<Food> foodList;
     private boolean valid;
 
     public Engine(Board board, long seedNew, boolean receive){
@@ -19,6 +22,8 @@ public final class Engine {
         Byte serialNum = (byte) 0;
         LinkedList<Snake> snakeList = board.getSnakeList();
         LinkedList<Food> foodList = board.getFoodList();
+//        snakeList = board.getSnakeList();
+//        foodList = board.getFoodList();
         valid = false;
         generator = new Random();
         if (receive)
@@ -29,10 +34,9 @@ public final class Engine {
 
         snakeList.add(new Snake(generatePoint(
             new LinkedList<>()), serialNum, "Green"));
-        Snake snake = board.getSnake(serialNum);
-//        foodList.add(new Food((generatePoint(snake.getBody()))));
         foodList.add(Food.Base);
-        Food.Base.setPoint(generatePoint(snake.getBody()));
+//        Food.Base.setPoint(generatePoint(snake.getBody()));
+        Food.Base.setPoint(generatePoint(board.getSnakeBodyList()));
     }
 
     public RectPoint generatePoint (LinkedList<RectPoint> list) {
@@ -66,10 +70,12 @@ public final class Engine {
                 valid = true;
             else valid = false;
             // update head
-            if (food.getPoint().equals(snake.getHead())) {
+            if (board.getFoodPointList().contains(snake.getHead())) {
+//                if (food.getPoint().equals(snake.getHead())) {
                 snake.grow();
                 snake.setScore(snake.getScore() + food.getScore());
-                food.setPoint(generatePoint(snake.getBody()));
+                board.getFood(0).setPoint(generatePoint(snake.getBody()));
+//                food.setPoint(generatePoint(snake.getBody()));
             }
             else
                 snake.move(width, height);
@@ -80,6 +86,9 @@ public final class Engine {
 
         }
         else if (!snake.isMoving());
+        if (valid) {
+            board.printStatus();
+        }
 
     }
 

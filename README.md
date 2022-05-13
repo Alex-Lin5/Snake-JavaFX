@@ -24,7 +24,7 @@ For development purpose, please follow the instruction below.
 #### Gaming
 - provide a seed to the application, or leave empty let the application 
 decide by itself, the random seed is for specific snake spawn point and 
-foodBase generation pattern
+food generation pattern
 - set up the initial length of snake
 - control the snake by four arrow keys, press `DIGIT 1` to pause moving
 - press `DIGIT 0` to enable debugger mode, press `PAGE_UP` and `PAGE_DOWN`
@@ -161,7 +161,7 @@ error that certain package is not found
   - Provide suggestion of overriding equals and hashcode method,
   and idea of possible HexPoint implementation as fundamental logic regarding
    Point class
-  - Provide idea of instantiate a static board to be referenced
+  - Provide idea of instantiating a static board to be referenced
   by other objects
 
 - snake project by @Subh0m0y or @hungrybluedev \

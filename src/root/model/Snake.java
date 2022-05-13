@@ -23,6 +23,7 @@ public final class Snake {
     private boolean moving;
     private boolean spawn;
     private boolean growing;
+    private boolean molting;
 
     public Snake(RectPoint SpawnPoint, Byte num, String name) {
         short length = 9;
@@ -38,6 +39,7 @@ public final class Snake {
         moving = false;
         spawn = true;
         growing = false;
+        molting = false;
 
         head = SpawnPoint;
         tail = SpawnPoint;
@@ -49,7 +51,6 @@ public final class Snake {
     public void grow() {
         int x, y, xNew, yNew;
         growing = true;
-//        length += 1;
         x = head.getX();
         y = head.getY();
         xNew = x + xVelocity;
@@ -164,6 +165,9 @@ public final class Snake {
                     body.get(length-1).getY() +
                             factorS*factorT*distance);
     }
+    public void molt(){
+
+    }
     private boolean isBodyStacked() {
         boolean stacked = false;
         int length = getLength();
@@ -221,5 +225,5 @@ public final class Snake {
     public short getLength() { return (short) body.size();}
     public float getSpeed() { return speed;}
     public boolean isTurned() { return turned;}
-    
+    public boolean isMolting() { return molting;}
 }

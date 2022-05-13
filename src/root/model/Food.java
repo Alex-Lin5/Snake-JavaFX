@@ -17,5 +17,6 @@ public enum Food {
         return score;
     }
     public void setPoint(RectPoint pt) { point = pt;}
-    public RectPoint getPoint() {return point;}
+    public RectPoint getPoint() { return point;}
+    public byte getSerialNum() { return serialNum;}
 }

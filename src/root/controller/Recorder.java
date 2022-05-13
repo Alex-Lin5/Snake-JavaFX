@@ -1,6 +1,8 @@
 package root.controller;
 
 import root.model.Board;
+import root.model.Food;
+import root.model.Point.RectPoint;
 import root.model.Trail;
 import root.model.Snake;
 
@@ -33,12 +35,13 @@ public final class Recorder {
         timeTick += 1;
         if (engine.isValid()) {
             step += 1;
-            value.setHead(step, snake.getBody().get(0));
+            board.setStep(step);
+            value.addHead(step, snake.getBody().get(0));
             if (snake.isGrowing()) {
 //                value.setFood(step, board.getFood().getPoint());
-                value.setFood(step, board.getFoodList());
-                value.setLength(step, snake.getLength());
-                value.setScore(step, snake.getScore());
+                value.addFoodList(step, board.getFoodList());
+                value.addLength(step, snake.getLength());
+                value.addScore(step, snake.getScore());
             }
             value.setLifespan(step);
 
@@ -78,6 +81,18 @@ public final class Recorder {
             "%s Step: %d, Score: %d, length: %d, head on (%d, %d).\n",
             sign, step, data.getScore(step), data.getLength(step),
             data.getHead(step).getX(), data.getHead(step).getY());
+        printFood(serialNum, step);
+    }
+    private void printFood(Number serialNum, Integer step){
+        Trail data = getData(serialNum);
+        System.out.printf("Food:");
+        int index = 1;
+        for (Food food: data.getFoodList(step)) {
+            System.out.printf("%d tag%s = (%d, %d). ", index, food.getSerialNum(),
+                food.getPoint().getX(), food.getPoint().getY());
+            index++;
+        }
+        System.out.printf("\n");
     }
     public void setSteps(int step) { this.step = step;}
     public int getTimeTick() { return timeTick;}

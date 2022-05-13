@@ -26,6 +26,7 @@ public final class Messenger {
     private final int height;
     private final int PanelWidth;
     private final int PanelHeight;
+    private int step;
     private boolean processed;
 
     public Messenger(Board board, Recorder recorder, Debugger debugger, Pen pen) {
@@ -37,6 +38,7 @@ public final class Messenger {
         this.debugger = debugger;
         PanelWidth = PANEL_WIDTH;
         PanelHeight = PANEL_HEIGHT;
+        step = 0;
 
     }
 
@@ -70,6 +72,23 @@ public final class Messenger {
                 } else if (!snake.isMoving() & !debugger.isOn())
                     pen.textCanvas("Resting.",
                         new RectPoint(5, height + lineSpace * line));
+                else if (snake.isMoving())
+                    pen.textCanvas("Moving",
+                        new RectPoint(5, height + lineSpace * line));
+//                if (snake.isGrowing() ) {
+//                    step = recorder.getSteps();
+//                    processed = true;
+//                }
+//                else if (processed & step+3 > recorder.getSteps())
+//                    pen.textCanvas("Growing",
+//                        new RectPoint(5, height + lineSpace * line));
+//                else processed = false;
+
+
+//                if (snake.isMolting())
+//                    pen.textCanvas("Molting",
+//                            new RectPoint(5, height + lineSpace * line));
+
             }
             else if (line == 4) {
                 if (debugger.isOn()) {
@@ -77,7 +96,6 @@ public final class Messenger {
                     pen.textCanvas("Debugger on",
                         new RectPoint(5, height + lineSpace * line));
                 }
-
             }
         }
 
@@ -93,6 +111,7 @@ public final class Messenger {
                 recorder.printDeath((byte) 0);
                 processed = true;
             }
+//            processed = false;
         }
         else processed = false;
 

@@ -5,6 +5,8 @@ import root.model.Food;
 import root.model.Trail;
 import root.model.Snake;
 
+import java.util.LinkedList;
+
 public final class Debugger {
     enum status { BACK, FORWARD, STILL}
     enum len { LONGER, SHORTER, STILL}
@@ -31,10 +33,12 @@ public final class Debugger {
             tuned = true;
             currentStep = recorder.getSteps();
         }
-
         checkStatus();
-        setSnake();
-        setFood();
+        if (object != status.STILL) {
+            setSnake();
+            setFood();
+            recorder.printValue(0, nextStep, object);
+        }
         currentStep = nextStep;
     }
 
@@ -77,8 +81,8 @@ public final class Debugger {
         snake.setHead(snake.getBody().get(0));
         snake.setTail(snake.getBody().get(length-1));
 
-        if (object != status.STILL)
-            recorder.printValue(0, nextStep, object);
+//        if (object != status.STILL)
+//            recorder.printValue(0, nextStep, object);
 //        currentStep = nextStep;
         }
 
@@ -108,9 +112,13 @@ public final class Debugger {
         Trail value = recorder.getData(0);
 //        for (Food food: board.getFoodList())
 //            food.setPoint();
-        for (int i=0; i<board.getFoodList().size(); i++) {
-            board.getFood(i).setPoint(
-                    value.getFood(currentStep).get(i).getPoint());
+        board.getFoodList().clear();
+        for (int i=0; i<value.getFoodList(currentStep).size(); i++) {
+            board.getFoodList().add(
+                value.getFoodList(currentStep).get(i));
+//            for (int i=0; i<board.getFoodList().size(); i++) {
+//            board.getFood(i).setPoint(
+//                    value.getFoodList(currentStep).get(i).getPoint());
         }
 //        board.getFood().setPoint(value.getFood(currentStep));
 //        board.getFood() = new Food(value.getFood(currentStep));

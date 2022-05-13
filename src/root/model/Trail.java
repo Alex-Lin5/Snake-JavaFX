@@ -59,26 +59,30 @@ public final class Trail {
         return target;
     }
     public int getLifespan() { return lifespan;}
-    public void setLifespan(int step) { lifespan = step;}
-    public void setFood(int step, LinkedList<Food> point) {
-        foodList.put(step, point);
+    public void setLifespan(Integer step) { lifespan = step;}
+    public void addFoodList(Integer step, LinkedList<Food> list) {
+//        LinkedList<Food> temp = new LinkedList<>();
+//        for (Food food: list) {
+//            temp.add(new Food(food));
+//        }
+        foodList.put(step, list);
     }
-    public LinkedList<Food> getFood(int step) {
+    public LinkedList<Food> getFoodList(int step) {
         return foodList.get(getKey(step, foodList));
     }
-    public void setHead(int step, RectPoint point) {
+    public void addHead(int step, RectPoint point) {
         head.put(step, point);
     }
     public RectPoint getHead(int step) {
         return head.get(step);
     }
-    public void setLength(int step, Number length) {
+    public void addLength(int step, Number length) {
         this.length.put(step, length.shortValue());
     }
     public short getLength(int step) {
         return length.get(getKey(step, length));
     }
-    public void setScore(int step, int score) {
+    public void addScore(int step, int score) {
         this.score.put(step, score);
     }
     public int getScore(int step) {
