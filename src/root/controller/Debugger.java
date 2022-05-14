@@ -1,11 +1,8 @@
 package root.controller;
 
 import root.model.Board;
-import root.model.Food;
 import root.model.Trail;
 import root.model.Snake;
-
-import java.util.LinkedList;
 
 public final class Debugger {
     enum status { BACK, FORWARD, STILL}
@@ -110,7 +107,7 @@ public final class Debugger {
 
     private void setFood() {
         Trail value = recorder.getData(0);
-//        for (Food food: board.getFoodList())
+//        for (Base food: board.getFoodList())
 //            food.setPoint();
         board.getFoodList().clear();
         for (int i=0; i<value.getFoodList(currentStep).size(); i++) {
@@ -121,7 +118,7 @@ public final class Debugger {
 //                    value.getFoodList(currentStep).get(i).getPoint());
         }
 //        board.getFood().setPoint(value.getFood(currentStep));
-//        board.getFood() = new Food(value.getFood(currentStep));
+//        board.getFood() = new Base(value.getFood(currentStep));
     }
     private void checkStatus() {
         int LatestStep = recorder.getSteps();

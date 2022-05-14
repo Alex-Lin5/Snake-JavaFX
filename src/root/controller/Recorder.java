@@ -1,8 +1,7 @@
 package root.controller;
 
 import root.model.Board;
-import root.model.Food;
-import root.model.Point.RectPoint;
+import root.model.Food.Base;
 import root.model.Trail;
 import root.model.Snake;
 
@@ -85,9 +84,9 @@ public final class Recorder {
     }
     private void printFood(Number serialNum, Integer step){
         Trail data = getData(serialNum);
-        System.out.printf("Food:");
+        System.out.printf("Base:");
         int index = 1;
-        for (Food food: data.getFoodList(step)) {
+        for (Base food: data.getFoodList(step)) {
             System.out.printf("%d tag%s = (%d, %d). ", index, food.getSerialNum(),
                 food.getPoint().getX(), food.getPoint().getY());
             index++;

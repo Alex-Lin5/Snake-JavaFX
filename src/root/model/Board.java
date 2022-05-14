@@ -1,9 +1,9 @@
 package root.model;
 
 
+import root.model.Food.Base;
 import root.model.Point.RectPoint;
 
-import java.awt.*;
 import java.util.LinkedList;
 
 import static root.Main.BOARD_HEIGHT;
@@ -15,7 +15,7 @@ public final class Board {
     private final int width;
     private final int height;
     private final LinkedList<Snake> snakeList;
-    private final LinkedList<Food> foodList;
+    private final LinkedList<Base> foodList;
     private int step;
 //    private byte snakeNum;
 //    private byte foodNum;
@@ -35,14 +35,14 @@ public final class Board {
         return snakeList.get(serialNum.byteValue());
     }
     public LinkedList<Snake> getSnakeList() { return snakeList;}
-    public Food getFood(Number num) { return foodList.get(num.byteValue());}
-    public LinkedList<Food> getFoodList() { return foodList;}
+    public Base getFood(Number num) { return foodList.get(num.byteValue());}
+    public LinkedList<Base> getFoodList() { return foodList;}
     public int getStep() { return step;}
     public void setStep(int step) { this.step = step;}
 
     public LinkedList<RectPoint> getFoodPointList() {
         LinkedList<RectPoint> list = new LinkedList<>();
-        for (Food food: foodList)
+        for (Base food: foodList)
             list.add(food.getPoint());
         return list;
     }
@@ -53,13 +53,16 @@ public final class Board {
         return list;
     }
     public void printStatus() {
-        System.out.printf("Board Step: %d: Food::", step);
+        System.out.printf("Board Step: %d: Base::", step);
         int index = 1;
-        for (Food food: foodList) {
+        for (Base food: foodList) {
             System.out.printf("%d tag%s = (%d, %d). ", index, food.getSerialNum(),
                     food.getPoint().getX(), food.getPoint().getY());
             index++;
         }
         System.out.printf("\n");
+        Snake snake = snakeList.get(0);
+        System.out.printf("Head on (%d, %d).\n", snake.getHead().getX(),
+                snake.getHead().getY());
     }
 }

@@ -1,7 +1,7 @@
 package root.view;
 
 import root.model.Board;
-import root.model.Food;
+import root.model.Food.Base;
 import root.model.Point.RectPoint;
 
 import root.model.Snake;
@@ -32,7 +32,7 @@ public final class Painter {
         pen.drawGrid(board.getWidth(), board.getHeight(), size);
 
         pen.setColor(FoodColor);
-        for (Food food: board.getFoodList())
+        for (Base food: board.getFoodList())
             pen.drawSquare(food.getPoint(), size);
 
         pen.setColor(SnakeColor);

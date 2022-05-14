@@ -1,11 +1,10 @@
 package root.controller;
 
 import root.model.Board;
-import root.model.Food;
+import root.model;
 import root.model.Point.RectPoint;
 import root.model.Snake;
 
-import java.awt.*;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -14,14 +13,14 @@ public final class Engine {
     private final Board board;
     private final long seed;
 //    private LinkedList<Snake> snakeList;
-//    private LinkedList<Food> foodList;
+//    private LinkedList<Base> foodList;
     private boolean valid;
 
     public Engine(Board board, long seedNew, boolean receive){
         this.board = board;
         Byte serialNum = (byte) 0;
         LinkedList<Snake> snakeList = board.getSnakeList();
-        LinkedList<Food> foodList = board.getFoodList();
+        LinkedList<Base> foodList = board.getFoodList();
 //        snakeList = board.getSnakeList();
 //        foodList = board.getFoodList();
         valid = false;
@@ -34,9 +33,9 @@ public final class Engine {
 
         snakeList.add(new Snake(generatePoint(
             new LinkedList<>()), serialNum, "Green"));
-        foodList.add(Food.Base);
-//        Food.Base.setPoint(generatePoint(snake.getBody()));
-        Food.Base.setPoint(generatePoint(board.getSnakeBodyList()));
+        foodList.add(Food.Base(generatePoint(board.getSnakeBodyList()));
+//        Base.Base.setPoint(generatePoint(snake.getBody()));
+        Base.Base.setPoint(generatePoint(board.getSnakeBodyList()));
     }
 
     public RectPoint generatePoint (LinkedList<RectPoint> list) {
@@ -60,7 +59,7 @@ public final class Engine {
 
     public void work() {
         Snake snake = board.getSnake(0);
-        Food food = board.getFood(0);
+        Base food = board.getFood(0);
         int width, height;
         width = board.getWidth();
         height = board.getHeight();
@@ -87,7 +86,7 @@ public final class Engine {
         }
         else if (!snake.isMoving());
         if (valid) {
-            board.printStatus();
+//            board.printStatus();
         }
 
     }

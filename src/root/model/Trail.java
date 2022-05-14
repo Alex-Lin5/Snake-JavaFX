@@ -1,5 +1,6 @@
 package root.model;
 
+import root.model.Food.Base;
 import root.model.Point.RectPoint;
 
 import java.util.HashMap;
@@ -7,12 +8,12 @@ import java.util.LinkedList;
 
 public final class Trail {
     private final HashMap<Integer, RectPoint> head; // current point of head
-    private final HashMap<Integer, LinkedList<Food>> foodList;
+    private final HashMap<Integer, LinkedList<Base>> foodList;
     private final HashMap<Integer, Short> length;
     private final HashMap<Integer, Integer> score;
     private int lifespan;
 
-    public Trail(RectPoint head, LinkedList<Food> foodL, Number length) {
+    public Trail(RectPoint head, LinkedList<Base> foodL, Number length) {
 //    public Trail(RectPoint head, RectPoint foodList, Short length) {
         this.head = new HashMap<>();
 //        this.head = new ArrayList<>();
@@ -60,14 +61,14 @@ public final class Trail {
     }
     public int getLifespan() { return lifespan;}
     public void setLifespan(Integer step) { lifespan = step;}
-    public void addFoodList(Integer step, LinkedList<Food> list) {
-//        LinkedList<Food> temp = new LinkedList<>();
-//        for (Food food: list) {
-//            temp.add(new Food(food));
+    public void addFoodList(Integer step, LinkedList<Base> list) {
+//        LinkedList<Base> temp = new LinkedList<>();
+//        for (Base food: list) {
+//            temp.add(new Base(food));
 //        }
         foodList.put(step, list);
     }
-    public LinkedList<Food> getFoodList(int step) {
+    public LinkedList<Base> getFoodList(int step) {
         return foodList.get(getKey(step, foodList));
     }
     public void addHead(int step, RectPoint point) {
@@ -92,7 +93,7 @@ public final class Trail {
 }
 
 //class packet{
-//    private Food foodList;
+//    private Base foodList;
 //    private int length;
 //    private int score;
 //}
