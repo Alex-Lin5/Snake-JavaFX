@@ -1,7 +1,7 @@
 package root.controller;
 
 import root.model.Board;
-import root.model.Food.Base;
+import root.model.Food.*;
 import root.model.Trail;
 import root.model.Snake;
 
@@ -59,39 +59,40 @@ public final class Recorder {
     }
     public void printDeath(Number serialNum) {
         Trail data = getData(serialNum);
+        String out;
         int life = data.getLifespan();
-        System.out.printf(
-            "Score: %d, length: %d, head hits on (%d, %d).\n" +
-                    "Seed is %d\n",
-            data.getScore(life), data.getLength(life),
-            data.getHead(life).getX(), data.getHead(life).getY(),
-            engine.getSeed());
+        out = String.format("Score: %d, length: %d, ",
+                data.getScore(life), data.getLength(life));
+        out += "head hits on " + String.valueOf(data.getHead(life)) + '\n';
+        out += String.format("Seed is %d\n", engine.getSeed());
+        System.out.printf(out);
     }
     public void printValue(Number serialNum, Integer step, Debugger.status theStatus) {
         Trail data = getData(serialNum);
-        String sign;
+        String sign, out;
         if (theStatus == Debugger.status.BACK)
             sign = "--";
         else if (theStatus == Debugger.status.FORWARD)
             sign = "++";
         else
             sign = "==";
-        System.out.printf(
-            "%s Step: %d, Score: %d, length: %d, head on (%d, %d).\n",
-            sign, step, data.getScore(step), data.getLength(step),
-            data.getHead(step).getX(), data.getHead(step).getY());
+        out = String.format("%s Step: %d, Score: %d, length: %d, head on ",
+                sign, step, data.getScore(step), data.getLength(step));
+        out += String.valueOf(data.getHead(step)) + ".";
+        System.out.printf(out + "\n");
         printFood(serialNum, step);
     }
     private void printFood(Number serialNum, Integer step){
         Trail data = getData(serialNum);
-        System.out.printf("Base:");
-        int index = 1;
-        for (Base food: data.getFoodList(step)) {
-            System.out.printf("%d tag%s = (%d, %d). ", index, food.getSerialNum(),
-                food.getPoint().getX(), food.getPoint().getY());
+        String out = "FoodList: ";
+        int index = 0;
+        for (Food food: data.getFoodList(step)) {
+            String oneFood = String.format("%d/", index);
+            oneFood += String.valueOf(food) + " ";
+            out += oneFood;
             index++;
         }
-        System.out.printf("\n");
+        System.out.printf(out + "\n");
     }
     public void setSteps(int step) { this.step = step;}
     public int getTimeTick() { return timeTick;}

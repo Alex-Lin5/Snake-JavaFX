@@ -107,7 +107,7 @@ public final class Debugger {
 
     private void setFood() {
         Trail value = recorder.getData(0);
-//        for (Base food: board.getFoodList())
+//        for (BaseFood food: board.getFoodList())
 //            food.setPoint();
         board.getFoodList().clear();
         for (int i=0; i<value.getFoodList(currentStep).size(); i++) {
@@ -118,7 +118,7 @@ public final class Debugger {
 //                    value.getFoodList(currentStep).get(i).getPoint());
         }
 //        board.getFood().setPoint(value.getFood(currentStep));
-//        board.getFood() = new Base(value.getFood(currentStep));
+//        board.getFood() = new BaseFood(value.getFood(currentStep));
     }
     private void checkStatus() {
         int LatestStep = recorder.getSteps();

@@ -1,7 +1,8 @@
 package root.controller;
 
 import root.model.Board;
-import root.model;
+import root.model.Food.*;
+//import root.model.Food.Food;
 import root.model.Point.RectPoint;
 import root.model.Snake;
 
@@ -13,14 +14,14 @@ public final class Engine {
     private final Board board;
     private final long seed;
 //    private LinkedList<Snake> snakeList;
-//    private LinkedList<Base> foodList;
+//    private LinkedList<BaseFood> foodList;
     private boolean valid;
 
     public Engine(Board board, long seedNew, boolean receive){
         this.board = board;
         Byte serialNum = (byte) 0;
         LinkedList<Snake> snakeList = board.getSnakeList();
-        LinkedList<Base> foodList = board.getFoodList();
+        LinkedList<Food> foodList = board.getFoodList();
 //        snakeList = board.getSnakeList();
 //        foodList = board.getFoodList();
         valid = false;
@@ -33,9 +34,9 @@ public final class Engine {
 
         snakeList.add(new Snake(generatePoint(
             new LinkedList<>()), serialNum, "Green"));
-        foodList.add(Food.Base(generatePoint(board.getSnakeBodyList()));
-//        Base.Base.setPoint(generatePoint(snake.getBody()));
-        Base.Base.setPoint(generatePoint(board.getSnakeBodyList()));
+        foodList.add(new BaseFood(generatePoint(board.getSnakeBodyList())));
+//        Food.Food.setPoint(generatePoint(board.getSnakeBodyList()));
+        
     }
 
     public RectPoint generatePoint (LinkedList<RectPoint> list) {
@@ -59,7 +60,7 @@ public final class Engine {
 
     public void work() {
         Snake snake = board.getSnake(0);
-        Base food = board.getFood(0);
+        Food food = board.getFood(0);
         int width, height;
         width = board.getWidth();
         height = board.getHeight();
@@ -73,7 +74,11 @@ public final class Engine {
 //                if (food.getPoint().equals(snake.getHead())) {
                 snake.grow();
                 snake.setScore(snake.getScore() + food.getScore());
-                board.getFood(0).setPoint(generatePoint(snake.getBody()));
+                board.getFoodList().remove(0);
+                board.getFoodList().add(new BaseFood(
+                    generatePoint(board.getSnakeBodyList())));
+
+//                board.getFood(0).setPoint(generatePoint(snake.getBody()));
 //                food.setPoint(generatePoint(snake.getBody()));
             }
             else
