@@ -1,6 +1,7 @@
 package root.model;
 
 import root.model.Point.RectPoint;
+import root.view.Color;
 
 import java.util.LinkedList;
 
@@ -9,6 +10,7 @@ import static root.model.Board.SIZE;
 public final class Snake {
     private final byte serialNum;
     private final String name;
+    private final Color color;
     private float speed;
     private int score;
     private final LinkedList<RectPoint> body;
@@ -25,11 +27,12 @@ public final class Snake {
     private boolean growing;
     private boolean molting;
 
-    public Snake(RectPoint SpawnPoint, Byte num, String name) {
+    public Snake(RectPoint SpawnPoint, Byte num, String name, Color cl) {
         short length = 9;
 
         this.name = name;
-        serialNum = num;
+        this.serialNum = num;
+        this.color = cl;
         score = 0;
         xVelocity = 0;
         yVelocity = 0;
@@ -143,7 +146,6 @@ public final class Snake {
                           RectPoint.direction tailDirection) {
         int factorS, factorT;
         int length = getLength();
-//        int distance = body.get(0).distanceTo(newPoint);
 
         if (split == RectPoint.direction.POS)
             factorS = 1;
@@ -208,6 +210,8 @@ public final class Snake {
         this.dead = true;
         setStatic();
     }
+
+    public Color getColor() { return color;}
     public String getName() { return name;}
     public boolean isGrowing() { return growing;}
     public byte getSerialNum() { return serialNum;}

@@ -9,7 +9,6 @@ import root.model.Snake;
 import static root.Main.PANEL_HEIGHT;
 import static root.Main.PANEL_WIDTH;
 import static root.model.Board.SIZE;
-import static root.view.Painter.SnakeColor;
 
 public final class Messenger {
     private static Color InfoColor = Color.BLACK;
@@ -53,7 +52,7 @@ public final class Messenger {
         Snake snake = board.getSnake(0);
         for (int line = 1; line <= 4; line++) {
             if (line == 1) {
-                pen.setColor(SnakeColor);
+                pen.setColor(snake.getColor());
                 pen.drawSquare(new RectPoint(5, height + lineSpace*line - SIZE), SIZE);
                 pen.setColor(InfoColor);
                 pen.setAlign(Pen.Align.LEFT);
@@ -111,7 +110,6 @@ public final class Messenger {
                 recorder.printDeath((byte) 0);
                 processed = true;
             }
-//            processed = false;
         }
         else processed = false;
 

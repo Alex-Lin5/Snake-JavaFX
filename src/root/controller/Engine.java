@@ -5,6 +5,7 @@ import root.model.Food.*;
 //import root.model.Food.Food;
 import root.model.Point.RectPoint;
 import root.model.Snake;
+import root.view.Color;
 
 import java.util.LinkedList;
 import java.util.Random;
@@ -33,7 +34,7 @@ public final class Engine {
         generator.setSeed(seed);
 
         snakeList.add(new Snake(generatePoint(
-            new LinkedList<>()), serialNum, "Green"));
+            new LinkedList<>()), serialNum, "Green", Color.BROWN));
         foodList.add(new BaseFood(generatePoint(board.getSnakeBodyList())));
 //        Food.Food.setPoint(generatePoint(board.getSnakeBodyList()));
         

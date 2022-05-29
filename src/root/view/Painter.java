@@ -9,8 +9,6 @@ import root.model.Snake;
 import static root.model.Board.SIZE;
 public final class Painter {
     private static Color PadColor = Color.BLACK;
-    private static Color FoodColor = Color.WHEAT;
-    public static Color SnakeColor = Color.BROWN;
     private static Color GridColor = Color.GREY;
     private static Color DeadColor = Color.RED;
     private static int size = SIZE;
@@ -31,11 +29,12 @@ public final class Painter {
         pen.setColor(GridColor);
         pen.drawGrid(board.getWidth(), board.getHeight(), size);
 
-        pen.setColor(FoodColor);
-        for (Food food: board.getFoodList())
+        for (Food food: board.getFoodList()) {
+            pen.setColor(food.getColor());
             pen.drawSquare(food.getPoint(), size);
+        }
 
-        pen.setColor(SnakeColor);
+        pen.setColor(snake.getColor());
         for(int i=0; i<snake.getLength()-1; i++) {
             pen.drawSquare(snake.getBody().get(i), size);
         }

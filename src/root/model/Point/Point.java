@@ -2,21 +2,26 @@ package root.model.Point;
 
 import org.jetbrains.annotations.NotNull;
 
-public class BasePoint {
+public class Point {
     final int x;    // The X coordinate
     final int y;    // The Y coordinate
 
     public int getX(){ return x;}
     public int getY(){ return y;}
-    public BasePoint(final int x, final int y) {
+    public Point(final int x, final int y) {
         this.x = x;
         this.y = y;
+    }
+    public Point(final Point pt){
+        x = pt.x;
+        y = pt.y;
     }
 
     @Override
     public boolean equals(@NotNull Object object) {
-        if (!(object instanceof BasePoint point)) return false;
-        return point.getX() == x & point.getY() == y;
+        if (object == this) return true;
+        if (!(object instanceof Point pt)) return false;
+        return pt.getX() == x & pt.getY() == y;
     }
     @Override
     public int hashCode(){

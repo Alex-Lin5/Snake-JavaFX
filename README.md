@@ -73,9 +73,9 @@ Table below concludes the process of instantiating different objects.
 || &#8594;|Pen|---|[Color]|||||
 |             |    &#8594;     |  Keypad| &#8594; | (Initializer)||  
 |             | |   &#8595;   | |||
-|             ||Board |&#8594;| Snake|***|RectPoint|+++|BasePoint
-||||   &#8594;   | Food|||
-|||   &#8595;   ||||
+|             ||Board |&#8594;| Snake|***|RectPoint|+++|Point
+||||   &#8594;   | Food|+++|BaseFood|
+|||   &#8595;   |||+++|BonusFood
 |||   Engine   || || ||
 |||   &#8595;   ||||
 |||  Recorder   |&#8594;|Trail||
@@ -91,20 +91,22 @@ Table below concludes the process of instantiating different objects.
 #### - Model
 - Package Point is the basic unit indicates the coordination of objects, like
 snake and food
-- BasePoint provide equals and hashCode method to support the manipulation of 
+  - BasePoint provide equals and hashCode method to support the manipulation of 
 Collection
-- RectPoint is inherited from BasePoint, all objects calls the RectPoint as
+  - RectPoint is inherited from BasePoint, all objects calls the RectPoint as
 their attributes
-- Might implement HexPoint inherited from BasePoint as another approach to 
+  - Might implement HexPoint inherited from BasePoint as another approach to 
 operate model
 - Keypad receive keyboard input event and respond to snake and other objects
 - snakeList and foodList are instantiated on the board
-- Food is enumed as different types of functional food, and stored in foodList
+- Package Food contans all functional food 
+  - Food object is inherited by different types of functional food, and stored in foodList
 - Snake performs grow, move and molt as it is included in the class file 
 #### - View
 - Enum Color with several provide color like black, red and white etc., each
 one stores a web value as string passed to member method in pen
-- Color is passed to snake and food as static object as part of attribute
+  - Color is passed to snake and food as static object as part of attribute
+  - Color is included in model snake and food as one of the attributes
 - Painter will paint the GUI of board, snake body is partially painted, the
 head and tail is painted independently for sliding through the grid
 - Messenger will provide information of game, like snake info including name,
@@ -118,6 +120,7 @@ and whenever the game is restarted
 - Class Trail stores the history behavior of snake in 
 length, head, score, and food location regarding the time stamp
 - Recorder controls the process of class trail recording in steps
+  - It prints information of game on the console based on the step number, or time stamp
 - debugger is not working if engine is running, the status is indicated by
 a boolean value. While the debugger is on, it checks the current status and 
 setup the snake and food step by step, then cleans out the history behine the
