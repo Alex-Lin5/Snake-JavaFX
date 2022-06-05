@@ -77,18 +77,11 @@ public final class Debugger {
 
         snake.setHead(snake.getBody().get(0));
         snake.setTail(snake.getBody().get(length-1));
-
-//        if (object != status.STILL)
-//            recorder.printValue(0, nextStep, object);
-//        currentStep = nextStep;
-        }
+     }
 
     public void reset() {
         int stepNow = currentStep-backSteps;
         recorder.setSteps(stepNow);
-//        recorder.removeData(
-//                board.getSnake((byte) 0).getSerialNum(),
-//                stepNow);
         recorder.removeData(0, stepNow);
         backSteps = 0;
         object = status.STILL;
@@ -107,18 +100,11 @@ public final class Debugger {
 
     private void setFood() {
         Trail value = recorder.getData(0);
-//        for (BaseFood food: board.getFoodList())
-//            food.setPoint();
         board.getFoodList().clear();
         for (int i=0; i<value.getFoodList(currentStep).size(); i++) {
             board.getFoodList().add(
                 value.getFoodList(currentStep).get(i));
-//            for (int i=0; i<board.getFoodList().size(); i++) {
-//            board.getFood(i).setPoint(
-//                    value.getFoodList(currentStep).get(i).getPoint());
         }
-//        board.getFood().setPoint(value.getFood(currentStep));
-//        board.getFood() = new BaseFood(value.getFood(currentStep));
     }
     private void checkStatus() {
         int LatestStep = recorder.getSteps();

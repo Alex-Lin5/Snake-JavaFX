@@ -2,7 +2,6 @@ package root.controller;
 
 import root.model.Board;
 import root.model.Food.*;
-//import root.model.Food.Food;
 import root.model.Point.RectPoint;
 import root.model.Snake;
 import root.view.Color;

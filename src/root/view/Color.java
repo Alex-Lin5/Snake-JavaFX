@@ -16,5 +16,5 @@ public enum Color {
     Color(String str){
         webValue = str;
     }
-    String getWeb() {return webValue;}
+    public String getWeb() {return webValue;}
 }

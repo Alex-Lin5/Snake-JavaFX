@@ -3,7 +3,7 @@ package root.controller;
 import root.model.Board;
 import root.view.Messenger;
 import root.view.Painter;
-import root.view.Pen;
+import root.lib.Pen;
 
 import static root.model.Board.SIZE;
 

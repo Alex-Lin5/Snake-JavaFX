@@ -1,9 +1,8 @@
-package root.model;
+package root.lib;
 
 import javafx.scene.canvas.Canvas;
 import javafx.stage.Stage;
 import root.controller.Debugger;
-import root.controller.Initializer;
 import root.controller.ThreadLoop;
 import root.model.Snake;
 

@@ -1,12 +1,13 @@
-package root.controller;
+package root.lib;
 
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import root.model.Keypad;
-import root.view.Pen;
+import root.controller.ThreadLoop;
+import root.lib.Keypad;
+import root.lib.Pen;
 
 import static root.Main.*;
 

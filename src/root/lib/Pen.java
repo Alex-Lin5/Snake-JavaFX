@@ -1,9 +1,10 @@
-package root.view;
+package root.lib;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import root.model.Point.RectPoint;
+import root.view.Toolkit;
 
 
 public final class Pen implements Toolkit {
@@ -50,7 +51,7 @@ public final class Pen implements Toolkit {
             gc.strokeLine(0, i*size, width-gc.getLineWidth(), i*size);
     }
 
-    enum Align{
+    public enum Align{
         LEFT(TextAlignment.LEFT),
         RIGHT(TextAlignment.RIGHT),
         CENTER(TextAlignment.CENTER);

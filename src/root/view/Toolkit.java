@@ -1,6 +1,6 @@
 package root.view;
 
-import javafx.scene.text.TextAlignment;
+import root.lib.Pen;
 import root.model.Point.RectPoint;
 
 

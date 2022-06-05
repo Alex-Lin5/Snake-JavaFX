@@ -2,7 +2,7 @@ package root.model.Point;
 
 import org.jetbrains.annotations.NotNull;
 
-public class Point {
+public abstract class Point {
     final int x;    // The X coordinate
     final int y;    // The Y coordinate
 

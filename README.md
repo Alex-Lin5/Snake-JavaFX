@@ -73,7 +73,7 @@ Table below concludes the process of instantiating different objects.
 || &#8594;|Pen|---|[Color]|||||
 |             |    &#8594;     |  Keypad| &#8594; | (Initializer)||  
 |             | |   &#8595;   | |||
-|             ||Board |&#8594;| Snake|***|RectPoint|+++|Point
+|             ||Board |&#8594;| Snake|***|Point|+++|RectPoint
 ||||   &#8594;   | Food|+++|BaseFood|
 |||   &#8595;   |||+++|BonusFood
 |||   Engine   || || ||
@@ -127,6 +127,7 @@ setup the snake and food step by step, then cleans out the history behine the
 current step
 
 ### Adapter
+lib package includes JavaFX library code, wrapped java classes
 - Class Pen implement Toolkit interface including the basic method required
 for drawing and texting, it isolated the code of project and JavaFX libray code.
 - User-defined class Color is provided as enum that passed to the method in 

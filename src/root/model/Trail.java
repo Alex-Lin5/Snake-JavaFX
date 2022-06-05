@@ -14,7 +14,6 @@ public final class Trail {
     private int lifespan;
 
     public Trail(RectPoint head, LinkedList<Food> foodL, Number length) {
-//    public Trail(RectPoint head, RectPoint foodList, Short length) {
         this.head = new HashMap<>();
         this.foodList = new HashMap<>();
         this.length = new HashMap<>();
@@ -22,7 +21,6 @@ public final class Trail {
 
         lifespan = 0;
         this.head.put(0, head);
-//        this.foodList.put(0, foodL);
         addFoodList(0, foodL);
         this.length.put(0, length.shortValue());
         score.put(0, 0);
@@ -91,9 +89,3 @@ public final class Trail {
     }
 
 }
-
-//class packet{
-//    private Food foodList;
-//    private int length;
-//    private int score;
-//}
