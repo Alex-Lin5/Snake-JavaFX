@@ -2,7 +2,7 @@ package root.view;
 
 import root.controller.Debugger;
 import root.controller.Recorder;
-import root.lib.Pen;
+import lib.Pen;
 import root.model.Board;
 import root.model.Point.RectPoint;
 import root.model.Snake;

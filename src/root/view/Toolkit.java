@@ -1,6 +1,6 @@
 package root.view;
 
-import root.lib.Pen;
+import lib.Pen;
 import root.model.Point.RectPoint;
 
 

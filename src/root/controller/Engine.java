@@ -35,8 +35,6 @@ public final class Engine {
         snakeList.add(new Snake(generatePoint(
             new LinkedList<>()), serialNum, "Green", Color.BROWN));
         foodList.add(new BaseFood(generatePoint(board.getSnakeBodyList())));
-//        Food.Food.setPoint(generatePoint(board.getSnakeBodyList()));
-        
     }
 
     public RectPoint generatePoint (LinkedList<RectPoint> list) {
@@ -77,9 +75,6 @@ public final class Engine {
                 board.getFoodList().remove(0);
                 board.getFoodList().add(new BaseFood(
                     generatePoint(board.getSnakeBodyList())));
-
-//                board.getFood(0).setPoint(generatePoint(snake.getBody()));
-//                food.setPoint(generatePoint(snake.getBody()));
             }
             else
                 snake.move(width, height);

@@ -1,4 +1,4 @@
-package root.lib;
+package lib;
 
 import javafx.scene.canvas.Canvas;
 import javafx.stage.Stage;
@@ -16,7 +16,7 @@ public class Keypad {
     public Keypad(ThreadLoop loop, Canvas myCanvas, Stage stage) {
         theStage = stage;
         this.canvas = myCanvas;
-        snake = loop.getBoard().getSnake((byte) 0);
+        snake = loop.getBoard().getSnake(0);
         debugger = loop.getDebugger();
     }
     public void getKey() {

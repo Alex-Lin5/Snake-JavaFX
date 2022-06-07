@@ -1,4 +1,4 @@
-package root.lib;
+package lib;
 
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -6,8 +6,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import root.controller.ThreadLoop;
-import root.lib.Keypad;
-import root.lib.Pen;
 
 import static root.Main.*;
 
@@ -37,7 +35,6 @@ public final class Initializer {
         myStage.setScene(myScene);
         myStage.show();
 
-//        ThreadLoop loop = new ThreadLoop(myGraphicsContext);
         ThreadLoop loop = new ThreadLoop(pen);
         Keypad keypad1 = new Keypad(loop, canvasFX, myStage);
         keypad1.getKey();

@@ -2,7 +2,7 @@ package root;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import root.lib.Initializer;
+import lib.Initializer;
 
 public class Main extends Application {
 
